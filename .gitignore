@@ -102,3 +102,6 @@ Thumbs.db
 .vscode/
 *.swp
 *.swo
+
+# Generator output: ground-truth labels and dead-lettered HEC batches
+out/

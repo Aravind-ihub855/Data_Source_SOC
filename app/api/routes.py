@@ -1,6 +1,8 @@
+import asyncio
+from datetime import timedelta
 from fastapi import APIRouter, Query, HTTPException
 from typing import Optional, Dict, Any, List
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from app.config import settings
 from app.splunk_config import splunk_config, is_splunk_enabled
 from app.delivery.splunk_delivery import (
@@ -8,22 +10,19 @@ from app.delivery.splunk_delivery import (
     get_metrics_summary,
     test_splunk_connection
 )
+from app.util import now, parse_iso
 from app.coordination.scheduler import (
     start_stream,
     stop_stream,
     is_stream_running,
     trigger_scenario_by_id,
     trigger_random_scenario,
-    get_cooldown_info
+    get_cooldown_info,
+    activity_factor,
+    run_backfill
 )
 from app.coordination.registry import scenario_registry
-from app.registry.entities import (
-    get_all_users,
-    get_all_devices,
-    NORMAL_EXTERNAL_IPS,
-    SUSPICIOUS_EXTERNAL_IPS,
-    get_primary_aws_account
-)
+from app.registry.entities import TENANTS, NORMAL_EXTERNAL_IPS, SUSPICIOUS_EXTERNAL_IPS
 
 router = APIRouter()
 
@@ -34,6 +33,12 @@ class RateUpdateRequest(BaseModel):
     windows_rate: Optional[int] = None
     firewall_rate: Optional[int] = None
     powershell_rate: Optional[int] = None # legacy alias for windows_rate
+
+class BackfillRequest(BaseModel):
+    hours: float = Field(default=1.0, gt=0, le=168, description="Length of the window to generate")
+    end: Optional[str] = Field(default=None, description="Window end (ISO 8601 UTC); default now")
+
+_backfill: Dict[str, Any] = {"status": "IDLE", "result": None, "error": None}
 
 @router.get("/health", tags=["Status"])
 async def health_check():
@@ -54,6 +59,9 @@ async def get_status():
         "version": settings.APP_VERSION,
         "stream_running": is_stream_running(),
         "sources_count": 5,
+        "tenants": settings.tenant_list,
+        "seed": settings.SEED,
+        "activity_factor_now": activity_factor(now()),
         "rates_per_minute": {
             "defender": settings.DEFENDER_RATE_PER_MIN,
             "entra_id": settings.ENTRA_RATE_PER_MIN,
@@ -70,6 +78,7 @@ async def get_status():
         },
         "splunk_hec": {
             "url": splunk_config.HEC_URL,
+            "mirror_url": settings.MIRROR_URL or None,
             "token_configured": bool(splunk_config.HEC_TOKEN),
             "target_indexes": {
                 "endpoint": splunk_config.INDEX_ENDPOINT,
@@ -139,21 +148,22 @@ async def get_cooldown():
     return get_cooldown_info()
 
 @router.post("/scenarios/trigger/{scenario_id}", tags=["Scenario Coordinator"])
-async def trigger_scenario(scenario_id: str):
+async def trigger_scenario(scenario_id: str, tenant: Optional[str] = Query(default=None, description="Tenant id (default: first in TENANTS)")):
     """
     Manually triggers any of the 20 coordinated attack/benign/quality scenarios
     (e.g. SCN-ID-01, SCN-EP-01, SCN-NW-01, SCN-CL-01, SCN-CH-01, SCN-FP-01, SCN-DQ-01).
-    Generates correlated events across Defender, Entra ID, CloudTrail, Windows Event Logs, and Firewall,
-    buffers them, and forwards to Splunk HEC.
+    Generates correlated events across Defender, Entra ID, CloudTrail, Windows Event Logs, and Firewall
+    and schedules each one for delivery to Splunk HEC at its own event time.
     """
     try:
-        delivered = await trigger_scenario_by_id(scenario_id)
+        delivered = await trigger_scenario_by_id(scenario_id, tenant)
         return {
             "status": "SUCCESS",
             "scenario_id": scenario_id,
+            "tenant_id": tenant or settings.tenant_list[0],
             "events_count": len(delivered),
             "events": delivered,
-            "message": f"Successfully injected scenario {scenario_id} ({len(delivered)} correlated events delivered across 5 sources)"
+            "message": f"Injected scenario {scenario_id} ({len(delivered)} correlated events scheduled at their event times)"
         }
     except KeyError as e:
         raise HTTPException(status_code=404, detail=str(e))
@@ -161,18 +171,20 @@ async def trigger_scenario(scenario_id: str):
         raise HTTPException(status_code=500, detail=f"Failed to generate scenario {scenario_id}: {str(e)}")
 
 @router.post("/scenarios/trigger-random", tags=["Scenario Coordinator"])
-async def trigger_random():
+async def trigger_random(tenant: Optional[str] = Query(default=None)):
     """
     Picks and triggers the next random scenario from outside the 8-scenario LRU cooldown window.
     Guarantees no immediate repetition across the 20 scenarios.
     """
     try:
-        result = await trigger_random_scenario()
+        result = await trigger_random_scenario(tenant)
         return {
             "status": "SUCCESS",
             "scenario": result,
-            "message": f"Successfully picked and injected scenario {result['scenario_id']}: {result['name']} ({result['events_delivered_count']} events delivered)"
+            "message": f"Picked and injected scenario {result['scenario_id']}: {result['name']} ({result['events_delivered_count']} events scheduled)"
         }
+    except KeyError as e:
+        raise HTTPException(status_code=404, detail=str(e))
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to trigger random scenario: {str(e)}")
 
@@ -226,13 +238,46 @@ async def test_splunk():
 
 @router.get("/entities", tags=["Shared Registry"])
 async def list_entities():
-    """Inspects the Shared Entity Registry maintaining consistency across all 5 generators."""
+    """Inspects the Shared Entity Registry (per tenant) that keeps all 5 generators consistent."""
     return {
-        "users": get_all_users(),
-        "devices": get_all_devices(),
+        "tenants": TENANTS,
         "ip_pools": {
             "normal_external_ips": NORMAL_EXTERNAL_IPS,
             "suspicious_external_ips": SUSPICIOUS_EXTERNAL_IPS
-        },
-        "cloud_account": get_primary_aws_account()
+        }
     }
+
+@router.post("/backfill", tags=["Backfill"])
+async def start_backfill(req: BackfillRequest):
+    """
+    Generates a past window (baseline + paced scenarios) on simulated time and sends it to Splunk
+    with historical timestamps. Runs in the background; poll GET /backfill. Same SEED, same events.
+    """
+    if _backfill["status"] == "RUNNING":
+        raise HTTPException(status_code=409, detail="A backfill is already running")
+    if is_stream_running():
+        raise HTTPException(status_code=409, detail="Stop the live stream first (POST /stream/stop): "
+                                                    "it shares the random generator, so the backfill would not be repeatable")
+    try:
+        end = parse_iso(req.end) if req.end else now()
+    except ValueError:
+        raise HTTPException(status_code=422, detail="end must be ISO 8601, e.g. 2026-11-24T09:00:00Z")
+    if end > now():
+        raise HTTPException(status_code=422, detail="A backfill window must end in the past (end defaults to now)")
+    start = end - timedelta(hours=req.hours)
+
+    async def _run():
+        try:
+            _backfill["result"] = await run_backfill(start, end)
+            _backfill["status"] = "DONE"
+        except Exception as e:
+            _backfill.update(status="FAILED", error=str(e))
+
+    _backfill.update(status="RUNNING", result=None, error=None)
+    _backfill["task"] = asyncio.create_task(_run())
+    return {"status": "STARTED", "start": start.isoformat(), "end": end.isoformat(), "seed": settings.SEED}
+
+@router.get("/backfill", tags=["Backfill"])
+async def backfill_status():
+    """Status of the last backfill."""
+    return {k: v for k, v in _backfill.items() if k != "task"}

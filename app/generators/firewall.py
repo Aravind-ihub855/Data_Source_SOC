@@ -1,8 +1,7 @@
-import uuid
-import datetime
 import random
 from typing import Dict, Any, Optional
-from app.registry.entities import get_random_user, get_device_for_user, get_random_normal_ip, get_suspicious_ip
+from app.registry.entities import get_random_normal_ip, get_suspicious_ip, identity, tenant, devices
+from app.util import iso_now, parse_iso
 
 COMMON_RULES = [
     {"name": "Outbound-Web-Traffic", "port": 443, "proto": "TCP", "app": "ssl", "zone_src": "trust", "zone_dst": "untrust"},
@@ -11,8 +10,14 @@ COMMON_RULES = [
     {"name": "Default-Interzone-Deny", "port": 22, "proto": "TCP", "app": "ssh", "zone_src": "untrust", "zone_dst": "trust"}
 ]
 
+
+def _cef_value(v: Any) -> str:
+    """CEF extension escaping: backslash, equals sign and line breaks."""
+    return str(v).replace("\\", "\\\\").replace("=", "\\=").replace("\r", "\\r").replace("\n", "\\n")
+
+
 def generate_firewall_cef_event(
-    device_name: str = "FW-01",
+    device_name: Optional[str] = None,
     device_vendor: str = "ExampleVendor",
     device_product: str = "ExampleNGFW",
     device_version: str = "10.2",
@@ -37,42 +42,37 @@ def generate_firewall_cef_event(
     threat_name: Optional[str] = None,
     threat_category: Optional[str] = None,
     user: Optional[str] = None,
-    scenario_id: Optional[str] = None,
     event_time: Optional[str] = None
 ) -> Dict[str, Any]:
     """
     Generates a vendor-neutral Next-Gen Firewall record conforming to 05_firewall.schema.json.
     Includes both raw_message (CEF format) and structured parsed_fields.
     """
-    now_utc = event_time or datetime.datetime.utcnow().isoformat() + "Z"
+    now_utc = event_time or iso_now()
+    fw = device_name or tenant()["firewall"]
     sess_id = session_id or str(random.randint(1000000, 9999999))
-
-    # Build CEF extension string
-    extensions = [
-        f"rt={now_utc}",
-        f"src={source_ip}",
-        f"spt={source_port}",
-        f"dst={destination_ip}",
-        f"dpt={destination_port}",
-        f"proto={protocol}",
-        f"act={action}",
-        f"deviceExternalId={device_name}",
-        f"cs1={rule_name}",
-        f"cs1Label=RuleName",
-        f"out={bytes_out}",
-        f"in={bytes_in}",
-        f"app={application}",
-        f"externalId={sess_id}"
-    ]
-    if threat_name:
-        extensions.append(f"cs2={threat_name}")
-        extensions.append("cs2Label=ThreatName")
+    suser = None
     if user:
-        extensions.append(f"suser={user}")
+        who = identity(user)
+        suser = f"{who['domain']}\\{who['sam']}"
+
+    extensions = [
+        ("rt", int(parse_iso(now_utc).timestamp() * 1000)),
+        ("src", source_ip), ("spt", source_port), ("dst", destination_ip), ("dpt", destination_port),
+        ("proto", protocol), ("act", action), ("deviceExternalId", fw),
+        ("cs1", rule_name), ("cs1Label", "RuleName"),
+        ("out", bytes_out), ("in", bytes_in), ("app", application), ("externalId", sess_id),
+    ]
+    if direction == "outbound":
+        extensions.append(("sourceTranslatedAddress", tenant()["egress_ip"]))
+    if threat_name:
+        extensions += [("cs2", threat_name), ("cs2Label", "ThreatName")]
+    if suser:
+        extensions.append(("suser", suser))
 
     raw_message = (
         f"CEF:0|{device_vendor}|{device_product}|{device_version}|{signature_id}|"
-        f"{name}|{severity}|{' '.join(extensions)}"
+        f"{name}|{severity}|{' '.join(f'{k}={_cef_value(v)}' for k, v in extensions)}"
     )
 
     parsed_fields: Dict[str, Any] = {
@@ -80,8 +80,8 @@ def generate_firewall_cef_event(
         "device_vendor": device_vendor,
         "device_product": device_product,
         "device_version": device_version,
-        "device_id": device_name,
-        "device_name": device_name,
+        "device_id": fw,
+        "device_name": fw,
         "signature_id": str(signature_id),
         "name": name,
         "severity": severity,
@@ -91,7 +91,7 @@ def generate_firewall_cef_event(
         "duration_seconds": 12,
         "source_ip": source_ip,
         "source_port": source_port,
-        "source_nat_ip": "198.51.100.10",
+        "source_nat_ip": tenant()["egress_ip"],
         "destination_ip": destination_ip,
         "destination_port": destination_port,
         "protocol": protocol,
@@ -108,35 +108,23 @@ def generate_firewall_cef_event(
         "packets_in": packets_in,
         "session_end_reason": "tcp-fin" if action == "allow" else "policy-deny"
     }
-
     if threat_name:
         parsed_fields["threat_name"] = threat_name
         parsed_fields["threat_category"] = threat_category or "command-and-control"
         parsed_fields["threat_id"] = str(signature_id)
-    if user:
-        parsed_fields["user"] = user
+    if suser:
+        parsed_fields["user"] = suser
 
-    event = {
-        "format": "CEF",
-        "raw_message": raw_message,
-        "parsed_fields": parsed_fields
-    }
-
-    if scenario_id:
-        event["scenarioId"] = scenario_id
-        event["parsed_fields"]["scenario_id"] = scenario_id
-
-    return event
+    return {"format": "CEF", "raw_message": raw_message, "parsed_fields": parsed_fields}
 
 def generate_firewall_threat_event(
-    device_name: str,
     source_ip: str,
     destination_ip: str,
     destination_port: int = 443,
     threat_name: str = "Suspicious TLS destination",
     action: str = "alert",
     user: Optional[str] = None,
-    scenario_id: Optional[str] = None,
+    device_name: Optional[str] = None,
     event_time: Optional[str] = None
 ) -> Dict[str, Any]:
     """
@@ -162,31 +150,28 @@ def generate_firewall_threat_event(
         threat_name=threat_name,
         threat_category="command-and-control",
         user=user,
-        scenario_id=scenario_id,
         event_time=event_time
     )
 
 def generate_firewall_deny_event(
-    device_name: str = "FW-01",
+    device_name: Optional[str] = None,
     source_ip: Optional[str] = None,
-    destination_ip: str = "10.0.1.10",
+    destination_ip: Optional[str] = None,
     destination_port: int = 22,
     rule_name: str = "Default-Interzone-Deny",
-    scenario_id: Optional[str] = None,
     event_time: Optional[str] = None
 ) -> Dict[str, Any]:
     """
     Generates an inbound blocked scanning or policy deny event.
     """
-    scanner_ip = source_ip or get_suspicious_ip(1)["ip"]
     return generate_firewall_cef_event(
         device_name=device_name,
         signature_id="3001",
         name="Traffic Dropped by Policy",
         severity=4,
-        source_ip=scanner_ip,
+        source_ip=source_ip or get_suspicious_ip(1)["ip"],
         source_port=random.randint(1024, 65535),
-        destination_ip=destination_ip,
+        destination_ip=destination_ip or random.choice(devices())["ip_address"],
         destination_port=destination_port,
         protocol="TCP",
         action="deny",
@@ -198,34 +183,32 @@ def generate_firewall_deny_event(
         bytes_in=64,
         packets_out=0,
         packets_in=1,
-        scenario_id=scenario_id,
         event_time=event_time
     )
 
 def generate_firewall_baseline_event() -> Dict[str, Any]:
     """
-    Generates realistic benign traffic flow through perimeter firewall (95% allowed outbound web, 5% blocked scan).
+    Generates realistic benign traffic flow through perimeter firewall (95% allowed outbound, 5% blocked scan).
     """
-    roll = random.random()
-    if roll < 0.95:
-        normal_rule = random.choice(COMMON_RULES[:2])
-        return generate_firewall_cef_event(
-            device_name="FW-01",
-            signature_id="8001",
-            name="Outbound connection",
-            severity=1,
-            source_ip=f"10.0.1.{random.randint(10, 200)}",
-            source_port=random.randint(49152, 65535),
-            destination_ip=get_random_normal_ip(),
-            destination_port=normal_rule["port"],
-            protocol=normal_rule["proto"],
-            action="allow",
-            rule_name=normal_rule["name"],
-            direction="outbound",
-            log_type="traffic",
-            application=normal_rule["app"],
-            bytes_out=random.randint(500, 15000),
-            bytes_in=random.randint(1000, 50000)
-        )
-    else:
+    if random.random() >= 0.95:
         return generate_firewall_deny_event()
+    normal_rule = random.choice(COMMON_RULES[:2])
+    host = random.choice(devices())
+    return generate_firewall_cef_event(
+        signature_id="8001",
+        name="Outbound connection",
+        severity=1,
+        source_ip=host["ip_address"],
+        source_port=random.randint(49152, 65535),
+        destination_ip=get_random_normal_ip(),
+        destination_port=normal_rule["port"],
+        protocol=normal_rule["proto"],
+        action="allow",
+        rule_name=normal_rule["name"],
+        direction="outbound",
+        log_type="traffic",
+        application=normal_rule["app"],
+        bytes_out=random.randint(500, 15000),
+        bytes_in=random.randint(1000, 50000),
+        user=host["assigned_user"]
+    )

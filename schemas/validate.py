@@ -12,6 +12,8 @@ import json
 from pathlib import Path
 from jsonschema import Draft202012Validator
 
+sys.stdout.reconfigure(encoding="utf-8")  # emoji output on a Windows (cp1252) console
+
 SCHEMAS_DIR = Path(__file__).resolve().parent
 ROOT_DIR = SCHEMAS_DIR.parent
 EXAMPLES_DIR = SCHEMAS_DIR / "examples"

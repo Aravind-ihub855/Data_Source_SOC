@@ -6,8 +6,9 @@
   "x-schema-version": "1.0.0",
   "x-splunk": {
     "index": "network",
-    "sourcetype_simulation": "aetheris:firewall",
-    "note": "Production sourcetype depends on the vendor add-on (for example Palo Alto or Fortinet) or generic CEF ingestion."
+    "sourcetype_simulation": "cef",
+    "note": "Production sourcetype depends on the vendor add-on (for example Palo Alto or Fortinet) or generic CEF ingestion.",
+    "delivery": "Only raw_message (the CEF syslog line) is delivered; source udp:514."
   },
   "x-dedupe-key": "device_id + session_id + event_time + log_type",
   "$defs": {

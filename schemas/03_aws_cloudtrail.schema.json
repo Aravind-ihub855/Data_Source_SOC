@@ -6,8 +6,9 @@
   "x-schema-version": "1.0.0",
   "x-splunk": {
     "index": "cloud",
-    "sourcetype_simulation": "aetheris:cloudtrail",
-    "sourcetype_production_hint": "aws:cloudtrail (AWS add-on for Splunk)"
+    "sourcetype_simulation": "aws:cloudtrail",
+    "sourcetype_production_hint": "aws:cloudtrail (AWS add-on for Splunk)",
+    "delivery": "Delivered as the CloudTrail record itself (Splunk Add-on for AWS)."
   },
   "x-dedupe-key": "eventID",
   "$defs": {

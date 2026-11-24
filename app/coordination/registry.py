@@ -1,6 +1,7 @@
 from typing import Dict, Any, List, Optional, Callable
 from dataclasses import dataclass, field
 from app.coordination.context import ScenarioContext, build_scenario_context
+from app.util import iso_now
 
 @dataclass
 class ScenarioDefinition:
@@ -17,6 +18,9 @@ class ScenarioDefinition:
     expected_detections: List[str]
     description: str
     generator_fn: Optional[Callable[[ScenarioContext], List[Any]]] = None
+    scenario_type: str = "baseline"
+    label: str = "malicious"
+    expected_verdict: str = "true_positive"
     last_run_timestamp: Optional[str] = None
     execution_count: int = 0
 
@@ -58,8 +62,7 @@ class ScenarioRegistry:
             raise NotImplementedError(f"No generator function bound to scenario {scenario_id}")
         
         events = definition.generator_fn(ctx)
-        import datetime
-        definition.last_run_timestamp = datetime.datetime.utcnow().isoformat() + "Z"
+        definition.last_run_timestamp = iso_now()
         definition.execution_count += 1
         return events
 

@@ -6,7 +6,7 @@
   "x-schema-version": "1.0.0",
   "x-splunk": {
     "index": "endpoint",
-    "sourcetype_simulation": "aetheris:defender",
+    "sourcetype_simulation": "ms:defender:eventhub",
     "source_per_table": [
       "DeviceProcessEvents",
       "DeviceNetworkEvents",
@@ -14,7 +14,8 @@
       "DeviceLogonEvents",
       "AlertInfo"
     ],
-    "note": "Production sourcetype depends on the Defender add-on you deploy. Confirm against that add-on's documentation."
+    "note": "Production sourcetype depends on the Defender add-on you deploy. Confirm against that add-on's documentation.",
+    "delivery": "Delivered as a Defender Streaming API record via Event Hub: {time, tenantId, operationName, category: AdvancedHunting-<Table>, properties: <this event>} (Splunk Add-on for Microsoft Security)."
   },
   "x-dedupe-key": "DeviceId + ReportId + Timestamp (alerts: AlertId)",
   "$defs": {

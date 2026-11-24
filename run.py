@@ -6,4 +6,4 @@ if __name__ == "__main__":
     port = int(os.getenv("PORT", settings.PORT))
     host = os.getenv("HOST", settings.HOST)
     print(f"Starting Aetheris Synthetic Security Data Generator on http://{host}:{port}...")
-    uvicorn.run("app.main:app", host=host, port=port, reload=True)
+    uvicorn.run("app.main:app", host=host, port=port, reload=settings.RELOAD)

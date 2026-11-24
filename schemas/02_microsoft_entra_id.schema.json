@@ -6,12 +6,13 @@
   "x-schema-version": "1.0.0",
   "x-splunk": {
     "index": "identity",
-    "sourcetype_simulation": "aetheris:entra",
+    "sourcetype_simulation": "azure:monitor:aad",
     "source_per_family": [
       "signin",
       "audit"
     ],
-    "note": "Production sourcetype depends on the Microsoft cloud add-on you deploy. Confirm the field casing it emits."
+    "note": "Production sourcetype depends on the Microsoft cloud add-on you deploy. Confirm the field casing it emits.",
+    "delivery": "Delivered as an Azure Monitor diagnostic record: {time, category: SignInLogs|AuditLogs, tenantId, resultType, callerIpAddress, correlationId, properties: <this event>} (Splunk Add-on for Microsoft Cloud Services)."
   },
   "x-dedupe-key": "id (signIn.id / directoryAudit.id)",
   "$defs": {

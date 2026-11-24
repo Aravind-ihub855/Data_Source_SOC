@@ -1,11 +1,15 @@
+import contextlib
 import random
+from contextvars import ContextVar
 from typing import Dict, Any, List, Optional
+
+from app.util import stable_hex, stable_uuid
 
 # =============================================================================
 # Acme Financial Services: Enterprise Entity, Identity & Asset Graph
 # =============================================================================
 
-USERS = [
+_ACME_USERS = [
     {
         "user_id": "USR-001",
         "username": "david.miller",
@@ -150,7 +154,7 @@ USERS = [
     }
 ]
 
-DEVICES = [
+_ACME_DEVICES = [
     {
         "device_id": "DEV-001",
         "device_name": "FINANCE-PC-01",
@@ -241,6 +245,19 @@ DEVICES = [
         "business_function": "CFO Workstation - M&A & Treasury Authorizations",
         "regulatory_impact": ["SEC_Materiality", "SOX"],
         "isolation_risk": "CRITICAL (Executive disruption; requires CISO / Legal alert)"
+    },
+    {
+        "device_id": "DEV-008",
+        "device_name": "SEC-ANALYST-01",
+        "assigned_user": "emma.davis",
+        "ip_address": "10.0.1.31",
+        "mac_address": "00:1B:44:11:3A:F4",
+        "os": "Windows 11 Enterprise 23H2",
+        "tier": "Tier-1",
+        "criticality": "High",
+        "business_function": "SOC Analyst Workstation (EDR / SIEM consoles)",
+        "regulatory_impact": ["SOC2"],
+        "isolation_risk": "MEDIUM (Removes one analyst seat during an incident)"
     }
 ]
 
@@ -258,7 +275,7 @@ SUSPICIOUS_EXTERNAL_IPS = [
     {"ip": "45.33.32.156", "location": "Amsterdam, Netherlands", "category": "Fast Flux Staging Server", "confidence": 0.92}
 ]
 
-AWS_ACCOUNTS = [
+_ACME_AWS_ACCOUNTS = [
     {
         "account_id": "123456789012",
         "account_alias": "acme-financial-prod",
@@ -272,7 +289,101 @@ AWS_ACCOUNTS = [
 ]
 
 # -------------------------------------------------------------
-# Entity Resolution & Cross-Platform Pivot Functions
+# Tenants. Each tenant has its own people, devices, AD domain, subnet and AWS account.
+# tnt-globex is derived from the Acme roster with its own names and identifiers.
+# -------------------------------------------------------------
+
+_GLOBEX_PEOPLE = [("Priya", "Nair"), ("Tom", "Becker"), ("Lucas", "Moreau"), ("Hannah", "Schulz"),
+                  ("Omar", "Haddad"), ("Grace", "Lee")]
+
+
+def _derive_globex() -> Dict[str, Any]:
+    names, renamed, first_names = {}, {}, {}
+    users = []
+    for i, u in enumerate(_ACME_USERS):
+        v = dict(u, user_id=u["user_id"].replace("USR", "GLX-USR"))
+        if u.get("is_service_account"):
+            v.update(email="svc-backup@globexlogistics.com", ad_samaccount="GLOBEX\\svc_backup")
+        else:
+            first, last = _GLOBEX_PEOPLE[i]
+            first_names[u["first_name"].upper()] = first.upper()  # SARAH-LAPTOP-02 -> TOM-LAPTOP-02
+            sam = f"{first[0]}{last}".lower()
+            v.update(username=f"{first}.{last}".lower(), first_name=first, last_name=last,
+                     email=f"{first[0]}.{last}@globexlogistics.com".lower(),
+                     ad_samaccount=f"GLOBEX\\{sam}", local_account=sam)
+        v["aws_role"] = u["aws_role"].replace("123456789012", "210987654321")
+        names[u["username"]] = v["username"]
+        users.append(v)
+    devices = []
+    for d in _ACME_DEVICES:
+        name = "GLX-" + "-".join(first_names.get(part, part) for part in d["device_name"].split("-"))
+        renamed[d["device_name"]] = name
+        devices.append(dict(d, device_id=d["device_id"].replace("DEV", "GLX-DEV"), device_name=name,
+                            assigned_user=names[d["assigned_user"]],
+                            ip_address=d["ip_address"].replace("10.0.", "10.20.", 1)))
+    for v in users:
+        v["assigned_device"] = renamed[v["assigned_device"]]
+    aws = [{"account_id": "210987654321", "account_alias": "globex-logistics-prod", "region": "eu-west-1",
+            "s3_buckets": [{"name": "globex-shipping-manifests", "classification": "CONFIDENTIAL", "regulatory": "SOX"},
+                           {"name": "globex-payroll-data-encrypted", "classification": "RESTRICTED_PII", "regulatory": "GDPR"},
+                           {"name": "globex-customer-kyc-documents", "classification": "HIGHLY_RESTRICTED", "regulatory": "PCI_DSS"}]}]
+    return {"users": users, "devices": devices, "aws_accounts": aws,
+            "base_names": {v: k for k, v in renamed.items()}}
+
+
+def _finish(tenant_id: str, org: str, domain: str, netbios: str, firewall: str, egress_ip: str,
+            users, devices, aws_accounts, base_names=None) -> Dict[str, Any]:
+    """Adds the stable identifiers every source must agree on (derived once, never random)."""
+    domain_sid = "S-1-5-21-" + "-".join(str(int(stable_hex(f"{tenant_id}:sid:{i}", 8), 16) % 4_000_000_000)
+                                        for i in range(3))
+    for i, u in enumerate(users):
+        u["object_id"] = stable_uuid(f"{tenant_id}:user:{u['username']}")
+        u["sid"] = f"{domain_sid}-{1101 + i}"
+        u["sam"] = u["ad_samaccount"].split("\\")[-1]
+        u["aws_principal_id"] = "AIDA" + stable_hex(f"{tenant_id}:aws:{u['username']}", 16).upper()
+    for d in devices:
+        d["mde_device_id"] = stable_hex(f"{tenant_id}:mde:{d['device_name']}", 40)
+        d["entra_device_id"] = stable_uuid(f"{tenant_id}:entra-device:{d['device_name']}")
+        d["base_name"] = (base_names or {}).get(d["device_name"], d["device_name"])
+    return {"tenant_id": tenant_id, "org": org, "domain": domain, "netbios": netbios,
+            "entra_tenant_id": stable_uuid(f"{tenant_id}:entra-tenant"), "firewall": firewall,
+            "egress_ip": egress_ip, "users": users, "devices": devices, "aws_accounts": aws_accounts}
+
+
+TENANTS: Dict[str, Dict[str, Any]] = {
+    "tnt-acme": _finish("tnt-acme", "Acme Financial Services", "acmefinancial.com", "ACME", "FW-01",
+                        "198.51.100.14", _ACME_USERS, _ACME_DEVICES, _ACME_AWS_ACCOUNTS),
+    "tnt-globex": _finish("tnt-globex", "Globex Logistics", "globexlogistics.com", "GLOBEX", "GLX-FW-01",
+                          "203.0.113.40", **_derive_globex()),
+}
+
+_current_tenant: ContextVar[str] = ContextVar("tenant", default="tnt-acme")
+
+
+@contextlib.contextmanager
+def use_tenant(tenant_id: str):
+    if tenant_id not in TENANTS:
+        raise KeyError(f"Unknown tenant '{tenant_id}'. Known: {list(TENANTS)}")
+    token = _current_tenant.set(tenant_id)
+    try:
+        yield TENANTS[tenant_id]
+    finally:
+        _current_tenant.reset(token)
+
+
+def tenant() -> Dict[str, Any]:
+    return TENANTS[_current_tenant.get()]
+
+
+def users() -> List[Dict[str, Any]]:
+    return tenant()["users"]
+
+
+def devices() -> List[Dict[str, Any]]:
+    return tenant()["devices"]
+
+# -------------------------------------------------------------
+# Entity Resolution & Cross-Platform Pivot Functions (current tenant)
 # -------------------------------------------------------------
 
 def resolve_identity(identifier: str) -> Optional[Dict[str, Any]]:
@@ -283,16 +394,9 @@ def resolve_identity(identifier: str) -> Optional[Dict[str, Any]]:
     if not identifier:
         return None
     raw = identifier.lower().strip()
-    for u in USERS:
-        if (
-            raw == u["username"].lower()
-            or raw == u["email"].lower()
-            or raw == u["ad_samaccount"].lower()
-            or raw == u["ad_samaccount"].split("\\")[-1].lower()
-            or raw == u["local_account"].lower()
-            or raw == u["aws_role"].lower()
-            or raw in u["aws_role"].lower()
-        ):
+    for u in users():
+        if raw in (u["username"].lower(), u["email"].lower(), u["ad_samaccount"].lower(),
+                   u["sam"].lower(), u["local_account"].lower(), u["aws_role"].lower()):
             return u
     return None
 
@@ -300,41 +404,43 @@ def resolve_device(device_id_or_name: str) -> Optional[Dict[str, Any]]:
     if not device_id_or_name:
         return None
     raw = device_id_or_name.lower().strip()
-    for d in DEVICES:
-        if raw == d["device_name"].lower() or raw == d["device_id"].lower() or raw == d["ip_address"].lower():
+    for d in devices():
+        if raw in (d["device_name"].lower(), d["device_id"].lower(), d["ip_address"], d["base_name"].lower()):
             return d
     return None
+
+def identity(name: str) -> Dict[str, str]:
+    """One account as every source must report it. Unknown accounts get stable derived ids."""
+    t, u = tenant(), resolve_identity(name)
+    if u:
+        return {"username": u["username"], "sam": u["sam"], "domain": t["netbios"], "upn": u["email"],
+                "sid": u["sid"], "object_id": u["object_id"], "aws_principal_id": u["aws_principal_id"]}
+    sam = name.split("\\")[-1].lower()
+    return {"username": sam, "sam": sam, "domain": t["netbios"], "upn": f"{sam}@{t['domain']}",
+            "sid": f"S-1-5-21-{int(stable_hex(t['tenant_id'] + sam, 8), 16)}-{1000 + int(stable_hex(sam, 3), 16) % 900}",
+            "object_id": stable_uuid(f"{t['tenant_id']}:user:{sam}"),
+            "aws_principal_id": "AIDA" + stable_hex(f"{t['tenant_id']}:aws:{sam}", 16).upper()}
+
+
+def device(name: str) -> Dict[str, Any]:
+    """One host as every source must report it (fqdn is what Defender and Windows log)."""
+    t, d = tenant(), resolve_device(name)
+    d = d or {"device_name": name, "ip_address": None, "mde_device_id": stable_hex(f"{t['tenant_id']}:mde:{name}", 40),
+              "entra_device_id": stable_uuid(f"{t['tenant_id']}:entra-device:{name}"), "os": "Windows 11 Enterprise 23H2"}
+    return dict(d, fqdn=f"{d['device_name'].lower()}.{t['domain']}")
+
 
 def get_all_users() -> List[Dict[str, Any]]:
-    return USERS
+    return users()
 
 def get_random_user() -> Dict[str, Any]:
-    return random.choice(USERS)
+    return random.choice(users())
 
 def get_all_devices() -> List[Dict[str, Any]]:
-    return DEVICES
+    return devices()
 
 def get_random_normal_ip() -> str:
-    item = random.choice(NORMAL_EXTERNAL_IPS)
-    return item["ip"] if isinstance(item, dict) else item
-
-def get_user_by_id(user_id: str) -> Optional[Dict[str, Any]]:
-    for u in USERS:
-        if u.get("user_id") == user_id:
-            return u
-    return None
-
-def get_device_by_id(device_id: str) -> Optional[Dict[str, Any]]:
-    for d in DEVICES:
-        if d.get("device_id") == device_id:
-            return d
-    return None
-
-def get_device_by_name(device_name: str) -> Optional[Dict[str, Any]]:
-    return resolve_device(device_name)
-
-def get_user_by_username(username: str) -> Optional[Dict[str, Any]]:
-    return resolve_identity(username)
+    return random.choice(NORMAL_EXTERNAL_IPS)["ip"]
 
 def get_device_for_user(username: str) -> Dict[str, Any]:
     u = resolve_identity(username)
@@ -342,10 +448,11 @@ def get_device_for_user(username: str) -> Dict[str, Any]:
         dev = resolve_device(u["assigned_device"])
         if dev:
             return dev
-    return DEVICES[0]
+    return devices()[0]
 
 def get_suspicious_ip(index: int = 0) -> Dict[str, Any]:
     return SUSPICIOUS_EXTERNAL_IPS[index % len(SUSPICIOUS_EXTERNAL_IPS)]
 
 def get_primary_aws_account() -> Dict[str, Any]:
-    return AWS_ACCOUNTS[0]
+    return tenant()["aws_accounts"][0]
+

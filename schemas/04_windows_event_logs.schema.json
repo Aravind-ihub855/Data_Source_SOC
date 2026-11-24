@@ -6,12 +6,9 @@
   "x-schema-version": "1.0.0",
   "x-splunk": {
     "index": "endpoint",
-    "sourcetype_simulation": [
-      "XmlWinEventLog:Microsoft-Windows-Sysmon/Operational",
-      "XmlWinEventLog:Microsoft-Windows-PowerShell/Operational",
-      "XmlWinEventLog:Security"
-    ],
-    "note": "These XmlWinEventLog sourcetypes are the Splunk Add-on for Microsoft Windows convention."
+    "sourcetype_simulation": "XmlWinEventLog",
+    "note": "These XmlWinEventLog sourcetypes are the Splunk Add-on for Microsoft Windows convention.",
+    "delivery": "Only raw_xml is delivered (it is _raw); source is XmlWinEventLog:<Channel> (Splunk Add-on for Windows 5.0+)."
   },
   "x-dedupe-key": "Computer + Channel + EventRecordID + TimeCreated.SystemTime",
   "$defs": {

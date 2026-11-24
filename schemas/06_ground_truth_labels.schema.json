@@ -171,6 +171,21 @@
         "string",
         "null"
       ]
+    },
+    "tenant_id": {
+      "type": "string",
+      "description": "Tenant the event belongs to (also sent to Splunk as indexed field tenant_id)."
+    },
+    "delivery_id": {
+      "type": "string",
+      "description": "This delivered copy (also sent as indexed field delivery_id); joins a label to one Splunk event."
+    },
+    "scenario_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Scenario catalogue id (e.g. SCN-CH-01); null for baseline traffic."
     }
   },
   "examples": [
@@ -225,5 +240,6 @@
       "duplicate_of": null,
       "notes": "Single mistyped password, followed by success within 15 s."
     }
-  ]
+  ],
+  "x-storage": "Written by the generator to GROUND_TRUTH_PATH (default out/ground_truth.jsonl), one JSON object per delivered copy."
 }

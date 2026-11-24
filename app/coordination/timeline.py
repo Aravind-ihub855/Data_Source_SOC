@@ -1,12 +1,15 @@
 import datetime
 from typing import Optional
+from app.util import now, iso
+
 
 class TimelineManager:
     """
     Manages synchronized scenario attack clocks, staged offsets, and out-of-order jitter.
+    The base time comes from the shared clock, so backfills run on simulated time.
     """
     def __init__(self, base_time: Optional[datetime.datetime] = None):
-        self.base_time: datetime.datetime = base_time or datetime.datetime.utcnow()
+        self.base_time: datetime.datetime = base_time or now()
 
     def get_time_at_offset(
         self,
@@ -16,8 +19,7 @@ class TimelineManager:
         """
         Returns ISO-8601 UTC timestamp string at a specific delta offset from scenario base time.
         """
-        event_dt = self.base_time + datetime.timedelta(seconds=offset_seconds + jitter_seconds)
-        return event_dt.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+        return iso(self.base_time + datetime.timedelta(seconds=offset_seconds + jitter_seconds))
 
     def get_out_of_order_time(
         self,
@@ -26,5 +28,4 @@ class TimelineManager:
         """
         Generates late-arriving or reversed timestamp for data quality testing.
         """
-        event_dt = self.base_time - datetime.timedelta(seconds=negative_offset_seconds)
-        return event_dt.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+        return iso(self.base_time - datetime.timedelta(seconds=negative_offset_seconds))
