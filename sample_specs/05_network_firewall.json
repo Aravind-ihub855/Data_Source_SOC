@@ -1,0 +1,192 @@
+{
+  "dataset_name": "Aetheris multi-source security telemetry evaluation corpus",
+  "dataset_version": "1.0.0",
+  "dataset_status": "synthetic_high_fidelity_test_fixture_not_live_telemetry",
+  "source": "Vendor-neutral firewall",
+  "native_format": "CEF raw message plus parsed representation",
+  "event_families": "Allowed traffic, threat alert, normal traffic, denied traffic",
+  "record_count": 5,
+  "records": [
+    {
+      "dataset_record_id": "fw-001",
+      "source_event_id": "fw-event-8001",
+      "source_event_time": "2026-11-23T08:31:08Z",
+      "source_payload": {
+        "format": "CEF",
+        "raw_message": "CEF:0|ExampleVendor|ExampleFirewall|10.2|8001|Outbound connection|5|rt=Nov 23 2026 08:31:08Z src=10.20.4.15 spt=53122 dst=198.51.100.77 dpt=443 proto=TCP act=allow deviceExternalId=FW-01 cs1=Outbound-Web cs1Label=RuleName",
+        "parsed_fields": {
+          "device_vendor": "ExampleVendor",
+          "device_product": "ExampleFirewall",
+          "device_version": "10.2",
+          "signature_id": "8001",
+          "name": "Outbound connection",
+          "severity": "5",
+          "event_time": "2026-11-23T08:31:08Z",
+          "device_name": "FW-01",
+          "device_id": "FW-01",
+          "source_ip": "10.20.4.15",
+          "source_port": 53122,
+          "destination_ip": "198.51.100.77",
+          "destination_port": 443,
+          "protocol": "TCP",
+          "action": "allow",
+          "rule_name": "Outbound-Web"
+        }
+      },
+      "evaluation_metadata": {
+        "scenario_key": "SCN-001",
+        "correlation_group": "CORR-001",
+        "ground_truth": "suspicious_test_activity",
+        "expected_aetheris_severity": "high",
+        "duplicate_of": null,
+        "out_of_order_arrival": false,
+        "notes": "Outbound HTTPS session from endpoint; CEF sample with parsed extension fields."
+      }
+    },
+    {
+      "dataset_record_id": "fw-002",
+      "source_event_id": "fw-event-8002",
+      "source_event_time": "2026-11-23T08:31:09Z",
+      "source_payload": {
+        "format": "CEF",
+        "raw_message": "CEF:0|ExampleVendor|ExampleFirewall|10.2|8002|Threat signature match|8|rt=Nov 23 2026 08:31:09Z src=10.20.4.15 spt=53122 dst=198.51.100.77 dpt=443 proto=TCP act=alert deviceExternalId=FW-01 cs1=Outbound-Web cs1Label=RuleName cs2=Suspicious TLS destination cs2Label=ThreatName",
+        "parsed_fields": {
+          "device_vendor": "ExampleVendor",
+          "device_product": "ExampleFirewall",
+          "device_version": "10.2",
+          "signature_id": "8002",
+          "name": "Threat signature match",
+          "severity": "8",
+          "event_time": "2026-11-23T08:31:09Z",
+          "device_name": "FW-01",
+          "device_id": "FW-01",
+          "source_ip": "10.20.4.15",
+          "source_port": 53122,
+          "destination_ip": "198.51.100.77",
+          "destination_port": 443,
+          "protocol": "TCP",
+          "action": "alert",
+          "rule_name": "Outbound-Web",
+          "threat_name": "Suspicious TLS destination"
+        }
+      },
+      "evaluation_metadata": {
+        "scenario_key": "SCN-001",
+        "correlation_group": "CORR-001",
+        "ground_truth": "suspicious_test_activity",
+        "expected_aetheris_severity": "high",
+        "duplicate_of": null,
+        "out_of_order_arrival": false,
+        "notes": "Firewall threat-signature event corroborates same source/destination; not proof by itself."
+      }
+    },
+    {
+      "dataset_record_id": "fw-003",
+      "source_event_id": "fw-event-8003",
+      "source_event_time": "2026-11-23T09:10:05Z",
+      "source_payload": {
+        "format": "CEF",
+        "raw_message": "CEF:0|ExampleVendor|ExampleFirewall|10.2|8003|Outbound connection|2|rt=Nov 23 2026 09:10:05Z src=10.20.5.20 spt=54000 dst=192.0.2.25 dpt=443 proto=TCP act=allow deviceExternalId=FW-01 cs1=Corporate-Web cs1Label=RuleName",
+        "parsed_fields": {
+          "device_vendor": "ExampleVendor",
+          "device_product": "ExampleFirewall",
+          "device_version": "10.2",
+          "signature_id": "8003",
+          "name": "Outbound connection",
+          "severity": "2",
+          "event_time": "2026-11-23T09:10:05Z",
+          "device_name": "FW-01",
+          "device_id": "FW-01",
+          "source_ip": "10.20.5.20",
+          "source_port": 54000,
+          "destination_ip": "192.0.2.25",
+          "destination_port": 443,
+          "protocol": "TCP",
+          "action": "allow",
+          "rule_name": "Corporate-Web"
+        }
+      },
+      "evaluation_metadata": {
+        "scenario_key": "SCN-002",
+        "correlation_group": "NONE-001",
+        "ground_truth": "benign",
+        "expected_aetheris_severity": "none",
+        "duplicate_of": null,
+        "out_of_order_arrival": false,
+        "notes": "Ordinary outbound browser HTTPS traffic allowed by standard policy."
+      }
+    },
+    {
+      "dataset_record_id": "fw-004",
+      "source_event_id": "fw-event-8001",
+      "source_event_time": "2026-11-23T08:31:08Z",
+      "source_payload": {
+        "format": "CEF",
+        "raw_message": "CEF:0|ExampleVendor|ExampleFirewall|10.2|8001|Outbound connection|5|rt=Nov 23 2026 08:31:08Z src=10.20.4.15 spt=53122 dst=198.51.100.77 dpt=443 proto=TCP act=allow deviceExternalId=FW-01 cs1=Outbound-Web cs1Label=RuleName",
+        "parsed_fields": {
+          "device_vendor": "ExampleVendor",
+          "device_product": "ExampleFirewall",
+          "device_version": "10.2",
+          "signature_id": "8001",
+          "name": "Outbound connection",
+          "severity": "5",
+          "event_time": "2026-11-23T08:31:08Z",
+          "device_name": "FW-01",
+          "device_id": "FW-01",
+          "source_ip": "10.20.4.15",
+          "source_port": 53122,
+          "destination_ip": "198.51.100.77",
+          "destination_port": 443,
+          "protocol": "TCP",
+          "action": "allow",
+          "rule_name": "Outbound-Web"
+        }
+      },
+      "evaluation_metadata": {
+        "scenario_key": "SCN-001",
+        "correlation_group": "CORR-001",
+        "ground_truth": "suspicious_test_activity",
+        "expected_aetheris_severity": "high",
+        "duplicate_of": "fw-001",
+        "out_of_order_arrival": false,
+        "notes": "Intentional duplicate firewall event ID for deduplication."
+      }
+    },
+    {
+      "dataset_record_id": "fw-005",
+      "source_event_id": "fw-event-8005",
+      "source_event_time": "2026-11-23T11:00:00Z",
+      "source_payload": {
+        "format": "CEF",
+        "raw_message": "CEF:0|ExampleVendor|ExampleFirewall|10.2|8005|Inbound connection denied|3|rt=Nov 23 2026 11:00:00Z src=203.0.113.44 spt=45000 dst=10.20.4.15 dpt=3389 proto=TCP act=deny deviceExternalId=FW-01 cs1=Default-Deny cs1Label=RuleName",
+        "parsed_fields": {
+          "device_vendor": "ExampleVendor",
+          "device_product": "ExampleFirewall",
+          "device_version": "10.2",
+          "signature_id": "8005",
+          "name": "Inbound connection denied",
+          "severity": "3",
+          "event_time": "2026-11-23T11:00:00Z",
+          "device_name": "FW-01",
+          "device_id": "FW-01",
+          "source_ip": "203.0.113.44",
+          "source_port": 45000,
+          "destination_ip": "10.20.4.15",
+          "destination_port": 3389,
+          "protocol": "TCP",
+          "action": "deny",
+          "rule_name": "Default-Deny"
+        }
+      },
+      "evaluation_metadata": {
+        "scenario_key": "SCN-008",
+        "correlation_group": "NONE-007",
+        "ground_truth": "benign",
+        "expected_aetheris_severity": "none",
+        "duplicate_of": null,
+        "out_of_order_arrival": false,
+        "notes": "Blocked inbound scan from documentation address; deny action alone is not critical."
+      }
+    }
+  ]
+}

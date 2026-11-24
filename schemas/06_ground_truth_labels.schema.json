@@ -1,0 +1,229 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.aetheris.example/source/ground_truth_labels/1.0.0.json",
+  "title": "Ground-truth label record (supporting schema)",
+  "description": "Labels live in a separate store and are NEVER sent to Splunk or embedded in events. They are joined to events by `source` + `event_key` for evaluation of detection, correlation, triage and the agent.",
+  "x-schema-version": "1.0.0",
+  "x-splunk": {
+    "sent_to_splunk": false
+  },
+  "x-dedupe-key": "label_id",
+  "$defs": {
+    "ts": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{1,7})?Z$",
+      "description": "UTC, ISO 8601, trailing Z, up to 7 fractional digits."
+    }
+  },
+  "type": "object",
+  "required": [
+    "label_id",
+    "dataset_version",
+    "seed",
+    "source",
+    "event_key",
+    "event_time",
+    "label",
+    "scenario_instance_id",
+    "scenario_type",
+    "expected_severity",
+    "expected_verdict",
+    "injected_fault"
+  ],
+  "properties": {
+    "label_id": {
+      "type": "string"
+    },
+    "dataset_version": {
+      "type": "string"
+    },
+    "seed": {
+      "type": "integer"
+    },
+    "source": {
+      "enum": [
+        "defender",
+        "entra",
+        "cloudtrail",
+        "windows",
+        "firewall"
+      ]
+    },
+    "event_key": {
+      "type": "string",
+      "description": "The source's natural dedupe key, e.g. 'defender|<DeviceId>|<ReportId>|<Timestamp>'."
+    },
+    "event_time": {
+      "$ref": "#/$defs/ts"
+    },
+    "ingest_delay_seconds": {
+      "type": "number",
+      "minimum": 0
+    },
+    "label": {
+      "enum": [
+        "benign",
+        "benign_lookalike",
+        "benign_true_positive",
+        "ambiguous",
+        "malicious"
+      ]
+    },
+    "scenario_instance_id": {
+      "type": "string"
+    },
+    "scenario_type": {
+      "enum": [
+        "baseline",
+        "account_compromise",
+        "malware_execution",
+        "ransomware",
+        "lateral_movement",
+        "data_exfiltration",
+        "cloud_privilege_escalation",
+        "defense_evasion",
+        "password_spray",
+        "mfa_fatigue",
+        "impossible_travel",
+        "authorized_admin_change",
+        "vulnerability_scan",
+        "backup_job",
+        "travelling_user",
+        "insider_misuse"
+      ]
+    },
+    "attack_stage": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "stage_index": {
+          "type": "integer"
+        },
+        "tactic": {
+          "type": "string"
+        },
+        "technique": {
+          "type": "string",
+          "pattern": "^T\\d{4}(\\.\\d{3})?$"
+        }
+      }
+    },
+    "expected_severity": {
+      "enum": [
+        "none",
+        "informational",
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ]
+    },
+    "expected_detection_rule_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "correlation_group_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "expected_verdict": {
+      "enum": [
+        "true_positive",
+        "benign_true_positive",
+        "false_positive",
+        "undetermined",
+        "not_applicable"
+      ]
+    },
+    "expected_response_actions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "injected_fault": {
+      "enum": [
+        "none",
+        "duplicate",
+        "late_arrival",
+        "out_of_order",
+        "clock_skew",
+        "missing_field",
+        "truncated",
+        "schema_drift",
+        "retry_storm"
+      ]
+    },
+    "duplicate_of": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "notes": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "examples": [
+    {
+      "label_id": "lbl-000001",
+      "dataset_version": "1.0.0",
+      "seed": 20261123,
+      "source": "defender",
+      "event_key": "defender|93648e706eedbb51c979bdabaeeb52ac4e53a2b4|48211|2026-11-23T08:31:02.417Z",
+      "event_time": "2026-11-23T08:31:02.417Z",
+      "ingest_delay_seconds": 142.0,
+      "label": "malicious",
+      "scenario_instance_id": "scn-ato-0007",
+      "scenario_type": "account_compromise",
+      "attack_stage": {
+        "stage_index": 2,
+        "tactic": "Execution",
+        "technique": "T1059.001"
+      },
+      "expected_severity": "high",
+      "expected_detection_rule_ids": [
+        "DET-ENDPOINT-OFFICE-SPAWNS-ENCODED-PS"
+      ],
+      "correlation_group_id": "corr-ato-0007",
+      "expected_verdict": "true_positive",
+      "expected_response_actions": [
+        "isolate_endpoint",
+        "revoke_sessions",
+        "reset_credentials"
+      ],
+      "injected_fault": "none",
+      "duplicate_of": null,
+      "notes": null
+    },
+    {
+      "label_id": "lbl-000412",
+      "dataset_version": "1.0.0",
+      "seed": 20261123,
+      "source": "windows",
+      "event_key": "finance-pc-01.corp.example.com|Security|91201|2026-11-23T08:04:58.3300000Z",
+      "event_time": "2026-11-23T08:04:58.330Z",
+      "label": "benign",
+      "scenario_instance_id": "scn-baseline-typo",
+      "scenario_type": "baseline",
+      "attack_stage": null,
+      "expected_severity": "none",
+      "expected_detection_rule_ids": [],
+      "correlation_group_id": null,
+      "expected_verdict": "not_applicable",
+      "expected_response_actions": [],
+      "injected_fault": "none",
+      "duplicate_of": null,
+      "notes": "Single mistyped password, followed by success within 15 s."
+    }
+  ]
+}

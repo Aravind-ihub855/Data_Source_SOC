@@ -1,0 +1,1174 @@
+{
+  "01_microsoft_defender": {
+    "proc": {
+      "DeviceId": "93648e706eedbb51c979bdabaeeb52ac4e53a2b4",
+      "DeviceName": "finance-pc-01.corp.example.com",
+      "MachineGroup": "Finance-Workstations",
+      "Timestamp": "2026-11-23T08:31:02.417Z",
+      "ActionType": "ProcessCreated",
+      "ReportId": 48211,
+      "FileName": "powershell.exe",
+      "FolderPath": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+      "SHA1": "fa22a9fb44bbcdc211ade0da99946aacdca7d325",
+      "SHA256": "b6a8c199c8a41f9dd0bd414857e33f5b6971a4821706d8740cb6086f9f31e352",
+      "MD5": "e44cc72d74d91c47bf47947f78cb88aa",
+      "FileSize": 452096,
+      "ProcessId": 4820,
+      "ProcessCommandLine": "powershell.exe -NoProfile -WindowStyle Hidden -EncodedCommand VwByAGkAdABlAC0ATwB1AHQAcAB1AHQAIAAnAGkAbgBlAHIAdAAgAHMAaQBtAHUAbABhAHQAaQBvAG4AIABwAGEAeQBsAG8AYQBkACcA",
+      "ProcessCreationTime": "2026-11-23T08:31:02.417Z",
+      "ProcessIntegrityLevel": "Medium",
+      "ProcessTokenElevation": "TokenElevationTypeLimited",
+      "ProcessVersionInfoCompanyName": "Microsoft Corporation",
+      "ProcessVersionInfoProductName": "Microsoft Windows Operating System",
+      "ProcessVersionInfoProductVersion": "10.0.22621.2506",
+      "ProcessVersionInfoOriginalFileName": "PowerShell.EXE",
+      "AccountDomain": "CORP",
+      "AccountName": "j.doe",
+      "AccountSid": "S-1-5-21-3623811015-3361044348-30300820-1105",
+      "AccountUpn": "j.doe@example.com",
+      "AccountObjectId": "3f2b8c1e-7a44-4d0b-9c61-5e1d2a8f0b17",
+      "LogonId": 987654,
+      "InitiatingProcessFileName": "WINWORD.EXE",
+      "InitiatingProcessId": 3012,
+      "InitiatingProcessCommandLine": "\"WINWORD.EXE\" /n \"C:\\Users\\j.doe\\Downloads\\Q3-invoice.docm\"",
+      "InitiatingProcessFolderPath": "C:\\Program Files\\Microsoft Office\\root\\Office16\\WINWORD.EXE",
+      "InitiatingProcessCreationTime": "2026-11-23T08:29:50.114Z",
+      "InitiatingProcessSHA1": "041cd0532d6dfdd7580bd68942eaf3384e5ae4bd",
+      "InitiatingProcessSHA256": "07ee058f1fe554143eb14624ffe8b76148e9ede2b23f96ecbb6302eeaa1cf4e5",
+      "InitiatingProcessMD5": "f44a30b557792eb86ca95f6687dd5bd4",
+      "InitiatingProcessFileSize": 48201736,
+      "InitiatingProcessAccountDomain": "CORP",
+      "InitiatingProcessAccountName": "j.doe",
+      "InitiatingProcessAccountSid": "S-1-5-21-3623811015-3361044348-30300820-1105",
+      "InitiatingProcessAccountUpn": "j.doe@example.com",
+      "InitiatingProcessAccountObjectId": "3f2b8c1e-7a44-4d0b-9c61-5e1d2a8f0b17",
+      "InitiatingProcessLogonId": 987654,
+      "InitiatingProcessIntegrityLevel": "Medium",
+      "InitiatingProcessTokenElevation": "TokenElevationTypeLimited",
+      "InitiatingProcessParentFileName": "explorer.exe",
+      "InitiatingProcessParentId": 2284,
+      "InitiatingProcessParentCreationTime": "2026-11-23T08:05:11.020Z"
+    },
+    "net": {
+      "DeviceId": "93648e706eedbb51c979bdabaeeb52ac4e53a2b4",
+      "DeviceName": "finance-pc-01.corp.example.com",
+      "MachineGroup": "Finance-Workstations",
+      "Timestamp": "2026-11-23T08:31:08.250Z",
+      "ActionType": "ConnectionSuccess",
+      "ReportId": 48219,
+      "LocalIP": "10.20.4.15",
+      "LocalPort": 53122,
+      "LocalIPType": "Private",
+      "RemoteIP": "203.0.113.77",
+      "RemotePort": 443,
+      "RemoteIPType": "Public",
+      "RemoteUrl": "cdn-update.example.net",
+      "Protocol": "Tcp",
+      "InitiatingProcessFileName": "powershell.exe",
+      "InitiatingProcessId": 4820,
+      "InitiatingProcessCommandLine": "powershell.exe -NoProfile -WindowStyle Hidden -EncodedCommand VwByAGkAdABlAC0ATwB1AHQAcAB1AHQAIAAnAGkAbgBlAHIAdAAgAHMAaQBtAHUAbABhAHQAaQBvAG4AIABwAGEAeQBsAG8AYQBkACcA",
+      "InitiatingProcessFolderPath": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+      "InitiatingProcessCreationTime": "2026-11-23T08:31:02.417Z",
+      "InitiatingProcessSHA1": "fa22a9fb44bbcdc211ade0da99946aacdca7d325",
+      "InitiatingProcessSHA256": "b6a8c199c8a41f9dd0bd414857e33f5b6971a4821706d8740cb6086f9f31e352",
+      "InitiatingProcessMD5": "e44cc72d74d91c47bf47947f78cb88aa",
+      "InitiatingProcessAccountDomain": "CORP",
+      "InitiatingProcessAccountName": "j.doe",
+      "InitiatingProcessAccountSid": "S-1-5-21-3623811015-3361044348-30300820-1105",
+      "InitiatingProcessAccountUpn": "j.doe@example.com",
+      "InitiatingProcessLogonId": 987654
+    },
+    "alert": {
+      "AlertId": "da637842560210000000_1928374650",
+      "Timestamp": "2026-11-23T08:32:10.000Z",
+      "Title": "Suspicious PowerShell command line",
+      "Category": "Execution",
+      "Severity": "High",
+      "ServiceSource": "MicrosoftDefenderForEndpoint",
+      "DetectionSource": "EDR",
+      "OriginSource": "Endpoint",
+      "InvestigationId": "7001",
+      "AttackTechniques": [
+        "T1059.001",
+        "T1204.002"
+      ],
+      "Evidence": [
+        {
+          "EntityType": "Device",
+          "EvidenceRole": "Impacted",
+          "DeviceId": "93648e706eedbb51c979bdabaeeb52ac4e53a2b4",
+          "DeviceName": "finance-pc-01.corp.example.com"
+        },
+        {
+          "EntityType": "Process",
+          "EvidenceRole": "Suspicious",
+          "FileName": "powershell.exe",
+          "SHA1": "fa22a9fb44bbcdc211ade0da99946aacdca7d325",
+          "SHA256": "b6a8c199c8a41f9dd0bd414857e33f5b6971a4821706d8740cb6086f9f31e352",
+          "ProcessCommandLine": "powershell.exe -NoProfile -WindowStyle Hidden -EncodedCommand VwByAGkAdABlAC0ATwB1AHQAcAB1AHQAIAAnAGkAbgBlAHIAdAAgAHMAaQBtAHUAbABhAHQAaQBvAG4AIABwAGEAeQBsAG8AYQBkACcA"
+        },
+        {
+          "EntityType": "Account",
+          "EvidenceRole": "Impacted",
+          "AccountName": "j.doe",
+          "AccountSid": "S-1-5-21-3623811015-3361044348-30300820-1105",
+          "AccountUpn": "j.doe@example.com"
+        },
+        {
+          "EntityType": "Ip",
+          "EvidenceRole": "Related",
+          "RemoteIP": "203.0.113.77"
+        }
+      ]
+    },
+    "benign": {
+      "DeviceId": "48977817c832af789553ef1dd2add5cefd04eb78",
+      "DeviceName": "hr-laptop-02.corp.example.com",
+      "MachineGroup": "HR-Laptops",
+      "Timestamp": "2026-11-23T09:10:00.205Z",
+      "ActionType": "ProcessCreated",
+      "ReportId": 7340,
+      "FileName": "msedge.exe",
+      "FolderPath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+      "SHA1": "438aa324e37993dceb149da4b3c7f33f3cabaf78",
+      "SHA256": "010ff509df3a299d6a59b8a0be104b423fcaf1645f4474527e76e92792904f39",
+      "MD5": "e9417981dcf51bb3e8fdf7caf8e71379",
+      "FileSize": 4281344,
+      "ProcessId": 6200,
+      "ProcessCommandLine": "\"msedge.exe\" --profile-directory=Default",
+      "ProcessCreationTime": "2026-11-23T09:10:00.205Z",
+      "ProcessIntegrityLevel": "Medium",
+      "ProcessTokenElevation": "TokenElevationTypeLimited",
+      "AccountDomain": "CORP",
+      "AccountName": "a.smith",
+      "AccountSid": "S-1-5-21-3623811015-3361044348-30300820-1208",
+      "AccountUpn": "a.smith@example.com",
+      "AccountObjectId": "f7a08f34-bb87-57b7-8c66-a626d44e1537",
+      "LogonId": 456123,
+      "InitiatingProcessFileName": "explorer.exe",
+      "InitiatingProcessId": 2290,
+      "InitiatingProcessCommandLine": "explorer.exe",
+      "InitiatingProcessCreationTime": "2026-11-23T08:48:02.100Z",
+      "InitiatingProcessSHA256": "fc068390b77044ed8e3ab569ce8b861f70559d765dbd7bc8e2b3de7686929d5b",
+      "InitiatingProcessAccountName": "a.smith",
+      "InitiatingProcessLogonId": 456123
+    },
+    "file": {
+      "DeviceId": "48977817c832af789553ef1dd2add5cefd04eb78",
+      "DeviceName": "hr-laptop-02.corp.example.com",
+      "MachineGroup": "HR-Laptops",
+      "Timestamp": "2026-11-23T09:12:41.880Z",
+      "ActionType": "FileCreated",
+      "ReportId": 7355,
+      "FileName": "payroll-summary.xlsx",
+      "FolderPath": "C:\\Users\\a.smith\\Documents\\payroll-summary.xlsx",
+      "SHA1": "a286f4ec52d9ad4a3328fe70547323b33ad67e45",
+      "SHA256": "a455ff4cbd7d86ff780e5370975775370c6879750f9fcd57855fda3850166788",
+      "FileSize": 98304,
+      "InitiatingProcessFileName": "EXCEL.EXE",
+      "InitiatingProcessId": 7120,
+      "InitiatingProcessAccountName": "a.smith"
+    }
+  },
+  "02_microsoft_entra_id": {
+    "ok": {
+      "id": "ba8166ee-8789-5e7e-9191-e18f1950430c",
+      "createdDateTime": "2026-11-23T08:04:55Z",
+      "userId": "3f2b8c1e-7a44-4d0b-9c61-5e1d2a8f0b17",
+      "userDisplayName": "Jordan Doe",
+      "userPrincipalName": "j.doe@example.com",
+      "userType": "member",
+      "appId": "13d1c2f2-b1f8-5be8-ba00-bf9b379b1d76",
+      "appDisplayName": "Microsoft 365",
+      "resourceId": "0bb06430-3723-5385-9f10-6c310323ab72",
+      "resourceDisplayName": "Office 365 Exchange Online",
+      "ipAddress": "198.51.100.10",
+      "autonomousSystemNumber": 64500,
+      "clientAppUsed": "Browser",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Edge/120.0",
+      "isInteractive": true,
+      "correlationId": "be8c2524-d0b1-5260-a6bb-390540afb814",
+      "uniqueTokenIdentifier": "uti-001",
+      "status": {
+        "errorCode": 0,
+        "failureReason": null,
+        "additionalDetails": null
+      },
+      "deviceDetail": {
+        "deviceId": "b7c2e9a4-5d31-4f6a-8e02-91a3c4d5e6f7",
+        "displayName": "FINANCE-PC-01",
+        "operatingSystem": "Windows 11",
+        "browser": "Edge 120.0.2210",
+        "isCompliant": true,
+        "isManaged": true,
+        "trustType": "Domain joined"
+      },
+      "location": {
+        "city": "New York",
+        "state": "New York",
+        "countryOrRegion": "US"
+      },
+      "conditionalAccessStatus": "success",
+      "appliedConditionalAccessPolicies": [
+        {
+          "id": "6fd56ac5-a91b-50bc-bb88-aea59ccf8248",
+          "displayName": "Require MFA for cloud apps",
+          "result": "success",
+          "enforcedGrantControls": [
+            "Mfa"
+          ]
+        }
+      ],
+      "authenticationRequirement": "multiFactorAuthentication",
+      "authenticationDetails": [
+        {
+          "authenticationMethod": "Password",
+          "succeeded": true
+        },
+        {
+          "authenticationMethod": "Mobile app notification",
+          "succeeded": true
+        }
+      ],
+      "authenticationMethodsUsed": [
+        "Password",
+        "Mobile app notification"
+      ],
+      "riskDetail": "none",
+      "riskLevelDuringSignIn": "none",
+      "riskLevelAggregated": "none",
+      "riskState": "none",
+      "riskEventTypes_v2": [],
+      "signInEventTypes": [
+        "interactiveUser"
+      ]
+    },
+    "attack": {
+      "id": "04c14b71-bbb4-5d80-9a89-ff9f9ff2e2f0",
+      "createdDateTime": "2026-11-23T08:41:15Z",
+      "userId": "3f2b8c1e-7a44-4d0b-9c61-5e1d2a8f0b17",
+      "userDisplayName": "Jordan Doe",
+      "userPrincipalName": "j.doe@example.com",
+      "userType": "member",
+      "appId": "6159b0c4-028c-5479-ba6a-c5ed11efdd82",
+      "appDisplayName": "AWS IAM Identity Center",
+      "resourceId": "b0f4b621-5bf9-5bc1-af23-3eec0cb97d2e",
+      "resourceDisplayName": "AWS Single Sign-On",
+      "ipAddress": "203.0.113.77",
+      "autonomousSystemNumber": 64511,
+      "clientAppUsed": "Browser",
+      "userAgent": "python-requests/2.31.0",
+      "isInteractive": true,
+      "correlationId": "c33cfeda-06d3-58c8-95f7-216d4140e48d",
+      "uniqueTokenIdentifier": "uti-777",
+      "status": {
+        "errorCode": 0,
+        "failureReason": null,
+        "additionalDetails": null
+      },
+      "deviceDetail": {
+        "deviceId": "",
+        "displayName": null,
+        "operatingSystem": "Linux",
+        "browser": "Unknown",
+        "isCompliant": false,
+        "isManaged": false,
+        "trustType": null
+      },
+      "location": {
+        "city": "Example City",
+        "state": null,
+        "countryOrRegion": "NL"
+      },
+      "conditionalAccessStatus": "success",
+      "appliedConditionalAccessPolicies": [
+        {
+          "id": "6fd56ac5-a91b-50bc-bb88-aea59ccf8248",
+          "displayName": "Require MFA for cloud apps",
+          "result": "success",
+          "enforcedGrantControls": [
+            "Mfa"
+          ]
+        }
+      ],
+      "authenticationRequirement": "multiFactorAuthentication",
+      "authenticationDetails": [
+        {
+          "authenticationMethod": "Previously satisfied",
+          "succeeded": true
+        }
+      ],
+      "authenticationMethodsUsed": [
+        "Previously satisfied"
+      ],
+      "riskDetail": "none",
+      "riskLevelDuringSignIn": "medium",
+      "riskLevelAggregated": "medium",
+      "riskState": "atRisk",
+      "riskEventTypes_v2": [
+        "unfamiliarFeatures",
+        "anonymizedIPAddress"
+      ],
+      "signInEventTypes": [
+        "interactiveUser"
+      ]
+    },
+    "fail": {
+      "id": "7f83f170-ef45-5f75-91d1-764070d40215",
+      "createdDateTime": "2026-11-23T08:04:12Z",
+      "userId": "3f2b8c1e-7a44-4d0b-9c61-5e1d2a8f0b17",
+      "userDisplayName": "Jordan Doe",
+      "userPrincipalName": "j.doe@example.com",
+      "userType": "member",
+      "appId": "13d1c2f2-b1f8-5be8-ba00-bf9b379b1d76",
+      "appDisplayName": "Microsoft 365",
+      "resourceId": "0bb06430-3723-5385-9f10-6c310323ab72",
+      "resourceDisplayName": "Office 365 Exchange Online",
+      "ipAddress": "198.51.100.10",
+      "autonomousSystemNumber": 64500,
+      "clientAppUsed": "Browser",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Edge/120.0",
+      "isInteractive": true,
+      "correlationId": "3f7bd066-d158-5227-a22a-a832cafa0cdf",
+      "uniqueTokenIdentifier": "uti-000",
+      "status": {
+        "errorCode": 50126,
+        "failureReason": "Invalid username or password.",
+        "additionalDetails": null
+      },
+      "deviceDetail": {
+        "deviceId": "b7c2e9a4-5d31-4f6a-8e02-91a3c4d5e6f7",
+        "displayName": "FINANCE-PC-01",
+        "operatingSystem": "Windows 11",
+        "browser": "Edge 120.0.2210",
+        "isCompliant": true,
+        "isManaged": true,
+        "trustType": "Domain joined"
+      },
+      "location": {
+        "city": "New York",
+        "state": "New York",
+        "countryOrRegion": "US"
+      },
+      "conditionalAccessStatus": "notApplied",
+      "appliedConditionalAccessPolicies": [
+        {
+          "id": "6fd56ac5-a91b-50bc-bb88-aea59ccf8248",
+          "displayName": "Require MFA for cloud apps",
+          "result": "success",
+          "enforcedGrantControls": [
+            "Mfa"
+          ]
+        }
+      ],
+      "authenticationRequirement": "singleFactorAuthentication",
+      "authenticationDetails": [
+        {
+          "authenticationMethod": "Password",
+          "succeeded": false
+        }
+      ],
+      "authenticationMethodsUsed": [
+        "Password"
+      ],
+      "riskDetail": "none",
+      "riskLevelDuringSignIn": "none",
+      "riskLevelAggregated": "none",
+      "riskState": "none",
+      "riskEventTypes_v2": [],
+      "signInEventTypes": [
+        "interactiveUser"
+      ]
+    },
+    "sp": {
+      "id": "78e45b59-e59e-5ea9-92a9-f2effe942949",
+      "createdDateTime": "2026-11-23T08:27:00Z",
+      "userId": "00000000-0000-0000-0000-000000000000",
+      "userDisplayName": null,
+      "userPrincipalName": "reporting-app@example.com",
+      "userType": "member",
+      "appId": "13d1c2f2-b1f8-5be8-ba00-bf9b379b1d76",
+      "appDisplayName": "Reporting Service",
+      "resourceId": "0bb06430-3723-5385-9f10-6c310323ab72",
+      "resourceDisplayName": "Office 365 Exchange Online",
+      "ipAddress": "192.0.2.80",
+      "autonomousSystemNumber": 64500,
+      "clientAppUsed": "Browser",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Edge/120.0",
+      "isInteractive": false,
+      "correlationId": "00fd5611-1a15-54d2-8261-ba919fa19fc4",
+      "uniqueTokenIdentifier": "uti-001",
+      "status": {
+        "errorCode": 0,
+        "failureReason": null,
+        "additionalDetails": null
+      },
+      "deviceDetail": {
+        "deviceId": "",
+        "displayName": null
+      },
+      "location": {
+        "city": "New York",
+        "state": "New York",
+        "countryOrRegion": "US"
+      },
+      "conditionalAccessStatus": "success",
+      "appliedConditionalAccessPolicies": [
+        {
+          "id": "6fd56ac5-a91b-50bc-bb88-aea59ccf8248",
+          "displayName": "Require MFA for cloud apps",
+          "result": "success",
+          "enforcedGrantControls": [
+            "Mfa"
+          ]
+        }
+      ],
+      "authenticationRequirement": "singleFactorAuthentication",
+      "authenticationDetails": [],
+      "authenticationMethodsUsed": [],
+      "riskDetail": "none",
+      "riskLevelDuringSignIn": "none",
+      "riskLevelAggregated": "none",
+      "riskState": "none",
+      "riskEventTypes_v2": [],
+      "signInEventTypes": [
+        "servicePrincipal"
+      ],
+      "servicePrincipalId": "9a16a279-f19c-5a70-98c3-9593d9041754",
+      "servicePrincipalName": "Reporting Service"
+    },
+    "audit": {
+      "id": "Directory_a1c9af73-db24-5d3c",
+      "activityDateTime": "2026-11-23T08:44:10Z",
+      "activityDisplayName": "Add member to role",
+      "category": "RoleManagement",
+      "result": "success",
+      "resultReason": "",
+      "operationType": "Assign",
+      "loggedByService": "Core Directory",
+      "correlationId": "90737398-51c3-50bf-93ca-c015c4a6a14f",
+      "initiatedBy": {
+        "user": {
+          "id": "3f2b8c1e-7a44-4d0b-9c61-5e1d2a8f0b17",
+          "userPrincipalName": "j.doe@example.com",
+          "ipAddress": "203.0.113.77"
+        },
+        "app": null
+      },
+      "targetResources": [
+        {
+          "id": "3f2b8c1e-7a44-4d0b-9c61-5e1d2a8f0b17",
+          "displayName": "Jordan Doe",
+          "type": "User",
+          "userPrincipalName": "j.doe@example.com",
+          "modifiedProperties": [
+            {
+              "displayName": "Role.DisplayName",
+              "oldValue": null,
+              "newValue": "\"Application Administrator\""
+            }
+          ]
+        }
+      ],
+      "additionalDetails": [
+        {
+          "key": "User-Agent",
+          "value": "python-requests/2.31.0"
+        }
+      ]
+    }
+  },
+  "03_aws_cloudtrail": {
+    "saml": {
+      "eventVersion": "1.09",
+      "awsRegion": "us-east-1",
+      "eventType": "AwsApiCall",
+      "eventCategory": "Management",
+      "recipientAccountId": "123456789012",
+      "readOnly": false,
+      "managementEvent": true,
+      "tlsDetails": {
+        "tlsVersion": "TLSv1.3",
+        "cipherSuite": "TLS_AES_128_GCM_SHA256",
+        "clientProvidedHostHeader": "sts.us-east-1.amazonaws.com"
+      },
+      "eventTime": "2026-11-23T08:42:30Z",
+      "eventSource": "sts.amazonaws.com",
+      "eventName": "AssumeRoleWithSAML",
+      "sourceIPAddress": "203.0.113.77",
+      "userAgent": "python-requests/2.31.0",
+      "userIdentity": {
+        "type": "SAMLUser",
+        "principalId": "SAML:EXAMPLEPRINCIPAL:j.doe@example.com",
+        "userName": "j.doe@example.com",
+        "identityProvider": "arn:aws:iam::123456789012:saml-provider/EntraID",
+        "accountId": "123456789012"
+      },
+      "eventID": "70b8a528-148b-562f-af22-7cbc8a28f618",
+      "requestID": "27d5e46b-be2c-5a65-a31b-d88b1692ba6d",
+      "requestParameters": {
+        "roleArn": "arn:aws:iam::123456789012:role/FinanceReadOnly",
+        "principalArn": "arn:aws:iam::123456789012:saml-provider/EntraID",
+        "durationSeconds": 3600
+      },
+      "responseElements": {
+        "credentials": {
+          "accessKeyId": "ASIAEXAMPLEFINRO0001",
+          "expiration": "Nov 23, 2026, 9:42:30 AM",
+          "sessionToken": "REDACTED"
+        },
+        "assumedRoleUser": {
+          "assumedRoleId": "AROAEXAMPLEFINRO01:j.doe@example.com",
+          "arn": "arn:aws:sts::123456789012:assumed-role/FinanceReadOnly/j.doe@example.com"
+        },
+        "subject": "j.doe@example.com"
+      }
+    },
+    "stop": {
+      "eventVersion": "1.09",
+      "awsRegion": "us-east-1",
+      "eventType": "AwsApiCall",
+      "eventCategory": "Management",
+      "recipientAccountId": "123456789012",
+      "readOnly": false,
+      "managementEvent": true,
+      "tlsDetails": {
+        "tlsVersion": "TLSv1.3",
+        "cipherSuite": "TLS_AES_128_GCM_SHA256",
+        "clientProvidedHostHeader": "sts.us-east-1.amazonaws.com"
+      },
+      "eventTime": "2026-11-23T08:47:05Z",
+      "eventSource": "cloudtrail.amazonaws.com",
+      "eventName": "StopLogging",
+      "sourceIPAddress": "203.0.113.77",
+      "userAgent": "aws-cli/2.15.0",
+      "userIdentity": {
+        "type": "AssumedRole",
+        "principalId": "AROAEXAMPLEFINRO01:j.doe@example.com",
+        "arn": "arn:aws:sts::123456789012:assumed-role/FinanceReadOnly/j.doe@example.com",
+        "accountId": "123456789012",
+        "accessKeyId": "ASIAEXAMPLEFINRO0001",
+        "sessionContext": {
+          "attributes": {
+            "creationDate": "2026-11-23T08:42:30Z",
+            "mfaAuthenticated": "false"
+          },
+          "sessionIssuer": {
+            "type": "Role",
+            "principalId": "AROAEXAMPLEFINRO01",
+            "arn": "arn:aws:iam::123456789012:role/FinanceReadOnly",
+            "accountId": "123456789012",
+            "userName": "FinanceReadOnly"
+          }
+        }
+      },
+      "eventID": "c6fa064c-f1b2-55be-aa36-15e0c204ec82",
+      "requestID": "4cb760c0-584d-5e84-86c2-e6ac96715c9d",
+      "requestParameters": {
+        "name": "organization-trail"
+      },
+      "responseElements": null,
+      "errorCode": "AccessDenied",
+      "errorMessage": "User: arn:aws:sts::123456789012:assumed-role/FinanceReadOnly/j.doe@example.com is not authorized to perform: cloudtrail:StopLogging",
+      "resources": [
+        {
+          "ARN": "arn:aws:cloudtrail:us-east-1:123456789012:trail/organization-trail",
+          "accountId": "123456789012",
+          "type": "AWS::CloudTrail::Trail"
+        }
+      ]
+    },
+    "login": {
+      "eventVersion": "1.09",
+      "awsRegion": "us-east-1",
+      "eventType": "AwsConsoleSignIn",
+      "eventCategory": "Management",
+      "recipientAccountId": "123456789012",
+      "readOnly": false,
+      "managementEvent": true,
+      "tlsDetails": {
+        "tlsVersion": "TLSv1.3",
+        "cipherSuite": "TLS_AES_128_GCM_SHA256",
+        "clientProvidedHostHeader": "sts.us-east-1.amazonaws.com"
+      },
+      "eventTime": "2026-11-23T08:05:40Z",
+      "eventSource": "signin.amazonaws.com",
+      "eventName": "ConsoleLogin",
+      "sourceIPAddress": "198.51.100.10",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Edge/120.0",
+      "userIdentity": {
+        "type": "AssumedRole",
+        "principalId": "AROAEXAMPLEFINRO01:j.doe@example.com",
+        "arn": "arn:aws:sts::123456789012:assumed-role/FinanceReadOnly/j.doe@example.com",
+        "accountId": "123456789012",
+        "sessionContext": {
+          "attributes": {
+            "creationDate": "2026-11-23T08:42:30Z",
+            "mfaAuthenticated": "false"
+          },
+          "sessionIssuer": {
+            "type": "Role",
+            "principalId": "AROAEXAMPLEFINRO01",
+            "arn": "arn:aws:iam::123456789012:role/FinanceReadOnly",
+            "accountId": "123456789012",
+            "userName": "FinanceReadOnly"
+          }
+        }
+      },
+      "eventID": "645bed0a-0122-5db9-bfd5-fe4a3cd6e3a7",
+      "requestID": "92a1f6dc-870c-5217-87fd-3618a31963db",
+      "requestParameters": null,
+      "responseElements": {
+        "ConsoleLogin": "Success"
+      },
+      "additionalEventData": {
+        "LoginTo": "https://console.aws.amazon.com/console/home",
+        "MobileVersion": "No",
+        "MFAUsed": "Yes"
+      }
+    },
+    "desc": {
+      "eventVersion": "1.09",
+      "awsRegion": "us-east-1",
+      "eventType": "AwsApiCall",
+      "eventCategory": "Management",
+      "recipientAccountId": "123456789012",
+      "readOnly": true,
+      "managementEvent": true,
+      "tlsDetails": {
+        "tlsVersion": "TLSv1.3",
+        "cipherSuite": "TLS_AES_128_GCM_SHA256",
+        "clientProvidedHostHeader": "sts.us-east-1.amazonaws.com"
+      },
+      "eventTime": "2026-11-23T09:45:00Z",
+      "eventSource": "ec2.amazonaws.com",
+      "eventName": "DescribeInstances",
+      "sourceIPAddress": "192.0.2.80",
+      "userAgent": "terraform/1.8.0",
+      "userIdentity": {
+        "type": "AssumedRole",
+        "principalId": "AROAEXAMPLEAUTO01:deployment",
+        "arn": "arn:aws:sts::123456789012:assumed-role/ReadOnlyAutomation/deployment",
+        "accountId": "123456789012",
+        "accessKeyId": "ASIAEXAMPLEAUTO0001",
+        "sessionContext": {
+          "attributes": {
+            "creationDate": "2026-11-23T09:00:00Z",
+            "mfaAuthenticated": "false"
+          },
+          "sessionIssuer": {
+            "type": "Role",
+            "principalId": "AROAEXAMPLEAUTO01",
+            "arn": "arn:aws:iam::123456789012:role/ReadOnlyAutomation",
+            "accountId": "123456789012",
+            "userName": "ReadOnlyAutomation"
+          }
+        }
+      },
+      "eventID": "1a9d66d8-6f33-5a11-8be4-3febb00faa7c",
+      "requestID": "ac1fa596-c962-5cf5-af0d-8ee6b5c4187b",
+      "requestParameters": {
+        "instancesSet": {},
+        "filterSet": {}
+      },
+      "responseElements": null
+    },
+    "get": {
+      "eventVersion": "1.09",
+      "awsRegion": "us-east-1",
+      "eventType": "AwsApiCall",
+      "eventCategory": "Data",
+      "recipientAccountId": "123456789012",
+      "readOnly": true,
+      "managementEvent": false,
+      "tlsDetails": {
+        "tlsVersion": "TLSv1.3",
+        "cipherSuite": "TLS_AES_128_GCM_SHA256",
+        "clientProvidedHostHeader": "sts.us-east-1.amazonaws.com"
+      },
+      "eventTime": "2026-11-23T08:50:00Z",
+      "eventSource": "s3.amazonaws.com",
+      "eventName": "GetObject",
+      "sourceIPAddress": "192.0.2.90",
+      "userAgent": "aws-cli/2.15.0",
+      "userIdentity": {
+        "type": "AssumedRole",
+        "principalId": "AROAEXAMPLERPT01:job-1",
+        "arn": "arn:aws:sts::123456789012:assumed-role/ReportingRole/job-1",
+        "accountId": "123456789012",
+        "accessKeyId": "ASIAEXAMPLERPT0001",
+        "sessionContext": {
+          "attributes": {
+            "creationDate": "2026-11-23T08:45:00Z",
+            "mfaAuthenticated": "false"
+          },
+          "sessionIssuer": {
+            "type": "Role",
+            "principalId": "AROAEXAMPLERPT01",
+            "arn": "arn:aws:iam::123456789012:role/ReportingRole",
+            "accountId": "123456789012",
+            "userName": "ReportingRole"
+          }
+        }
+      },
+      "eventID": "f50ac20c-7acf-5e4f-8e92-fb99c59141f5",
+      "requestID": "c42c4d21-e895-524a-8a6b-a517b2084aec",
+      "requestParameters": {
+        "bucketName": "finance-reports-example",
+        "key": "monthly/report.csv"
+      },
+      "responseElements": null,
+      "additionalEventData": {
+        "bytesTransferredIn": 0,
+        "bytesTransferredOut": 48210,
+        "x-amz-id-2": "EXAMPLE"
+      },
+      "resources": [
+        {
+          "type": "AWS::S3::Object",
+          "ARN": "arn:aws:s3:::finance-reports-example/monthly/report.csv"
+        },
+        {
+          "accountId": "123456789012",
+          "type": "AWS::S3::Bucket",
+          "ARN": "arn:aws:s3:::finance-reports-example"
+        }
+      ]
+    }
+  },
+  "04_windows_event_logs": {
+    "s1": {
+      "raw_xml": "<Event xmlns=\"http://schemas.microsoft.com/win/2004/08/events/event\"><System><Provider Name=\"Microsoft-Windows-Sysmon\" Guid=\"{5770385F-C22A-43E0-BF4C-06F5698FFBD9}\"/><EventID>1</EventID><Version>5</Version><Level>4</Level><Task>1</Task><Opcode>0</Opcode><Keywords>0x8000000000000000</Keywords><TimeCreated SystemTime=\"2026-11-23T08:31:02.4172910Z\"/><EventRecordID>91001</EventRecordID><Correlation/><Execution ProcessID=\"2216\" ThreadID=\"3480\"/><Channel>Microsoft-Windows-Sysmon/Operational</Channel><Computer>FINANCE-PC-01.corp.example.com</Computer><Security UserID=\"S-1-5-18\"/></System><EventData><Data Name=\"RuleName\">-</Data><Data Name=\"UtcTime\">2026-11-23 08:31:02.417</Data><Data Name=\"ProcessGuid\">{9FA491BA-7AC7-5CDC-9F6E-A4AC3AC2D0ED}</Data><Data Name=\"ProcessId\">4820</Data><Data Name=\"Image\">C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe</Data><Data Name=\"FileVersion\">10.0.22621.2506 (WinBuild.160101.0800)</Data><Data Name=\"Description\">Windows PowerShell</Data><Data Name=\"Product\">Microsoft Windows Operating System</Data><Data Name=\"Company\">Microsoft Corporation</Data><Data Name=\"OriginalFileName\">PowerShell.EXE</Data><Data Name=\"CommandLine\">powershell.exe -NoProfile -WindowStyle Hidden -EncodedCommand VwByAGkAdABlAC0ATwB1AHQAcAB1AHQAIAAnAGkAbgBlAHIAdAAgAHMAaQBtAHUAbABhAHQAaQBvAG4AIABwAGEAeQBsAG8AYQBkACcA</Data><Data Name=\"CurrentDirectory\">C:\\Users\\j.doe\\Downloads\\</Data><Data Name=\"User\">CORP\\j.doe</Data><Data Name=\"LogonGuid\">{86290923-04B5-5762-BEC1-4CCFA2BC4FAA}</Data><Data Name=\"LogonId\">0xf1206</Data><Data Name=\"TerminalSessionId\">1</Data><Data Name=\"IntegrityLevel\">Medium</Data><Data Name=\"Hashes\">MD5=E44CC72D74D91C47BF47947F78CB88AA,SHA256=B6A8C199C8A41F9DD0BD414857E33F5B6971A4821706D8740CB6086F9F31E352,IMPHASH=DA41703DA2314CB799845B2FC0243412</Data><Data Name=\"ParentProcessGuid\">{4BE22093-1FC6-54E9-9E87-8CBD022FF391}</Data><Data Name=\"ParentProcessId\">3012</Data><Data Name=\"ParentImage\">C:\\Program Files\\Microsoft Office\\root\\Office16\\WINWORD.EXE</Data><Data Name=\"ParentCommandLine\">\"WINWORD.EXE\" /n \"C:\\Users\\j.doe\\Downloads\\Q3-invoice.docm\"</Data><Data Name=\"ParentUser\">CORP\\j.doe</Data></EventData></Event>",
+      "parsed_event": {
+        "Provider": {
+          "Name": "Microsoft-Windows-Sysmon",
+          "Guid": "{5770385F-C22A-43E0-BF4C-06F5698FFBD9}"
+        },
+        "EventID": 1,
+        "Version": 5,
+        "Level": 4,
+        "Task": 1,
+        "Opcode": 0,
+        "Keywords": "0x8000000000000000",
+        "TimeCreated": {
+          "SystemTime": "2026-11-23T08:31:02.4172910Z"
+        },
+        "EventRecordID": 91001,
+        "Correlation": {},
+        "Execution": {
+          "ProcessID": 2216,
+          "ThreadID": 3480
+        },
+        "Channel": "Microsoft-Windows-Sysmon/Operational",
+        "Computer": "FINANCE-PC-01.corp.example.com",
+        "Security": {
+          "UserID": "S-1-5-18"
+        },
+        "EventData": {
+          "RuleName": "-",
+          "UtcTime": "2026-11-23 08:31:02.417",
+          "ProcessGuid": "{9FA491BA-7AC7-5CDC-9F6E-A4AC3AC2D0ED}",
+          "ProcessId": "4820",
+          "Image": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+          "FileVersion": "10.0.22621.2506 (WinBuild.160101.0800)",
+          "Description": "Windows PowerShell",
+          "Product": "Microsoft Windows Operating System",
+          "Company": "Microsoft Corporation",
+          "OriginalFileName": "PowerShell.EXE",
+          "CommandLine": "powershell.exe -NoProfile -WindowStyle Hidden -EncodedCommand VwByAGkAdABlAC0ATwB1AHQAcAB1AHQAIAAnAGkAbgBlAHIAdAAgAHMAaQBtAHUAbABhAHQAaQBvAG4AIABwAGEAeQBsAG8AYQBkACcA",
+          "CurrentDirectory": "C:\\Users\\j.doe\\Downloads\\",
+          "User": "CORP\\j.doe",
+          "LogonGuid": "{86290923-04B5-5762-BEC1-4CCFA2BC4FAA}",
+          "LogonId": "0xf1206",
+          "TerminalSessionId": "1",
+          "IntegrityLevel": "Medium",
+          "Hashes": "MD5=E44CC72D74D91C47BF47947F78CB88AA,SHA256=B6A8C199C8A41F9DD0BD414857E33F5B6971A4821706D8740CB6086F9F31E352,IMPHASH=DA41703DA2314CB799845B2FC0243412",
+          "ParentProcessGuid": "{4BE22093-1FC6-54E9-9E87-8CBD022FF391}",
+          "ParentProcessId": "3012",
+          "ParentImage": "C:\\Program Files\\Microsoft Office\\root\\Office16\\WINWORD.EXE",
+          "ParentCommandLine": "\"WINWORD.EXE\" /n \"C:\\Users\\j.doe\\Downloads\\Q3-invoice.docm\"",
+          "ParentUser": "CORP\\j.doe"
+        }
+      }
+    },
+    "ps": {
+      "raw_xml": "<Event xmlns=\"http://schemas.microsoft.com/win/2004/08/events/event\"><System><Provider Name=\"Microsoft-Windows-PowerShell\" Guid=\"{A0C1853B-5C40-4B15-8766-3CF1C58F985A}\"/><EventID>4104</EventID><Version>1</Version><Level>5</Level><Task>2</Task><Opcode>15</Opcode><Keywords>0x0</Keywords><TimeCreated SystemTime=\"2026-11-23T08:31:03.1020000Z\"/><EventRecordID>91002</EventRecordID><Correlation/><Execution ProcessID=\"4820\" ThreadID=\"5012\"/><Channel>Microsoft-Windows-PowerShell/Operational</Channel><Computer>FINANCE-PC-01.corp.example.com</Computer><Security UserID=\"S-1-5-21-3623811015-3361044348-30300820-1105\"/></System><EventData><Data Name=\"MessageNumber\">1</Data><Data Name=\"MessageTotal\">1</Data><Data Name=\"ScriptBlockText\">Write-Output 'inert simulation payload'</Data><Data Name=\"ScriptBlockId\">3c3f3429-bc50-5267-813e-17f999179e26</Data><Data Name=\"Path\"></Data></EventData></Event>",
+      "parsed_event": {
+        "Provider": {
+          "Name": "Microsoft-Windows-PowerShell",
+          "Guid": "{A0C1853B-5C40-4B15-8766-3CF1C58F985A}"
+        },
+        "EventID": 4104,
+        "Version": 1,
+        "Level": 5,
+        "Task": 2,
+        "Opcode": 15,
+        "Keywords": "0x0",
+        "TimeCreated": {
+          "SystemTime": "2026-11-23T08:31:03.1020000Z"
+        },
+        "EventRecordID": 91002,
+        "Correlation": {},
+        "Execution": {
+          "ProcessID": 4820,
+          "ThreadID": 5012
+        },
+        "Channel": "Microsoft-Windows-PowerShell/Operational",
+        "Computer": "FINANCE-PC-01.corp.example.com",
+        "Security": {
+          "UserID": "S-1-5-21-3623811015-3361044348-30300820-1105"
+        },
+        "EventData": {
+          "MessageNumber": "1",
+          "MessageTotal": "1",
+          "ScriptBlockText": "Write-Output 'inert simulation payload'",
+          "ScriptBlockId": "3c3f3429-bc50-5267-813e-17f999179e26",
+          "Path": ""
+        }
+      }
+    },
+    "s3": {
+      "raw_xml": "<Event xmlns=\"http://schemas.microsoft.com/win/2004/08/events/event\"><System><Provider Name=\"Microsoft-Windows-Sysmon\" Guid=\"{5770385F-C22A-43E0-BF4C-06F5698FFBD9}\"/><EventID>3</EventID><Version>5</Version><Level>4</Level><Task>3</Task><Opcode>0</Opcode><Keywords>0x8000000000000000</Keywords><TimeCreated SystemTime=\"2026-11-23T08:31:08.2500000Z\"/><EventRecordID>91003</EventRecordID><Correlation/><Execution ProcessID=\"2216\" ThreadID=\"3480\"/><Channel>Microsoft-Windows-Sysmon/Operational</Channel><Computer>FINANCE-PC-01.corp.example.com</Computer><Security UserID=\"S-1-5-18\"/></System><EventData><Data Name=\"RuleName\">-</Data><Data Name=\"UtcTime\">2026-11-23 08:31:08.250</Data><Data Name=\"ProcessGuid\">{9FA491BA-7AC7-5CDC-9F6E-A4AC3AC2D0ED}</Data><Data Name=\"ProcessId\">4820</Data><Data Name=\"Image\">C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe</Data><Data Name=\"User\">CORP\\j.doe</Data><Data Name=\"Protocol\">tcp</Data><Data Name=\"Initiated\">true</Data><Data Name=\"SourceIsIpv6\">false</Data><Data Name=\"SourceIp\">10.20.4.15</Data><Data Name=\"SourceHostname\">-</Data><Data Name=\"SourcePort\">53122</Data><Data Name=\"SourcePortName\">-</Data><Data Name=\"DestinationIsIpv6\">false</Data><Data Name=\"DestinationIp\">203.0.113.77</Data><Data Name=\"DestinationHostname\">-</Data><Data Name=\"DestinationPort\">443</Data><Data Name=\"DestinationPortName\">https</Data></EventData></Event>",
+      "parsed_event": {
+        "Provider": {
+          "Name": "Microsoft-Windows-Sysmon",
+          "Guid": "{5770385F-C22A-43E0-BF4C-06F5698FFBD9}"
+        },
+        "EventID": 3,
+        "Version": 5,
+        "Level": 4,
+        "Task": 3,
+        "Opcode": 0,
+        "Keywords": "0x8000000000000000",
+        "TimeCreated": {
+          "SystemTime": "2026-11-23T08:31:08.2500000Z"
+        },
+        "EventRecordID": 91003,
+        "Correlation": {},
+        "Execution": {
+          "ProcessID": 2216,
+          "ThreadID": 3480
+        },
+        "Channel": "Microsoft-Windows-Sysmon/Operational",
+        "Computer": "FINANCE-PC-01.corp.example.com",
+        "Security": {
+          "UserID": "S-1-5-18"
+        },
+        "EventData": {
+          "RuleName": "-",
+          "UtcTime": "2026-11-23 08:31:08.250",
+          "ProcessGuid": "{9FA491BA-7AC7-5CDC-9F6E-A4AC3AC2D0ED}",
+          "ProcessId": "4820",
+          "Image": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+          "User": "CORP\\j.doe",
+          "Protocol": "tcp",
+          "Initiated": "true",
+          "SourceIsIpv6": "false",
+          "SourceIp": "10.20.4.15",
+          "SourceHostname": "-",
+          "SourcePort": "53122",
+          "SourcePortName": "-",
+          "DestinationIsIpv6": "false",
+          "DestinationIp": "203.0.113.77",
+          "DestinationHostname": "-",
+          "DestinationPort": "443",
+          "DestinationPortName": "https"
+        }
+      }
+    },
+    "s10": {
+      "raw_xml": "<Event xmlns=\"http://schemas.microsoft.com/win/2004/08/events/event\"><System><Provider Name=\"Microsoft-Windows-Sysmon\" Guid=\"{5770385F-C22A-43E0-BF4C-06F5698FFBD9}\"/><EventID>10</EventID><Version>3</Version><Level>4</Level><Task>10</Task><Opcode>0</Opcode><Keywords>0x8000000000000000</Keywords><TimeCreated SystemTime=\"2026-11-23T08:33:40.5110000Z\"/><EventRecordID>91004</EventRecordID><Correlation/><Execution ProcessID=\"2216\" ThreadID=\"3480\"/><Channel>Microsoft-Windows-Sysmon/Operational</Channel><Computer>FINANCE-PC-01.corp.example.com</Computer><Security UserID=\"S-1-5-18\"/></System><EventData><Data Name=\"RuleName\">-</Data><Data Name=\"UtcTime\">2026-11-23 08:33:40.511</Data><Data Name=\"SourceProcessGUID\">{9FA491BA-7AC7-5CDC-9F6E-A4AC3AC2D0ED}</Data><Data Name=\"SourceProcessId\">4820</Data><Data Name=\"SourceThreadId\">5012</Data><Data Name=\"SourceImage\">C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe</Data><Data Name=\"TargetProcessGUID\">{2D2756CF-2ED7-5379-87F6-DB928DC3CC29}</Data><Data Name=\"TargetProcessId\">640</Data><Data Name=\"TargetImage\">C:\\Windows\\System32\\lsass.exe</Data><Data Name=\"GrantedAccess\">0x1410</Data><Data Name=\"CallTrace\">C:\\Windows\\SYSTEM32\\ntdll.dll+9d4c4|C:\\Windows\\System32\\KERNELBASE.dll+2c2de</Data><Data Name=\"SourceUser\">CORP\\j.doe</Data><Data Name=\"TargetUser\">NT AUTHORITY\\SYSTEM</Data></EventData></Event>",
+      "parsed_event": {
+        "Provider": {
+          "Name": "Microsoft-Windows-Sysmon",
+          "Guid": "{5770385F-C22A-43E0-BF4C-06F5698FFBD9}"
+        },
+        "EventID": 10,
+        "Version": 3,
+        "Level": 4,
+        "Task": 10,
+        "Opcode": 0,
+        "Keywords": "0x8000000000000000",
+        "TimeCreated": {
+          "SystemTime": "2026-11-23T08:33:40.5110000Z"
+        },
+        "EventRecordID": 91004,
+        "Correlation": {},
+        "Execution": {
+          "ProcessID": 2216,
+          "ThreadID": 3480
+        },
+        "Channel": "Microsoft-Windows-Sysmon/Operational",
+        "Computer": "FINANCE-PC-01.corp.example.com",
+        "Security": {
+          "UserID": "S-1-5-18"
+        },
+        "EventData": {
+          "RuleName": "-",
+          "UtcTime": "2026-11-23 08:33:40.511",
+          "SourceProcessGUID": "{9FA491BA-7AC7-5CDC-9F6E-A4AC3AC2D0ED}",
+          "SourceProcessId": "4820",
+          "SourceThreadId": "5012",
+          "SourceImage": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+          "TargetProcessGUID": "{2D2756CF-2ED7-5379-87F6-DB928DC3CC29}",
+          "TargetProcessId": "640",
+          "TargetImage": "C:\\Windows\\System32\\lsass.exe",
+          "GrantedAccess": "0x1410",
+          "CallTrace": "C:\\Windows\\SYSTEM32\\ntdll.dll+9d4c4|C:\\Windows\\System32\\KERNELBASE.dll+2c2de",
+          "SourceUser": "CORP\\j.doe",
+          "TargetUser": "NT AUTHORITY\\SYSTEM"
+        }
+      }
+    },
+    "e4624": {
+      "raw_xml": "<Event xmlns=\"http://schemas.microsoft.com/win/2004/08/events/event\"><System><Provider Name=\"Microsoft-Windows-Security-Auditing\" Guid=\"{54849625-5478-4994-A5BA-3E3B0328C30D}\"/><EventID>4624</EventID><Version>2</Version><Level>0</Level><Task>12544</Task><Opcode>0</Opcode><Keywords>0x8020000000000000</Keywords><TimeCreated SystemTime=\"2026-11-23T08:05:11.0200000Z\"/><EventRecordID>91005</EventRecordID><Correlation/><Execution ProcessID=\"780\" ThreadID=\"6104\"/><Channel>Security</Channel><Computer>FINANCE-PC-01.corp.example.com</Computer><Security UserID=\"S-1-5-18\"/></System><EventData><Data Name=\"SubjectUserSid\">S-1-5-18</Data><Data Name=\"SubjectUserName\">FINANCE-PC-01$</Data><Data Name=\"SubjectDomainName\">CORP</Data><Data Name=\"SubjectLogonId\">0x3e7</Data><Data Name=\"TargetUserSid\">S-1-5-21-3623811015-3361044348-30300820-1105</Data><Data Name=\"TargetUserName\">j.doe</Data><Data Name=\"TargetDomainName\">CORP</Data><Data Name=\"TargetLogonId\">0xf1206</Data><Data Name=\"LogonType\">2</Data><Data Name=\"LogonProcessName\">User32</Data><Data Name=\"AuthenticationPackageName\">Negotiate</Data><Data Name=\"WorkstationName\">FINANCE-PC-01</Data><Data Name=\"LogonGuid\">{5F6E0F9B-59BB-5018-9F47-1694F167EFFD}</Data><Data Name=\"ProcessId\">0x2c4</Data><Data Name=\"ProcessName\">C:\\Windows\\System32\\winlogon.exe</Data><Data Name=\"IpAddress\">127.0.0.1</Data><Data Name=\"IpPort\">0</Data><Data Name=\"ImpersonationLevel\">%%1833</Data><Data Name=\"ElevatedToken\">%%1843</Data></EventData></Event>",
+      "parsed_event": {
+        "Provider": {
+          "Name": "Microsoft-Windows-Security-Auditing",
+          "Guid": "{54849625-5478-4994-A5BA-3E3B0328C30D}"
+        },
+        "EventID": 4624,
+        "Version": 2,
+        "Level": 0,
+        "Task": 12544,
+        "Opcode": 0,
+        "Keywords": "0x8020000000000000",
+        "TimeCreated": {
+          "SystemTime": "2026-11-23T08:05:11.0200000Z"
+        },
+        "EventRecordID": 91005,
+        "Correlation": {},
+        "Execution": {
+          "ProcessID": 780,
+          "ThreadID": 6104
+        },
+        "Channel": "Security",
+        "Computer": "FINANCE-PC-01.corp.example.com",
+        "Security": {
+          "UserID": "S-1-5-18"
+        },
+        "EventData": {
+          "SubjectUserSid": "S-1-5-18",
+          "SubjectUserName": "FINANCE-PC-01$",
+          "SubjectDomainName": "CORP",
+          "SubjectLogonId": "0x3e7",
+          "TargetUserSid": "S-1-5-21-3623811015-3361044348-30300820-1105",
+          "TargetUserName": "j.doe",
+          "TargetDomainName": "CORP",
+          "TargetLogonId": "0xf1206",
+          "LogonType": "2",
+          "LogonProcessName": "User32",
+          "AuthenticationPackageName": "Negotiate",
+          "WorkstationName": "FINANCE-PC-01",
+          "LogonGuid": "{5F6E0F9B-59BB-5018-9F47-1694F167EFFD}",
+          "ProcessId": "0x2c4",
+          "ProcessName": "C:\\Windows\\System32\\winlogon.exe",
+          "IpAddress": "127.0.0.1",
+          "IpPort": "0",
+          "ImpersonationLevel": "%%1833",
+          "ElevatedToken": "%%1843"
+        }
+      }
+    },
+    "e4625": {
+      "raw_xml": "<Event xmlns=\"http://schemas.microsoft.com/win/2004/08/events/event\"><System><Provider Name=\"Microsoft-Windows-Security-Auditing\" Guid=\"{54849625-5478-4994-A5BA-3E3B0328C30D}\"/><EventID>4625</EventID><Version>0</Version><Level>0</Level><Task>12546</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime=\"2026-11-23T08:04:58.3300000Z\"/><EventRecordID>91006</EventRecordID><Correlation/><Execution ProcessID=\"780\" ThreadID=\"6104\"/><Channel>Security</Channel><Computer>FINANCE-PC-01.corp.example.com</Computer><Security UserID=\"S-1-5-18\"/></System><EventData><Data Name=\"SubjectUserSid\">S-1-5-18</Data><Data Name=\"SubjectUserName\">FINANCE-PC-01$</Data><Data Name=\"SubjectDomainName\">CORP</Data><Data Name=\"SubjectLogonId\">0x3e7</Data><Data Name=\"TargetUserSid\">S-1-0-0</Data><Data Name=\"TargetUserName\">j.doe</Data><Data Name=\"TargetDomainName\">CORP</Data><Data Name=\"Status\">0xc000006d</Data><Data Name=\"SubStatus\">0xc000006a</Data><Data Name=\"LogonType\">2</Data><Data Name=\"LogonProcessName\">User32</Data><Data Name=\"AuthenticationPackageName\">Negotiate</Data><Data Name=\"WorkstationName\">FINANCE-PC-01</Data><Data Name=\"ProcessId\">0x2c4</Data><Data Name=\"ProcessName\">C:\\Windows\\System32\\winlogon.exe</Data><Data Name=\"IpAddress\">127.0.0.1</Data><Data Name=\"IpPort\">0</Data></EventData></Event>",
+      "parsed_event": {
+        "Provider": {
+          "Name": "Microsoft-Windows-Security-Auditing",
+          "Guid": "{54849625-5478-4994-A5BA-3E3B0328C30D}"
+        },
+        "EventID": 4625,
+        "Version": 0,
+        "Level": 0,
+        "Task": 12546,
+        "Opcode": 0,
+        "Keywords": "0x8010000000000000",
+        "TimeCreated": {
+          "SystemTime": "2026-11-23T08:04:58.3300000Z"
+        },
+        "EventRecordID": 91006,
+        "Correlation": {},
+        "Execution": {
+          "ProcessID": 780,
+          "ThreadID": 6104
+        },
+        "Channel": "Security",
+        "Computer": "FINANCE-PC-01.corp.example.com",
+        "Security": {
+          "UserID": "S-1-5-18"
+        },
+        "EventData": {
+          "SubjectUserSid": "S-1-5-18",
+          "SubjectUserName": "FINANCE-PC-01$",
+          "SubjectDomainName": "CORP",
+          "SubjectLogonId": "0x3e7",
+          "TargetUserSid": "S-1-0-0",
+          "TargetUserName": "j.doe",
+          "TargetDomainName": "CORP",
+          "Status": "0xc000006d",
+          "SubStatus": "0xc000006a",
+          "LogonType": "2",
+          "LogonProcessName": "User32",
+          "AuthenticationPackageName": "Negotiate",
+          "WorkstationName": "FINANCE-PC-01",
+          "ProcessId": "0x2c4",
+          "ProcessName": "C:\\Windows\\System32\\winlogon.exe",
+          "IpAddress": "127.0.0.1",
+          "IpPort": "0"
+        }
+      }
+    }
+  },
+  "05_firewall": {
+    "allow": {
+      "format": "CEF",
+      "raw_message": "CEF:0|ExampleVendor|ExampleNGFW|10.2|8001|Outbound session allowed|3|rt=1795422698000 src=10.20.4.15 spt=53122 dst=203.0.113.77 dpt=443 proto=TCP act=allow deviceExternalId=fw-edge-01 cs1=Outbound-Web cs1Label=RuleName out=18240 in=2210450 app=ssl externalId=1840221 sourceTranslatedAddress=198.51.100.10",
+      "parsed_fields": {
+        "device_vendor": "ExampleVendor",
+        "device_product": "ExampleNGFW",
+        "device_version": "10.2",
+        "device_id": "fw-edge-01",
+        "device_name": "fw-edge-01",
+        "protocol": "TCP",
+        "direction": "outbound",
+        "source_zone": "trust",
+        "destination_zone": "untrust",
+        "log_type": "traffic",
+        "signature_id": "8001",
+        "name": "Outbound session allowed",
+        "severity": 3,
+        "event_time": "2026-11-23T08:31:38Z",
+        "event_start_time": "2026-11-23T08:31:08Z",
+        "event_end_time": "2026-11-23T08:31:38Z",
+        "duration_seconds": 30,
+        "source_ip": "10.20.4.15",
+        "source_port": 53122,
+        "source_nat_ip": "198.51.100.10",
+        "source_nat_port": 41870,
+        "destination_ip": "203.0.113.77",
+        "destination_port": 443,
+        "action": "allow",
+        "rule_name": "Outbound-Web",
+        "session_id": "1840221",
+        "application": "ssl",
+        "bytes_out": 18240,
+        "bytes_in": 2210450,
+        "packets_out": 96,
+        "packets_in": 1710,
+        "session_end_reason": "tcp-fin",
+        "user": "j.doe"
+      }
+    },
+    "threat": {
+      "format": "CEF",
+      "raw_message": "CEF:0|ExampleVendor|ExampleNGFW|10.2|9052|Suspicious TLS destination|8|rt=1795422669000 src=10.20.4.15 spt=53122 dst=203.0.113.77 dpt=443 proto=TCP act=alert deviceExternalId=fw-edge-01 cs1=Outbound-Web cs1Label=RuleName out=1210 in=5120 app=ssl externalId=1840221 sourceTranslatedAddress=198.51.100.10 cs2=Suspicious TLS destination cs2Label=ThreatName",
+      "parsed_fields": {
+        "device_vendor": "ExampleVendor",
+        "device_product": "ExampleNGFW",
+        "device_version": "10.2",
+        "device_id": "fw-edge-01",
+        "device_name": "fw-edge-01",
+        "protocol": "TCP",
+        "direction": "outbound",
+        "source_zone": "trust",
+        "destination_zone": "untrust",
+        "log_type": "threat",
+        "signature_id": "9052",
+        "name": "Suspicious TLS destination",
+        "severity": 8,
+        "event_time": "2026-11-23T08:31:09Z",
+        "source_ip": "10.20.4.15",
+        "source_port": 53122,
+        "source_nat_ip": "198.51.100.10",
+        "destination_ip": "203.0.113.77",
+        "destination_port": 443,
+        "action": "alert",
+        "rule_name": "Outbound-Web",
+        "session_id": "1840221",
+        "application": "ssl",
+        "bytes_out": 1210,
+        "bytes_in": 5120,
+        "packets_out": 9,
+        "packets_in": 11,
+        "session_end_reason": "n/a",
+        "threat_name": "Suspicious TLS destination",
+        "threat_category": "command-and-control",
+        "threat_id": "9052",
+        "user": "j.doe"
+      }
+    },
+    "normal": {
+      "format": "CEF",
+      "raw_message": "CEF:0|ExampleVendor|ExampleNGFW|10.2|8003|Outbound session allowed|1|rt=1795425035000 src=10.20.5.20 spt=54000 dst=192.0.2.25 dpt=443 proto=TCP act=allow deviceExternalId=fw-edge-01 cs1=Corporate-Web cs1Label=RuleName out=4120 in=88210 app=ms-office365 externalId=1840377 sourceTranslatedAddress=198.51.100.10",
+      "parsed_fields": {
+        "device_vendor": "ExampleVendor",
+        "device_product": "ExampleNGFW",
+        "device_version": "10.2",
+        "device_id": "fw-edge-01",
+        "device_name": "fw-edge-01",
+        "protocol": "TCP",
+        "direction": "outbound",
+        "source_zone": "trust",
+        "destination_zone": "untrust",
+        "log_type": "traffic",
+        "signature_id": "8003",
+        "name": "Outbound session allowed",
+        "severity": 1,
+        "event_time": "2026-11-23T09:10:35Z",
+        "event_start_time": "2026-11-23T09:10:05Z",
+        "event_end_time": "2026-11-23T09:10:35Z",
+        "duration_seconds": 30,
+        "source_ip": "10.20.5.20",
+        "source_port": 54000,
+        "source_nat_ip": "198.51.100.10",
+        "source_nat_port": 40112,
+        "destination_ip": "192.0.2.25",
+        "destination_port": 443,
+        "action": "allow",
+        "rule_name": "Corporate-Web",
+        "session_id": "1840377",
+        "application": "ms-office365",
+        "bytes_out": 4120,
+        "bytes_in": 88210,
+        "packets_out": 22,
+        "packets_in": 71,
+        "session_end_reason": "tcp-fin",
+        "user": "a.smith"
+      }
+    },
+    "deny": {
+      "format": "CEF",
+      "raw_message": "CEF:0|ExampleVendor|ExampleNGFW|10.2|8005|Inbound session denied|2|rt=1795431600000 src=203.0.113.44 spt=45000 dst=198.51.100.10 dpt=3389 proto=TCP act=deny deviceExternalId=fw-edge-01 cs1=Default-Deny cs1Label=RuleName out=0 in=0 app=ms-rdp externalId=1841002",
+      "parsed_fields": {
+        "device_vendor": "ExampleVendor",
+        "device_product": "ExampleNGFW",
+        "device_version": "10.2",
+        "device_id": "fw-edge-01",
+        "device_name": "fw-edge-01",
+        "protocol": "TCP",
+        "direction": "inbound",
+        "source_zone": "untrust",
+        "destination_zone": "trust",
+        "log_type": "traffic",
+        "signature_id": "8005",
+        "name": "Inbound session denied",
+        "severity": 2,
+        "event_time": "2026-11-23T11:00:00Z",
+        "source_ip": "203.0.113.44",
+        "source_port": 45000,
+        "destination_ip": "198.51.100.10",
+        "destination_port": 3389,
+        "action": "deny",
+        "rule_name": "Default-Deny",
+        "session_id": "1841002",
+        "application": "ms-rdp",
+        "bytes_out": 0,
+        "bytes_in": 0,
+        "packets_out": 0,
+        "packets_in": 1,
+        "session_end_reason": "policy-deny",
+        "source_nat_ip": null
+      }
+    }
+  }
+}

@@ -1,0 +1,300 @@
+{
+  "dataset_name": "Aetheris multi-source security telemetry evaluation corpus",
+  "dataset_version": "1.0.0",
+  "dataset_status": "synthetic_high_fidelity_test_fixture_not_live_telemetry",
+  "source": "Microsoft Entra ID",
+  "native_format": "Microsoft Graph signIn and directoryAudit JSON",
+  "event_families": "Sign-in and directory audit",
+  "record_count": 6,
+  "records": [
+    {
+      "dataset_record_id": "ent-001",
+      "source_event_id": "signin-5001",
+      "source_event_time": "2026-11-23T08:29:40Z",
+      "source_payload": {
+        "id": "signin-5001",
+        "createdDateTime": "2026-11-23T08:29:40Z",
+        "userId": "entra-user-101",
+        "userDisplayName": "Jordan Doe",
+        "userPrincipalName": "j.doe@example.com",
+        "appId": "app-aws-console",
+        "appDisplayName": "AWS Console",
+        "resourceId": "aws-resource-01",
+        "resourceDisplayName": "AWS Management",
+        "ipAddress": "198.51.100.77",
+        "clientAppUsed": "Browser",
+        "isInteractive": true,
+        "userAgent": "Mozilla/5.0",
+        "correlationId": "entra-corr-5001",
+        "status": {
+          "errorCode": 50126,
+          "failureReason": "Invalid username or password"
+        },
+        "deviceDetail": {
+          "deviceId": "device-102",
+          "displayName": "FINANCE-PC-01",
+          "operatingSystem": "Windows 11",
+          "browser": "Edge",
+          "isCompliant": false,
+          "isManaged": true
+        },
+        "location": {
+          "city": "Example City",
+          "state": "Example Region",
+          "countryOrRegion": "US"
+        },
+        "conditionalAccessStatus": "failure",
+        "authenticationRequirement": "singleFactorAuthentication",
+        "authenticationDetails": [
+          {
+            "authenticationMethod": "Password",
+            "succeeded": false
+          }
+        ],
+        "authenticationMethodsUsed": [
+          "Password"
+        ],
+        "riskLevelDuringSignIn": "none",
+        "riskLevelAggregated": "none",
+        "riskState": "none",
+        "riskEventTypes_v2": [],
+        "signInEventTypes": [
+          "interactiveUser"
+        ]
+      },
+      "evaluation_metadata": {
+        "scenario_key": "SCN-001",
+        "correlation_group": "CORR-001",
+        "ground_truth": "suspicious_test_activity",
+        "expected_aetheris_severity": "high",
+        "duplicate_of": null,
+        "out_of_order_arrival": false,
+        "notes": "Failed sign-in preceding success, same account and IP."
+      }
+    },
+    {
+      "dataset_record_id": "ent-002",
+      "source_event_id": "signin-5002",
+      "source_event_time": "2026-11-23T08:30:20Z",
+      "source_payload": {
+        "id": "signin-5002",
+        "createdDateTime": "2026-11-23T08:30:20Z",
+        "userId": "entra-user-101",
+        "userDisplayName": "Jordan Doe",
+        "userPrincipalName": "j.doe@example.com",
+        "appId": "app-aws-console",
+        "appDisplayName": "AWS Console",
+        "resourceId": "aws-resource-01",
+        "resourceDisplayName": "AWS Management",
+        "ipAddress": "198.51.100.77",
+        "clientAppUsed": "Browser",
+        "isInteractive": true,
+        "userAgent": "Mozilla/5.0",
+        "correlationId": "entra-corr-5002",
+        "status": {
+          "errorCode": 0,
+          "failureReason": null
+        },
+        "deviceDetail": {
+          "deviceId": "device-102",
+          "displayName": "FINANCE-PC-01",
+          "operatingSystem": "Windows 11",
+          "browser": "Edge",
+          "isCompliant": false,
+          "isManaged": true
+        },
+        "location": {
+          "city": "Example City",
+          "state": "Example Region",
+          "countryOrRegion": "US"
+        },
+        "conditionalAccessStatus": "success",
+        "authenticationRequirement": "multiFactorAuthentication",
+        "authenticationDetails": [
+          {
+            "authenticationMethod": "Password",
+            "succeeded": true
+          },
+          {
+            "authenticationMethod": "Authenticator App",
+            "succeeded": true
+          }
+        ],
+        "authenticationMethodsUsed": [
+          "Password",
+          "Authenticator App"
+        ],
+        "riskLevelDuringSignIn": "none",
+        "riskLevelAggregated": "none",
+        "riskState": "none",
+        "riskEventTypes_v2": []
+      },
+      "evaluation_metadata": {
+        "scenario_key": "SCN-001",
+        "correlation_group": "CORR-001",
+        "ground_truth": "suspicious_test_activity",
+        "expected_aetheris_severity": "high",
+        "duplicate_of": null,
+        "out_of_order_arrival": false,
+        "notes": "Successful MFA sign-in after failed attempt, same account, device and IP."
+      }
+    },
+    {
+      "dataset_record_id": "ent-003",
+      "source_event_id": "audit-6001",
+      "source_event_time": "2026-11-23T08:36:00Z",
+      "source_payload": {
+        "id": "audit-6001",
+        "activityDateTime": "2026-11-23T08:36:00Z",
+        "activityDisplayName": "Add member to role",
+        "category": "RoleManagement",
+        "correlationId": "entra-audit-corr-6001",
+        "result": "success",
+        "resultReason": "Successfully added member",
+        "operationType": "Assign",
+        "loggedByService": "Core Directory",
+        "initiatedBy": {
+          "user": {
+            "id": "entra-user-101",
+            "displayName": "Jordan Doe",
+            "userPrincipalName": "j.doe@example.com",
+            "ipAddress": "198.51.100.77"
+          },
+          "app": null
+        },
+        "targetResources": [
+          {
+            "id": "entra-user-101",
+            "displayName": "Jordan Doe",
+            "type": "User",
+            "userPrincipalName": "j.doe@example.com",
+            "modifiedProperties": [
+              {
+                "displayName": "Role.DisplayName",
+                "oldValue": null,
+                "newValue": "Privileged Role Administrator"
+              }
+            ]
+          }
+        ],
+        "additionalDetails": [
+          {
+            "key": "UserAgent",
+            "value": "Browser"
+          }
+        ]
+      },
+      "evaluation_metadata": {
+        "scenario_key": "SCN-001",
+        "correlation_group": "CORR-001",
+        "ground_truth": "malicious_test_activity",
+        "expected_aetheris_severity": "critical",
+        "duplicate_of": null,
+        "out_of_order_arrival": false,
+        "notes": "Unexpected privileged role assignment by same identity/IP."
+      }
+    },
+    {
+      "dataset_record_id": "ent-004",
+      "source_event_id": "signin-5003",
+      "source_event_time": "2026-11-23T10:15:00Z",
+      "source_payload": {
+        "id": "signin-5003",
+        "createdDateTime": "2026-11-23T10:15:00Z",
+        "userId": "entra-user-205",
+        "userDisplayName": "Alex Smith",
+        "userPrincipalName": "a.smith@example.com",
+        "appDisplayName": "Microsoft 365",
+        "ipAddress": "192.0.2.25",
+        "clientAppUsed": "Browser",
+        "isInteractive": true,
+        "status": {
+          "errorCode": 0,
+          "failureReason": null
+        },
+        "deviceDetail": {
+          "deviceId": "device-205",
+          "displayName": "HR-LAPTOP-02",
+          "operatingSystem": "Windows 11",
+          "browser": "Edge",
+          "isCompliant": true,
+          "isManaged": true
+        },
+        "location": {
+          "city": "Example City",
+          "countryOrRegion": "US"
+        },
+        "conditionalAccessStatus": "success",
+        "authenticationRequirement": "multiFactorAuthentication",
+        "riskLevelDuringSignIn": "none",
+        "riskLevelAggregated": "none",
+        "riskState": "none"
+      },
+      "evaluation_metadata": {
+        "scenario_key": "SCN-004",
+        "correlation_group": "NONE-003",
+        "ground_truth": "benign",
+        "expected_aetheris_severity": "none",
+        "duplicate_of": null,
+        "out_of_order_arrival": false,
+        "notes": "Expected managed-device sign-in, MFA satisfied and no risk indicators."
+      }
+    },
+    {
+      "dataset_record_id": "ent-005",
+      "source_event_id": "signin-5001",
+      "source_event_time": "2026-11-23T08:29:40Z",
+      "source_payload": {
+        "id": "signin-5001",
+        "createdDateTime": "2026-11-23T08:29:40Z",
+        "userId": "entra-user-101",
+        "userPrincipalName": "j.doe@example.com",
+        "ipAddress": "198.51.100.77",
+        "status": {
+          "errorCode": 50126,
+          "failureReason": "Invalid username or password"
+        }
+      },
+      "evaluation_metadata": {
+        "scenario_key": "SCN-001",
+        "correlation_group": "CORR-001",
+        "ground_truth": "suspicious_test_activity",
+        "expected_aetheris_severity": "high",
+        "duplicate_of": "ent-001",
+        "out_of_order_arrival": false,
+        "notes": "Intentional duplicate sign-in ID; should not increment failed-login count."
+      }
+    },
+    {
+      "dataset_record_id": "ent-006",
+      "source_event_id": "signin-5004",
+      "source_event_time": "2026-11-23T08:27:00Z",
+      "source_payload": {
+        "id": "signin-5004",
+        "createdDateTime": "2026-11-23T08:27:00Z",
+        "userId": "service-principal-77",
+        "userPrincipalName": "reporting-app@example.com",
+        "appDisplayName": "Reporting Service",
+        "ipAddress": "192.0.2.80",
+        "isInteractive": false,
+        "status": {
+          "errorCode": 0,
+          "failureReason": null
+        },
+        "signInEventTypes": [
+          "servicePrincipal"
+        ],
+        "riskLevelDuringSignIn": "none"
+      },
+      "evaluation_metadata": {
+        "scenario_key": "SCN-005",
+        "correlation_group": "NONE-004",
+        "ground_truth": "benign",
+        "expected_aetheris_severity": "none",
+        "duplicate_of": null,
+        "out_of_order_arrival": true,
+        "notes": "Late-arriving service principal sign-in; test event-time and ingestion-time handling."
+      }
+    }
+  ]
+}

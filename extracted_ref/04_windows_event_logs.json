@@ -1,0 +1,278 @@
+{
+  "dataset_name": "Aetheris multi-source security telemetry evaluation corpus",
+  "dataset_version": "1.0.0",
+  "dataset_status": "synthetic_high_fidelity_test_fixture_not_live_telemetry",
+  "source": "Windows Event Logs",
+  "native_format": "Native-style Windows Event XML plus parsed representation",
+  "event_families": "Sysmon 1/3, PowerShell 4104, Security 4624/4625",
+  "record_count": 6,
+  "records": [
+    {
+      "dataset_record_id": "win-001",
+      "source_event_id": "FINANCE-PC-01:Sysmon:1:9012",
+      "source_event_time": "2026-11-23T08:31:02Z",
+      "source_payload": {
+        "raw_xml": "<Event xmlns=\"http://schemas.microsoft.com/win/2004/08/events/event\"><System><Provider Name=\"Microsoft-Windows-Sysmon\"/><EventID>1</EventID><Version>0</Version><TimeCreated SystemTime=\"2026-11-23T08:31:02Z\"/><EventRecordID>9012</EventRecordID><Channel>Microsoft-Windows-Sysmon/Operational</Channel><Computer>FINANCE-PC-01</Computer></System><EventData><Data Name=\"UtcTime\">2026-11-23 08:31:02.000</Data><Data Name=\"ProcessGuid\">{process-guid-123}</Data><Data Name=\"ProcessId\">4820</Data><Data Name=\"Image\">C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe</Data><Data Name=\"CommandLine\">powershell.exe -NoProfile -EncodedCommand SQBFAFgA</Data><Data Name=\"CurrentDirectory\">C:\\Users\\j.doe\\</Data><Data Name=\"User\">CORP\\j.doe</Data><Data Name=\"LogonGuid\">{logon-guid-123}</Data><Data Name=\"LogonId\">0x000F1206</Data><Data Name=\"TerminalSessionId\">1</Data><Data Name=\"IntegrityLevel\">High</Data><Data Name=\"Hashes\">SHA256=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</Data><Data Name=\"ParentProcessGuid\">{parent-guid-456}</Data><Data Name=\"ParentProcessId\">3012</Data><Data Name=\"ParentImage\">C:\\Program Files\\Microsoft Office\\root\\Office16\\WINWORD.EXE</Data><Data Name=\"ParentCommandLine\">WINWORD.EXE /n</Data><Data Name=\"ParentUser\">CORP\\j.doe</Data></EventData></Event>",
+        "parsed_event": {
+          "Provider": {
+            "Name": "Microsoft-Windows-Sysmon"
+          },
+          "EventID": 1,
+          "Version": 0,
+          "TimeCreated": {
+            "SystemTime": "2026-11-23T08:31:02Z"
+          },
+          "EventRecordID": 9012,
+          "Channel": "Microsoft-Windows-Sysmon/Operational",
+          "Computer": "FINANCE-PC-01",
+          "EventData": {
+            "UtcTime": "2026-11-23 08:31:02.000",
+            "ProcessGuid": "{process-guid-123}",
+            "ProcessId": "4820",
+            "Image": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+            "CommandLine": "powershell.exe -NoProfile -EncodedCommand SQBFAFgA",
+            "CurrentDirectory": "C:\\Users\\j.doe\\",
+            "User": "CORP\\j.doe",
+            "LogonGuid": "{logon-guid-123}",
+            "LogonId": "0x000F1206",
+            "TerminalSessionId": "1",
+            "IntegrityLevel": "High",
+            "Hashes": "SHA256=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "ParentProcessGuid": "{parent-guid-456}",
+            "ParentProcessId": "3012",
+            "ParentImage": "C:\\Program Files\\Microsoft Office\\root\\Office16\\WINWORD.EXE",
+            "ParentCommandLine": "WINWORD.EXE /n",
+            "ParentUser": "CORP\\j.doe"
+          }
+        }
+      },
+      "evaluation_metadata": {
+        "scenario_key": "SCN-001",
+        "correlation_group": "CORR-001",
+        "ground_truth": "malicious_test_activity",
+        "expected_aetheris_severity": "high",
+        "duplicate_of": null,
+        "out_of_order_arrival": false,
+        "notes": "Sysmon process creation linked to Defender process event by host, PID, user and time."
+      }
+    },
+    {
+      "dataset_record_id": "win-002",
+      "source_event_id": "FINANCE-PC-01:PowerShell:4104:9013",
+      "source_event_time": "2026-11-23T08:31:04Z",
+      "source_payload": {
+        "raw_xml": "<Event xmlns=\"http://schemas.microsoft.com/win/2004/08/events/event\"><System><Provider Name=\"Microsoft-Windows-PowerShell\"/><EventID>4104</EventID><Version>0</Version><TimeCreated SystemTime=\"2026-11-23T08:31:04Z\"/><EventRecordID>9013</EventRecordID><Channel>Microsoft-Windows-PowerShell/Operational</Channel><Computer>FINANCE-PC-01</Computer></System><EventData><Data Name=\"MessageNumber\">1</Data><Data Name=\"MessageTotal\">1</Data><Data Name=\"ScriptBlockText\">[System.Text.Encoding]::Unicode.GetString([Convert]::FromBase64String('SQBFAFgA'))</Data><Data Name=\"ScriptBlockId\">{script-block-123}</Data><Data Name=\"Path\"></Data><Data Name=\"SequenceNumber\">1</Data><Data Name=\"RunspaceId\">{runspace-123}</Data></EventData></Event>",
+        "parsed_event": {
+          "Provider": {
+            "Name": "Microsoft-Windows-PowerShell"
+          },
+          "EventID": 4104,
+          "Version": 0,
+          "TimeCreated": {
+            "SystemTime": "2026-11-23T08:31:04Z"
+          },
+          "EventRecordID": 9013,
+          "Channel": "Microsoft-Windows-PowerShell/Operational",
+          "Computer": "FINANCE-PC-01",
+          "EventData": {
+            "MessageNumber": "1",
+            "MessageTotal": "1",
+            "ScriptBlockText": "[System.Text.Encoding]::Unicode.GetString([Convert]::FromBase64String('SQBFAFgA'))",
+            "ScriptBlockId": "{script-block-123}",
+            "Path": "",
+            "SequenceNumber": "1",
+            "RunspaceId": "{runspace-123}"
+          }
+        }
+      },
+      "evaluation_metadata": {
+        "scenario_key": "SCN-001",
+        "correlation_group": "CORR-001",
+        "ground_truth": "suspicious_test_activity",
+        "expected_aetheris_severity": "high",
+        "duplicate_of": null,
+        "out_of_order_arrival": false,
+        "notes": "PowerShell script-block logging record; preserve script block identifiers and message sequence."
+      }
+    },
+    {
+      "dataset_record_id": "win-003",
+      "source_event_id": "FINANCE-PC-01:Security:4625:9014",
+      "source_event_time": "2026-11-23T08:29:20Z",
+      "source_payload": {
+        "raw_xml": "<Event xmlns=\"http://schemas.microsoft.com/win/2004/08/events/event\"><System><Provider Name=\"Microsoft-Windows-Security-Auditing\"/><EventID>4625</EventID><Version>0</Version><TimeCreated SystemTime=\"2026-11-23T08:29:20Z\"/><EventRecordID>9014</EventRecordID><Channel>Security</Channel><Computer>FINANCE-PC-01</Computer></System><EventData><Data Name=\"SubjectUserSid\">S-1-5-18</Data><Data Name=\"SubjectUserName\">FINANCE-PC-01$</Data><Data Name=\"TargetUserSid\">S-1-0-0</Data><Data Name=\"TargetUserName\">j.doe</Data><Data Name=\"TargetDomainName\">CORP</Data><Data Name=\"Status\">0xC000006D</Data><Data Name=\"SubStatus\">0xC000006A</Data><Data Name=\"FailureReason\">Unknown user name or bad password</Data><Data Name=\"LogonType\">3</Data><Data Name=\"LogonProcessName\">NtLmSsp</Data><Data Name=\"AuthenticationPackageName\">NTLM</Data><Data Name=\"WorkstationName\">FINANCE-PC-01</Data><Data Name=\"IpAddress\">198.51.100.77</Data><Data Name=\"IpPort\">53122</Data></EventData></Event>",
+        "parsed_event": {
+          "Provider": {
+            "Name": "Microsoft-Windows-Security-Auditing"
+          },
+          "EventID": 4625,
+          "Version": 0,
+          "TimeCreated": {
+            "SystemTime": "2026-11-23T08:29:20Z"
+          },
+          "EventRecordID": 9014,
+          "Channel": "Security",
+          "Computer": "FINANCE-PC-01",
+          "EventData": {
+            "SubjectUserSid": "S-1-5-18",
+            "SubjectUserName": "FINANCE-PC-01$",
+            "TargetUserSid": "S-1-0-0",
+            "TargetUserName": "j.doe",
+            "TargetDomainName": "CORP",
+            "Status": "0xC000006D",
+            "SubStatus": "0xC000006A",
+            "FailureReason": "Unknown user name or bad password",
+            "LogonType": "3",
+            "LogonProcessName": "NtLmSsp",
+            "AuthenticationPackageName": "NTLM",
+            "WorkstationName": "FINANCE-PC-01",
+            "IpAddress": "198.51.100.77",
+            "IpPort": "53122"
+          }
+        }
+      },
+      "evaluation_metadata": {
+        "scenario_key": "SCN-001",
+        "correlation_group": "CORR-001",
+        "ground_truth": "suspicious_test_activity",
+        "expected_aetheris_severity": "medium",
+        "duplicate_of": null,
+        "out_of_order_arrival": false,
+        "notes": "Failed logon; correlate using account, source IP and event time, not just proximity."
+      }
+    },
+    {
+      "dataset_record_id": "win-004",
+      "source_event_id": "HR-LAPTOP-02:Sysmon:1:9020",
+      "source_event_time": "2026-11-23T09:10:00Z",
+      "source_payload": {
+        "raw_xml": "<Event xmlns=\"http://schemas.microsoft.com/win/2004/08/events/event\"><System><Provider Name=\"Microsoft-Windows-Sysmon\"/><EventID>1</EventID><Version>0</Version><TimeCreated SystemTime=\"2026-11-23T09:10:00Z\"/><EventRecordID>9020</EventRecordID><Channel>Microsoft-Windows-Sysmon/Operational</Channel><Computer>HR-LAPTOP-02</Computer></System><EventData><Data Name=\"UtcTime\">2026-11-23 09:10:00.000</Data><Data Name=\"ProcessGuid\">{process-guid-hr-1}</Data><Data Name=\"ProcessId\">6200</Data><Data Name=\"Image\">C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe</Data><Data Name=\"CommandLine\">msedge.exe --profile-directory=Default</Data><Data Name=\"User\">CORP\\a.smith</Data><Data Name=\"IntegrityLevel\">Medium</Data><Data Name=\"Hashes\">SHA256=cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc</Data><Data Name=\"ParentProcessGuid\">{explorer-guid}</Data><Data Name=\"ParentProcessId\">1100</Data><Data Name=\"ParentImage\">C:\\Windows\\explorer.exe</Data><Data Name=\"ParentCommandLine\">C:\\Windows\\Explorer.EXE</Data><Data Name=\"ParentUser\">CORP\\a.smith</Data></EventData></Event>",
+        "parsed_event": {
+          "Provider": {
+            "Name": "Microsoft-Windows-Sysmon"
+          },
+          "EventID": 1,
+          "Version": 0,
+          "TimeCreated": {
+            "SystemTime": "2026-11-23T09:10:00Z"
+          },
+          "EventRecordID": 9020,
+          "Channel": "Microsoft-Windows-Sysmon/Operational",
+          "Computer": "HR-LAPTOP-02",
+          "EventData": {
+            "UtcTime": "2026-11-23 09:10:00.000",
+            "ProcessGuid": "{process-guid-hr-1}",
+            "ProcessId": "6200",
+            "Image": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+            "CommandLine": "msedge.exe --profile-directory=Default",
+            "User": "CORP\\a.smith",
+            "IntegrityLevel": "Medium",
+            "Hashes": "SHA256=cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+            "ParentProcessGuid": "{explorer-guid}",
+            "ParentProcessId": "1100",
+            "ParentImage": "C:\\Windows\\explorer.exe",
+            "ParentCommandLine": "C:\\Windows\\Explorer.EXE",
+            "ParentUser": "CORP\\a.smith"
+          }
+        }
+      },
+      "evaluation_metadata": {
+        "scenario_key": "SCN-002",
+        "correlation_group": "NONE-001",
+        "ground_truth": "benign",
+        "expected_aetheris_severity": "none",
+        "duplicate_of": null,
+        "out_of_order_arrival": false,
+        "notes": "Ordinary Edge process launch by a standard user."
+      }
+    },
+    {
+      "dataset_record_id": "win-005",
+      "source_event_id": "FINANCE-PC-01:Sysmon:3:9015",
+      "source_event_time": "2026-11-23T08:31:08Z",
+      "source_payload": {
+        "raw_xml": "<Event xmlns=\"http://schemas.microsoft.com/win/2004/08/events/event\"><System><Provider Name=\"Microsoft-Windows-Sysmon\"/><EventID>3</EventID><Version>0</Version><TimeCreated SystemTime=\"2026-11-23T08:31:08Z\"/><EventRecordID>9015</EventRecordID><Channel>Microsoft-Windows-Sysmon/Operational</Channel><Computer>FINANCE-PC-01</Computer></System><EventData><Data Name=\"UtcTime\">2026-11-23 08:31:08.000</Data><Data Name=\"ProcessGuid\">{process-guid-123}</Data><Data Name=\"ProcessId\">4820</Data><Data Name=\"Image\">C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe</Data><Data Name=\"User\">CORP\\j.doe</Data><Data Name=\"Protocol\">tcp</Data><Data Name=\"Initiated\">true</Data><Data Name=\"SourceIsIpv6\">false</Data><Data Name=\"SourceIp\">10.20.4.15</Data><Data Name=\"SourcePort\">53122</Data><Data Name=\"DestinationIsIpv6\">false</Data><Data Name=\"DestinationIp\">198.51.100.77</Data><Data Name=\"DestinationPort\">443</Data><Data Name=\"DestinationHostname\">updates-example.invalid</Data></EventData></Event>",
+        "parsed_event": {
+          "Provider": {
+            "Name": "Microsoft-Windows-Sysmon"
+          },
+          "EventID": 3,
+          "Version": 0,
+          "TimeCreated": {
+            "SystemTime": "2026-11-23T08:31:08Z"
+          },
+          "EventRecordID": 9015,
+          "Channel": "Microsoft-Windows-Sysmon/Operational",
+          "Computer": "FINANCE-PC-01",
+          "EventData": {
+            "UtcTime": "2026-11-23 08:31:08.000",
+            "ProcessGuid": "{process-guid-123}",
+            "ProcessId": "4820",
+            "Image": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+            "User": "CORP\\j.doe",
+            "Protocol": "tcp",
+            "Initiated": "true",
+            "SourceIsIpv6": "false",
+            "SourceIp": "10.20.4.15",
+            "SourcePort": "53122",
+            "DestinationIsIpv6": "false",
+            "DestinationIp": "198.51.100.77",
+            "DestinationPort": "443",
+            "DestinationHostname": "updates-example.invalid"
+          }
+        }
+      },
+      "evaluation_metadata": {
+        "scenario_key": "SCN-001",
+        "correlation_group": "CORR-001",
+        "ground_truth": "suspicious_test_activity",
+        "expected_aetheris_severity": "high",
+        "duplicate_of": null,
+        "out_of_order_arrival": false,
+        "notes": "Sysmon network connection uses the same process GUID and destination as Defender network event."
+      }
+    },
+    {
+      "dataset_record_id": "win-006",
+      "source_event_id": "FINANCE-PC-01:Security:4624:9016",
+      "source_event_time": "2026-11-23T08:30:20Z",
+      "source_payload": {
+        "raw_xml": "<Event xmlns=\"http://schemas.microsoft.com/win/2004/08/events/event\"><System><Provider Name=\"Microsoft-Windows-Security-Auditing\"/><EventID>4624</EventID><Version>0</Version><TimeCreated SystemTime=\"2026-11-23T08:30:20Z\"/><EventRecordID>9016</EventRecordID><Channel>Security</Channel><Computer>FINANCE-PC-01</Computer></System><EventData><Data Name=\"SubjectUserSid\">S-1-5-18</Data><Data Name=\"TargetUserSid\">S-1-5-21-111-222-333-1105</Data><Data Name=\"TargetUserName\">j.doe</Data><Data Name=\"TargetDomainName\">CORP</Data><Data Name=\"LogonType\">10</Data><Data Name=\"LogonProcessName\">User32</Data><Data Name=\"AuthenticationPackageName\">Negotiate</Data><Data Name=\"WorkstationName\">FINANCE-PC-01</Data><Data Name=\"IpAddress\">198.51.100.77</Data><Data Name=\"IpPort\">53122</Data></EventData></Event>",
+        "parsed_event": {
+          "Provider": {
+            "Name": "Microsoft-Windows-Security-Auditing"
+          },
+          "EventID": 4624,
+          "Version": 0,
+          "TimeCreated": {
+            "SystemTime": "2026-11-23T08:30:20Z"
+          },
+          "EventRecordID": 9016,
+          "Channel": "Security",
+          "Computer": "FINANCE-PC-01",
+          "EventData": {
+            "SubjectUserSid": "S-1-5-18",
+            "TargetUserSid": "S-1-5-21-111-222-333-1105",
+            "TargetUserName": "j.doe",
+            "TargetDomainName": "CORP",
+            "LogonType": "10",
+            "LogonProcessName": "User32",
+            "AuthenticationPackageName": "Negotiate",
+            "WorkstationName": "FINANCE-PC-01",
+            "IpAddress": "198.51.100.77",
+            "IpPort": "53122"
+          }
+        }
+      },
+      "evaluation_metadata": {
+        "scenario_key": "SCN-001",
+        "correlation_group": "CORR-001",
+        "ground_truth": "suspicious_test_activity",
+        "expected_aetheris_severity": "medium",
+        "duplicate_of": null,
+        "out_of_order_arrival": false,
+        "notes": "Successful endpoint logon; corroborate with Entra but do not assume identical event semantics."
+      }
+    }
+  ]
+}

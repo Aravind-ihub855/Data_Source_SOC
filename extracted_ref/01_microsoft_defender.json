@@ -1,0 +1,257 @@
+{
+  "dataset_name": "Aetheris multi-source security telemetry evaluation corpus",
+  "dataset_version": "1.0.0",
+  "dataset_status": "synthetic_high_fidelity_test_fixture_not_live_telemetry",
+  "source": "Microsoft Defender for Endpoint",
+  "native_format": "Advanced Hunting table-shaped JSON",
+  "event_families": "DeviceProcessEvents, DeviceNetworkEvents, AlertInfo/AlertEvidence",
+  "record_count": 6,
+  "records": [
+    {
+      "dataset_record_id": "def-001",
+      "source_event_id": "def-report-1001",
+      "source_event_time": "2026-11-23T08:31:02Z",
+      "source_payload": {
+        "Timestamp": "2026-11-23T08:31:02Z",
+        "DeviceId": "device-102",
+        "DeviceName": "FINANCE-PC-01",
+        "ActionType": "ProcessCreated",
+        "ReportId": 1001,
+        "FileName": "powershell.exe",
+        "FolderPath": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0",
+        "ProcessId": 4820,
+        "ProcessCommandLine": "powershell.exe -NoProfile -EncodedCommand SQBFAFgA",
+        "ProcessCreationTime": "2026-11-23T08:31:02Z",
+        "ProcessIntegrityLevel": "High",
+        "ProcessTokenElevation": "TokenElevationTypeFull",
+        "SHA1": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "SHA256": null,
+        "MD5": null,
+        "FileSize": 452096,
+        "ProcessVersionInfoCompanyName": "Microsoft Corporation",
+        "ProcessVersionInfoProductName": "Microsoft Windows Operating System",
+        "ProcessVersionInfoProductVersion": "10.0.22621.1",
+        "ProcessVersionInfoOriginalFileName": "PowerShell.EXE",
+        "AccountDomain": "CORP",
+        "AccountName": "j.doe",
+        "AccountSid": "S-1-5-21-111-222-333-1105",
+        "AccountUpn": "j.doe@example.com",
+        "AccountObjectId": "entra-user-101",
+        "LogonId": 987654,
+        "InitiatingProcessFileName": "winword.exe",
+        "InitiatingProcessId": 3012,
+        "InitiatingProcessCommandLine": "winword.exe /n",
+        "InitiatingProcessCreationTime": "2026-11-23T08:29:50Z",
+        "InitiatingProcessSHA1": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "InitiatingProcessSHA256": null,
+        "InitiatingProcessAccountName": "j.doe",
+        "InitiatingProcessAccountSid": "S-1-5-21-111-222-333-1105",
+        "InitiatingProcessAccountUpn": "j.doe@example.com",
+        "InitiatingProcessLogonId": 987654,
+        "InitiatingProcessIntegrityLevel": "Medium",
+        "InitiatingProcessTokenElevation": "TokenElevationTypeDefault"
+      },
+      "evaluation_metadata": {
+        "scenario_key": "SCN-001",
+        "correlation_group": "CORR-001",
+        "ground_truth": "malicious_test_activity",
+        "expected_aetheris_severity": "high",
+        "duplicate_of": null,
+        "out_of_order_arrival": false,
+        "notes": "Office parent spawned encoded PowerShell; correlate with Windows Sysmon and 4104."
+      }
+    },
+    {
+      "dataset_record_id": "def-002",
+      "source_event_id": "def-report-1002",
+      "source_event_time": "2026-11-23T08:31:08Z",
+      "source_payload": {
+        "Timestamp": "2026-11-23T08:31:08Z",
+        "DeviceId": "device-102",
+        "DeviceName": "FINANCE-PC-01",
+        "ActionType": "ConnectionSuccess",
+        "LocalIP": "10.20.4.15",
+        "LocalPort": 53122,
+        "RemoteIP": "198.51.100.77",
+        "RemotePort": 443,
+        "RemoteUrl": "updates-example.invalid",
+        "Protocol": "Tcp",
+        "InitiatingProcessFileName": "powershell.exe",
+        "InitiatingProcessId": 4820,
+        "InitiatingProcessCommandLine": "powershell.exe -NoProfile -EncodedCommand SQBFAFgA",
+        "InitiatingProcessSHA1": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "InitiatingProcessAccountName": "j.doe",
+        "InitiatingProcessAccountUpn": "j.doe@example.com",
+        "ReportId": 1002
+      },
+      "evaluation_metadata": {
+        "scenario_key": "SCN-001",
+        "correlation_group": "CORR-001",
+        "ground_truth": "suspicious_test_activity",
+        "expected_aetheris_severity": "high",
+        "duplicate_of": null,
+        "out_of_order_arrival": false,
+        "notes": "Network connection from same device/process context."
+      }
+    },
+    {
+      "dataset_record_id": "def-003",
+      "source_event_id": "alert-9001",
+      "source_event_time": "2026-11-23T08:32:10Z",
+      "source_payload": {
+        "AlertId": "alert-9001",
+        "Timestamp": "2026-11-23T08:32:10Z",
+        "Title": "Suspicious PowerShell behavior",
+        "Category": "Execution",
+        "Severity": "High",
+        "ServiceSource": "MicrosoftDefenderForEndpoint",
+        "DetectionSource": "Behavioral",
+        "AttackTechniques": [
+          "T1059.001"
+        ],
+        "OriginSource": "Endpoint",
+        "InvestigationId": "investigation-7001",
+        "Evidence": [
+          {
+            "EntityType": "Device",
+            "EvidenceRole": "Impacted",
+            "DeviceId": "device-102",
+            "DeviceName": "FINANCE-PC-01"
+          },
+          {
+            "EntityType": "Process",
+            "EvidenceRole": "Related",
+            "FileName": "powershell.exe",
+            "SHA1": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          {
+            "EntityType": "Account",
+            "EvidenceRole": "Related",
+            "AccountName": "j.doe",
+            "AccountUpn": "j.doe@example.com"
+          }
+        ]
+      },
+      "evaluation_metadata": {
+        "scenario_key": "SCN-001",
+        "correlation_group": "CORR-001",
+        "ground_truth": "malicious_test_activity",
+        "expected_aetheris_severity": "high",
+        "duplicate_of": null,
+        "out_of_order_arrival": false,
+        "notes": "Native Defender alert record; vendor severity is retained separately."
+      }
+    },
+    {
+      "dataset_record_id": "def-004",
+      "source_event_id": "def-report-1004",
+      "source_event_time": "2026-11-23T09:10:00Z",
+      "source_payload": {
+        "Timestamp": "2026-11-23T09:10:00Z",
+        "DeviceId": "device-205",
+        "DeviceName": "HR-LAPTOP-02",
+        "ActionType": "ProcessCreated",
+        "ReportId": 1004,
+        "FileName": "msedge.exe",
+        "FolderPath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application",
+        "ProcessId": 6200,
+        "ProcessCommandLine": "msedge.exe --profile-directory=Default",
+        "ProcessIntegrityLevel": "Medium",
+        "SHA1": "cccccccccccccccccccccccccccccccccccccccc",
+        "AccountName": "a.smith",
+        "AccountUpn": "a.smith@example.com",
+        "InitiatingProcessFileName": "explorer.exe"
+      },
+      "evaluation_metadata": {
+        "scenario_key": "SCN-002",
+        "correlation_group": "NONE-001",
+        "ground_truth": "benign",
+        "expected_aetheris_severity": "none",
+        "duplicate_of": null,
+        "out_of_order_arrival": false,
+        "notes": "Normal signed browser process. No alert solely from process creation."
+      }
+    },
+    {
+      "dataset_record_id": "def-005",
+      "source_event_id": "def-report-1001",
+      "source_event_time": "2026-11-23T08:31:02Z",
+      "source_payload": {
+        "Timestamp": "2026-11-23T08:31:02Z",
+        "DeviceId": "device-102",
+        "DeviceName": "FINANCE-PC-01",
+        "ActionType": "ProcessCreated",
+        "ReportId": 1001,
+        "FileName": "powershell.exe",
+        "FolderPath": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0",
+        "ProcessId": 4820,
+        "ProcessCommandLine": "powershell.exe -NoProfile -EncodedCommand SQBFAFgA",
+        "ProcessCreationTime": "2026-11-23T08:31:02Z",
+        "ProcessIntegrityLevel": "High",
+        "ProcessTokenElevation": "TokenElevationTypeFull",
+        "SHA1": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "SHA256": null,
+        "MD5": null,
+        "FileSize": 452096,
+        "ProcessVersionInfoCompanyName": "Microsoft Corporation",
+        "ProcessVersionInfoProductName": "Microsoft Windows Operating System",
+        "ProcessVersionInfoProductVersion": "10.0.22621.1",
+        "ProcessVersionInfoOriginalFileName": "PowerShell.EXE",
+        "AccountDomain": "CORP",
+        "AccountName": "j.doe",
+        "AccountSid": "S-1-5-21-111-222-333-1105",
+        "AccountUpn": "j.doe@example.com",
+        "AccountObjectId": "entra-user-101",
+        "LogonId": 987654,
+        "InitiatingProcessFileName": "winword.exe",
+        "InitiatingProcessId": 3012,
+        "InitiatingProcessCommandLine": "winword.exe /n",
+        "InitiatingProcessCreationTime": "2026-11-23T08:29:50Z",
+        "InitiatingProcessSHA1": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "InitiatingProcessSHA256": null,
+        "InitiatingProcessAccountName": "j.doe",
+        "InitiatingProcessAccountSid": "S-1-5-21-111-222-333-1105",
+        "InitiatingProcessAccountUpn": "j.doe@example.com",
+        "InitiatingProcessLogonId": 987654,
+        "InitiatingProcessIntegrityLevel": "Medium",
+        "InitiatingProcessTokenElevation": "TokenElevationTypeDefault"
+      },
+      "evaluation_metadata": {
+        "scenario_key": "SCN-001",
+        "correlation_group": "CORR-001",
+        "ground_truth": "malicious_test_activity",
+        "expected_aetheris_severity": "high",
+        "duplicate_of": "def-001",
+        "out_of_order_arrival": false,
+        "notes": "Intentional duplicate of def-001 for deduplication testing."
+      }
+    },
+    {
+      "dataset_record_id": "def-006",
+      "source_event_id": "def-report-1006",
+      "source_event_time": "2026-11-23T08:28:00Z",
+      "source_payload": {
+        "Timestamp": "2026-11-23T08:28:00Z",
+        "DeviceId": "device-310",
+        "DeviceName": "ENG-WS-03",
+        "ActionType": "FileCreated",
+        "ReportId": 1006,
+        "FileName": "quarterly-report.xlsx",
+        "FolderPath": "C:\\Users\\analyst\\Documents",
+        "SHA1": "dddddddddddddddddddddddddddddddddddddddd",
+        "FileSize": 98304,
+        "InitiatingProcessFileName": "EXCEL.EXE",
+        "InitiatingProcessAccountName": "analyst"
+      },
+      "evaluation_metadata": {
+        "scenario_key": "SCN-003",
+        "correlation_group": "NONE-002",
+        "ground_truth": "benign",
+        "expected_aetheris_severity": "none",
+        "duplicate_of": null,
+        "out_of_order_arrival": true,
+        "notes": "Late-arriving benign file event tests event-time ordering."
+      }
+    }
+  ]
+}

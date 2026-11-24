@@ -1,0 +1,476 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.aetheris.example/source/firewall/1.0.0.json",
+  "title": "Network firewall (CEF): event body",
+  "description": "Vendor-neutral next-generation firewall traffic/threat log as CEF with parsed fields. Replace device_vendor/product with the real vendor profile when a customer firewall is onboarded; keep the parsed_fields contract.",
+  "x-schema-version": "1.0.0",
+  "x-splunk": {
+    "index": "network",
+    "sourcetype_simulation": "aetheris:firewall",
+    "note": "Production sourcetype depends on the vendor add-on (for example Palo Alto or Fortinet) or generic CEF ingestion."
+  },
+  "x-dedupe-key": "device_id + session_id + event_time + log_type",
+  "$defs": {
+    "ts": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{1,7})?Z$",
+      "description": "UTC, ISO 8601, trailing Z, up to 7 fractional digits."
+    },
+    "ip": {
+      "type": "string",
+      "pattern": "^(((25[0-5]|2[0-4]\\d|1?\\d?\\d)\\.){3}(25[0-5]|2[0-4]\\d|1?\\d?\\d)|[0-9a-fA-F:]{2,39})$",
+      "description": "IPv4 or IPv6 literal. Simulation uses RFC 5737 / RFC 3849 documentation ranges and RFC 1918 only."
+    }
+  },
+  "type": "object",
+  "required": [
+    "format",
+    "raw_message",
+    "parsed_fields"
+  ],
+  "properties": {
+    "format": {
+      "const": "CEF"
+    },
+    "raw_message": {
+      "type": "string",
+      "pattern": "^CEF:0\\|[^|]*\\|[^|]*\\|[^|]*\\|[^|]*\\|[^|]*\\|\\d{1,2}\\|.+$",
+      "description": "Authoritative record (CEF:0|vendor|product|version|signatureId|name|severity|extension)."
+    },
+    "parsed_fields": {
+      "type": "object",
+      "required": [
+        "log_type",
+        "device_vendor",
+        "device_product",
+        "device_version",
+        "device_id",
+        "signature_id",
+        "name",
+        "severity",
+        "event_time",
+        "source_ip",
+        "source_port",
+        "destination_ip",
+        "destination_port",
+        "protocol",
+        "action",
+        "rule_name",
+        "direction",
+        "session_id",
+        "source_zone",
+        "destination_zone",
+        "application",
+        "bytes_out",
+        "bytes_in",
+        "packets_out",
+        "packets_in",
+        "session_end_reason"
+      ],
+      "properties": {
+        "log_type": {
+          "enum": [
+            "traffic",
+            "threat",
+            "url",
+            "system"
+          ]
+        },
+        "device_vendor": {
+          "type": "string"
+        },
+        "device_product": {
+          "type": "string"
+        },
+        "device_version": {
+          "type": "string"
+        },
+        "device_id": {
+          "type": "string",
+          "x-role": "dedupe_key"
+        },
+        "device_name": {
+          "type": "string"
+        },
+        "signature_id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "severity": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10
+        },
+        "event_time": {
+          "$ref": "#/$defs/ts",
+          "x-role": "event_time"
+        },
+        "event_start_time": {
+          "$ref": "#/$defs/ts"
+        },
+        "event_end_time": {
+          "$ref": "#/$defs/ts"
+        },
+        "duration_seconds": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "source_ip": {
+          "$ref": "#/$defs/ip",
+          "x-role": "entity.ip"
+        },
+        "source_port": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 65535
+        },
+        "destination_ip": {
+          "$ref": "#/$defs/ip",
+          "x-role": "entity.ip"
+        },
+        "destination_port": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 65535
+        },
+        "source_nat_ip": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ip"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source_nat_port": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 65535
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "destination_nat_ip": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ip"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "protocol": {
+          "enum": [
+            "TCP",
+            "UDP",
+            "ICMP",
+            "OTHER"
+          ]
+        },
+        "action": {
+          "enum": [
+            "allow",
+            "deny",
+            "drop",
+            "reset-client",
+            "reset-server",
+            "reset-both",
+            "alert",
+            "block-url"
+          ]
+        },
+        "rule_name": {
+          "type": "string"
+        },
+        "direction": {
+          "enum": [
+            "inbound",
+            "outbound",
+            "internal"
+          ]
+        },
+        "session_id": {
+          "type": "string",
+          "x-role": "dedupe_key"
+        },
+        "source_zone": {
+          "type": "string"
+        },
+        "destination_zone": {
+          "type": "string"
+        },
+        "application": {
+          "type": "string"
+        },
+        "user": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "url": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "url_category": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "bytes_out": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "bytes_in": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "packets_out": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "packets_in": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "session_end_reason": {
+          "enum": [
+            "tcp-fin",
+            "tcp-rst-from-client",
+            "tcp-rst-from-server",
+            "aged-out",
+            "policy-deny",
+            "threat",
+            "n/a"
+          ]
+        },
+        "threat_name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "threat_category": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "threat_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "log_type": {
+                "const": "threat"
+              }
+            },
+            "required": [
+              "log_type"
+            ]
+          },
+          "then": {
+            "required": [
+              "threat_name",
+              "threat_category",
+              "threat_id"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "log_type": {
+                "const": "traffic"
+              },
+              "action": {
+                "const": "allow"
+              }
+            },
+            "required": [
+              "log_type",
+              "action"
+            ]
+          },
+          "then": {
+            "required": [
+              "event_start_time",
+              "event_end_time",
+              "duration_seconds",
+              "source_nat_ip"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "examples": [
+    {
+      "format": "CEF",
+      "raw_message": "CEF:0|ExampleVendor|ExampleNGFW|10.2|8001|Outbound session allowed|3|rt=1795422698000 src=10.20.4.15 spt=53122 dst=203.0.113.77 dpt=443 proto=TCP act=allow deviceExternalId=fw-edge-01 cs1=Outbound-Web cs1Label=RuleName out=18240 in=2210450 app=ssl externalId=1840221 sourceTranslatedAddress=198.51.100.10",
+      "parsed_fields": {
+        "device_vendor": "ExampleVendor",
+        "device_product": "ExampleNGFW",
+        "device_version": "10.2",
+        "device_id": "fw-edge-01",
+        "device_name": "fw-edge-01",
+        "protocol": "TCP",
+        "direction": "outbound",
+        "source_zone": "trust",
+        "destination_zone": "untrust",
+        "log_type": "traffic",
+        "signature_id": "8001",
+        "name": "Outbound session allowed",
+        "severity": 3,
+        "event_time": "2026-11-23T08:31:38Z",
+        "event_start_time": "2026-11-23T08:31:08Z",
+        "event_end_time": "2026-11-23T08:31:38Z",
+        "duration_seconds": 30,
+        "source_ip": "10.20.4.15",
+        "source_port": 53122,
+        "source_nat_ip": "198.51.100.10",
+        "source_nat_port": 41870,
+        "destination_ip": "203.0.113.77",
+        "destination_port": 443,
+        "action": "allow",
+        "rule_name": "Outbound-Web",
+        "session_id": "1840221",
+        "application": "ssl",
+        "bytes_out": 18240,
+        "bytes_in": 2210450,
+        "packets_out": 96,
+        "packets_in": 1710,
+        "session_end_reason": "tcp-fin",
+        "user": "j.doe"
+      }
+    },
+    {
+      "format": "CEF",
+      "raw_message": "CEF:0|ExampleVendor|ExampleNGFW|10.2|9052|Suspicious TLS destination|8|rt=1795422669000 src=10.20.4.15 spt=53122 dst=203.0.113.77 dpt=443 proto=TCP act=alert deviceExternalId=fw-edge-01 cs1=Outbound-Web cs1Label=RuleName out=1210 in=5120 app=ssl externalId=1840221 sourceTranslatedAddress=198.51.100.10 cs2=Suspicious TLS destination cs2Label=ThreatName",
+      "parsed_fields": {
+        "device_vendor": "ExampleVendor",
+        "device_product": "ExampleNGFW",
+        "device_version": "10.2",
+        "device_id": "fw-edge-01",
+        "device_name": "fw-edge-01",
+        "protocol": "TCP",
+        "direction": "outbound",
+        "source_zone": "trust",
+        "destination_zone": "untrust",
+        "log_type": "threat",
+        "signature_id": "9052",
+        "name": "Suspicious TLS destination",
+        "severity": 8,
+        "event_time": "2026-11-23T08:31:09Z",
+        "source_ip": "10.20.4.15",
+        "source_port": 53122,
+        "source_nat_ip": "198.51.100.10",
+        "destination_ip": "203.0.113.77",
+        "destination_port": 443,
+        "action": "alert",
+        "rule_name": "Outbound-Web",
+        "session_id": "1840221",
+        "application": "ssl",
+        "bytes_out": 1210,
+        "bytes_in": 5120,
+        "packets_out": 9,
+        "packets_in": 11,
+        "session_end_reason": "n/a",
+        "threat_name": "Suspicious TLS destination",
+        "threat_category": "command-and-control",
+        "threat_id": "9052",
+        "user": "j.doe"
+      }
+    },
+    {
+      "format": "CEF",
+      "raw_message": "CEF:0|ExampleVendor|ExampleNGFW|10.2|8003|Outbound session allowed|1|rt=1795425035000 src=10.20.5.20 spt=54000 dst=192.0.2.25 dpt=443 proto=TCP act=allow deviceExternalId=fw-edge-01 cs1=Corporate-Web cs1Label=RuleName out=4120 in=88210 app=ms-office365 externalId=1840377 sourceTranslatedAddress=198.51.100.10",
+      "parsed_fields": {
+        "device_vendor": "ExampleVendor",
+        "device_product": "ExampleNGFW",
+        "device_version": "10.2",
+        "device_id": "fw-edge-01",
+        "device_name": "fw-edge-01",
+        "protocol": "TCP",
+        "direction": "outbound",
+        "source_zone": "trust",
+        "destination_zone": "untrust",
+        "log_type": "traffic",
+        "signature_id": "8003",
+        "name": "Outbound session allowed",
+        "severity": 1,
+        "event_time": "2026-11-23T09:10:35Z",
+        "event_start_time": "2026-11-23T09:10:05Z",
+        "event_end_time": "2026-11-23T09:10:35Z",
+        "duration_seconds": 30,
+        "source_ip": "10.20.5.20",
+        "source_port": 54000,
+        "source_nat_ip": "198.51.100.10",
+        "source_nat_port": 40112,
+        "destination_ip": "192.0.2.25",
+        "destination_port": 443,
+        "action": "allow",
+        "rule_name": "Corporate-Web",
+        "session_id": "1840377",
+        "application": "ms-office365",
+        "bytes_out": 4120,
+        "bytes_in": 88210,
+        "packets_out": 22,
+        "packets_in": 71,
+        "session_end_reason": "tcp-fin",
+        "user": "a.smith"
+      }
+    },
+    {
+      "format": "CEF",
+      "raw_message": "CEF:0|ExampleVendor|ExampleNGFW|10.2|8005|Inbound session denied|2|rt=1795431600000 src=203.0.113.44 spt=45000 dst=198.51.100.10 dpt=3389 proto=TCP act=deny deviceExternalId=fw-edge-01 cs1=Default-Deny cs1Label=RuleName out=0 in=0 app=ms-rdp externalId=1841002",
+      "parsed_fields": {
+        "device_vendor": "ExampleVendor",
+        "device_product": "ExampleNGFW",
+        "device_version": "10.2",
+        "device_id": "fw-edge-01",
+        "device_name": "fw-edge-01",
+        "protocol": "TCP",
+        "direction": "inbound",
+        "source_zone": "untrust",
+        "destination_zone": "trust",
+        "log_type": "traffic",
+        "signature_id": "8005",
+        "name": "Inbound session denied",
+        "severity": 2,
+        "event_time": "2026-11-23T11:00:00Z",
+        "source_ip": "203.0.113.44",
+        "source_port": 45000,
+        "destination_ip": "198.51.100.10",
+        "destination_port": 3389,
+        "action": "deny",
+        "rule_name": "Default-Deny",
+        "session_id": "1841002",
+        "application": "ms-rdp",
+        "bytes_out": 0,
+        "bytes_in": 0,
+        "packets_out": 0,
+        "packets_in": 1,
+        "session_end_reason": "policy-deny",
+        "source_nat_ip": null
+      }
+    }
+  ]
+}

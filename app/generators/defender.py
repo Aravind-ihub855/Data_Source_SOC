@@ -29,24 +29,54 @@ def generate_defender_process_event(
     report_id = f"DEF-{uuid.uuid4().hex[:12].upper()}"
     file_hash = sha256 or uuid.uuid4().hex + uuid.uuid4().hex[:32]
 
+    sha1_val = (uuid.uuid4().hex + uuid.uuid4().hex[:8]).lower()
     event = {
-        "Source": "Microsoft Defender for Endpoint",
-        "Table": "DeviceProcessEvents",
-        "Timestamp": event_time,
-        "ReportId": report_id,
-        "DeviceId": f"ms-dev-{uuid.uuid4().hex[:8]}",
+        "DeviceId": (uuid.uuid4().hex + uuid.uuid4().hex[:8]).lower(),
         "DeviceName": device_name,
-        "AccountName": account_name,
+        "MachineGroup": "Workstations",
+        "Timestamp": event_time,
         "ActionType": action_type,
+        "ReportId": random.randint(10000, 99999),
         "FileName": process_name,
         "FolderPath": f"C:\\Windows\\System32\\{process_name}",
-        "ProcessCommandLine": process_command_line,
-        "ProcessId": random.randint(1000, 9999),
-        "InitiatingProcessFileName": parent_process_name,
-        "InitiatingProcessId": random.randint(500, 2000),
+        "SHA1": sha1_val,
         "SHA256": file_hash,
         "MD5": uuid.uuid4().hex,
-        "Simulation": True
+        "FileSize": 452096,
+        "ProcessId": random.randint(1000, 9999),
+        "ProcessCommandLine": process_command_line,
+        "ProcessCreationTime": event_time,
+        "ProcessIntegrityLevel": "High",
+        "ProcessTokenElevation": "TokenElevationTypeFull",
+        "ProcessVersionInfoCompanyName": "Microsoft Corporation",
+        "ProcessVersionInfoProductName": "Microsoft Windows Operating System",
+        "ProcessVersionInfoProductVersion": "10.0.22621.1",
+        "ProcessVersionInfoOriginalFileName": process_name,
+        "AccountDomain": "CORP",
+        "AccountName": account_name,
+        "AccountSid": f"S-1-5-21-111-222-333-{random.randint(1000, 9999)}",
+        "AccountUpn": f"{account_name}@example.com",
+        "AccountObjectId": str(uuid.uuid4()),
+        "LogonId": 987654,
+        "InitiatingProcessFileName": parent_process_name,
+        "InitiatingProcessId": random.randint(500, 2000),
+        "InitiatingProcessCommandLine": f"{parent_process_name} /n",
+        "InitiatingProcessCreationTime": event_time,
+        "InitiatingProcessSHA1": (uuid.uuid4().hex + uuid.uuid4().hex[:8]).lower(),
+        "InitiatingProcessSHA256": file_hash,
+        "InitiatingProcessMD5": uuid.uuid4().hex,
+        "InitiatingProcessFileSize": 48201736,
+        "InitiatingProcessAccountDomain": "CORP",
+        "InitiatingProcessAccountName": account_name,
+        "InitiatingProcessAccountSid": f"S-1-5-21-111-222-333-{random.randint(1000, 9999)}",
+        "InitiatingProcessAccountUpn": f"{account_name}@example.com",
+        "InitiatingProcessAccountObjectId": str(uuid.uuid4()),
+        "InitiatingProcessLogonId": 987654,
+        "InitiatingProcessIntegrityLevel": "Medium",
+        "InitiatingProcessTokenElevation": "TokenElevationTypeDefault",
+        "InitiatingProcessParentFileName": "explorer.exe",
+        "InitiatingProcessParentId": 2284,
+        "InitiatingProcessParentCreationTime": event_time
     }
     if scenario_id:
         event["ScenarioId"] = scenario_id
@@ -60,28 +90,34 @@ def generate_defender_network_event(
     remote_url: str = "",
     initiating_process: str = "powershell.exe",
     action_type: str = "ConnectionSuccess",
-    scenario_id: Optional[str] = None
+    scenario_id: Optional[str] = None,
+    event_time: Optional[str] = None
 ) -> Dict[str, Any]:
     """
     Reusable function to generate an authentic Microsoft Defender DeviceNetworkEvents record.
     """
-    event_time = datetime.datetime.utcnow().isoformat() + "Z"
+    t = event_time or datetime.datetime.utcnow().isoformat() + "Z"
     event = {
-        "Source": "Microsoft Defender for Endpoint",
-        "Table": "DeviceNetworkEvents",
-        "Timestamp": event_time,
-        "ReportId": f"DEF-NET-{uuid.uuid4().hex[:10].upper()}",
+        "DeviceId": (uuid.uuid4().hex + uuid.uuid4().hex[:8]).lower(),
         "DeviceName": device_name,
-        "AccountName": account_name,
+        "MachineGroup": "Workstations",
+        "Timestamp": t,
         "ActionType": action_type,
-        "RemoteIP": remote_ip,
-        "RemotePort": remote_port,
-        "RemoteUrl": remote_url or f"https://{remote_ip}:{remote_port}",
+        "ReportId": random.randint(1000, 99999),
         "LocalIP": "10.0.1.45",
         "LocalPort": random.randint(49152, 65535),
-        "InitiatingProcessFileName": initiating_process,
+        "LocalIPType": "Private",
+        "RemoteIP": remote_ip,
+        "RemotePort": remote_port,
+        "RemoteIPType": "Public",
+        "RemoteUrl": remote_url or f"https://{remote_ip}:{remote_port}",
         "Protocol": "Tcp",
-        "Simulation": True
+        "InitiatingProcessFileName": initiating_process,
+        "InitiatingProcessId": random.randint(1000, 9999),
+        "InitiatingProcessCommandLine": f"{initiating_process} -exec",
+        "InitiatingProcessSHA256": (uuid.uuid4().hex + uuid.uuid4().hex[:32]).lower(),
+        "InitiatingProcessAccountName": account_name,
+        "InitiatingProcessLogonId": 987654
     }
     if scenario_id:
         event["ScenarioId"] = scenario_id
@@ -93,24 +129,30 @@ def generate_defender_file_event(
     file_name: str,
     folder_path: str,
     action_type: str = "FileCreated",
-    scenario_id: Optional[str] = None
+    sha256: Optional[str] = None,
+    scenario_id: Optional[str] = None,
+    event_time: Optional[str] = None,
+    initiating_process: str = "powershell.exe"
 ) -> Dict[str, Any]:
     """
     Reusable function to generate an authentic Microsoft Defender DeviceFileEvents record.
     """
-    event_time = datetime.datetime.utcnow().isoformat() + "Z"
+    t = event_time or datetime.datetime.utcnow().isoformat() + "Z"
     event = {
-        "Source": "Microsoft Defender for Endpoint",
-        "Table": "DeviceFileEvents",
-        "Timestamp": event_time,
-        "ReportId": f"DEF-FILE-{uuid.uuid4().hex[:10].upper()}",
+        "DeviceId": (uuid.uuid4().hex + uuid.uuid4().hex[:8]).lower(),
         "DeviceName": device_name,
-        "AccountName": account_name,
+        "MachineGroup": "Workstations",
+        "Timestamp": t,
         "ActionType": action_type,
+        "ReportId": random.randint(1000, 99999),
         "FileName": file_name,
         "FolderPath": folder_path,
-        "SHA256": uuid.uuid4().hex + uuid.uuid4().hex[:32],
-        "Simulation": True
+        "SHA1": (uuid.uuid4().hex + uuid.uuid4().hex[:8]).lower(),
+        "SHA256": sha256 or (uuid.uuid4().hex + uuid.uuid4().hex[:32]).lower(),
+        "FileSize": random.randint(10240, 524288),
+        "InitiatingProcessFileName": initiating_process,
+        "InitiatingProcessId": random.randint(1000, 9999),
+        "InitiatingProcessAccountName": account_name
     }
     if scenario_id:
         event["ScenarioId"] = scenario_id

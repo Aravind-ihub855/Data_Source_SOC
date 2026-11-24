@@ -15,16 +15,19 @@ class SplunkConfig(BaseSettings):
     HEC_TOKEN: str = os.getenv("SPLUNK_HEC_TOKEN", "")
     VERIFY_SSL: bool = os.getenv("SPLUNK_HEC_VERIFY_SSL", "false").lower() in ("true", "1", "yes")
     
-    # Target Indexes
+    # Target Indexes for the 5 Sources
     INDEX_ENDPOINT: str = os.getenv("SPLUNK_INDEX_ENDPOINT", "endpoint")
     INDEX_CLOUD: str = os.getenv("SPLUNK_INDEX_CLOUD", "cloud")
     INDEX_AUTH: str = os.getenv("SPLUNK_INDEX_AUTH", "authentication")
+    INDEX_NETWORK: str = os.getenv("SPLUNK_INDEX_NETWORK", "network")
     
-    # Sourcetypes
+    # Sourcetypes for the 5 Sources
     SOURCETYPE_DEFENDER: str = "aetheris:defender"
-    SOURCETYPE_POWERSHELL: str = "aetheris:powershell"
-    SOURCETYPE_CLOUDTRAIL: str = "aetheris:cloudtrail"
     SOURCETYPE_ENTRA: str = "aetheris:entra"
+    SOURCETYPE_CLOUDTRAIL: str = "aetheris:cloudtrail"
+    SOURCETYPE_WINDOWS: str = "aetheris:windows"
+    SOURCETYPE_FIREWALL: str = "aetheris:firewall"
+    SOURCETYPE_POWERSHELL: str = "aetheris:windows" # legacy compatibility
     
     # Delivery Engine settings
     BATCH_SIZE: int = int(os.getenv("SPLUNK_BATCH_SIZE", "10"))
@@ -38,7 +41,6 @@ class SplunkConfig(BaseSettings):
 
 splunk_config = SplunkConfig()
 
-# Reusable Splunk helper functions
 def get_splunk_config() -> SplunkConfig:
     """Returns current Splunk configuration instance."""
     return splunk_config
@@ -54,6 +56,8 @@ def get_index_for_source(source: str) -> str:
         return splunk_config.INDEX_CLOUD
     elif "entra" in src or "identity" in src or "auth" in src:
         return splunk_config.INDEX_AUTH
+    elif "firewall" in src or "network" in src or "palo" in src or "fortinet" in src:
+        return splunk_config.INDEX_NETWORK
     # All Windows / Endpoint / Defender / PowerShell / Security-Auditing goes to endpoint index
     return splunk_config.INDEX_ENDPOINT
 
@@ -62,12 +66,14 @@ def get_sourcetype_for_source(source: str) -> str:
     src = source.lower()
     if "defender" in src:
         return splunk_config.SOURCETYPE_DEFENDER
-    elif "powershell" in src:
-        return splunk_config.SOURCETYPE_POWERSHELL
-    elif "cloudtrail" in src:
-        return splunk_config.SOURCETYPE_CLOUDTRAIL
     elif "entra" in src:
         return splunk_config.SOURCETYPE_ENTRA
+    elif "cloudtrail" in src or "aws" in src:
+        return splunk_config.SOURCETYPE_CLOUDTRAIL
+    elif "firewall" in src:
+        return splunk_config.SOURCETYPE_FIREWALL
+    elif "windows" in src or "powershell" in src or "sysmon" in src or "security" in src:
+        return splunk_config.SOURCETYPE_WINDOWS
     return f"aetheris:{src}"
 
 def format_hec_envelope(

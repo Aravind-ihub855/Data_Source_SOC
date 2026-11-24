@@ -46,13 +46,14 @@ def generate_cloudtrail_event(
     response_elements: Optional[Dict[str, Any]] = None,
     error_code: Optional[str] = None,
     read_only: bool = False,
-    scenario_id: Optional[str] = None
+    scenario_id: Optional[str] = None,
+    event_time: Optional[str] = None
 ) -> Dict[str, Any]:
     """
     Reusable function to generate an authentic AWS CloudTrail audit log event.
     """
     aws_info = get_primary_aws_account()
-    event_time = datetime.datetime.utcnow().isoformat() + "Z"
+    now_utc = event_time or datetime.datetime.utcnow().isoformat() + "Z"
     event_id = str(uuid.uuid4())
 
     event = {
@@ -64,32 +65,78 @@ def generate_cloudtrail_event(
             "accountId": aws_info["account_id"],
             "userName": user_name
         },
-        "eventTime": event_time,
+        "eventTime": now_utc,
         "eventSource": event_source,
         "eventName": event_name,
         "awsRegion": aws_info["region"],
         "sourceIPAddress": source_ip,
         "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AWSConsole/1.0",
         "requestParameters": request_parameters or {},
-        "responseElements": response_elements or {"status": "Success"},
+        "responseElements": response_elements if error_code is None else None,
         "requestID": str(uuid.uuid4()),
         "eventID": event_id,
         "readOnly": read_only,
         "eventType": "AwsApiCall",
+        "eventCategory": "Management",
         "managementEvent": True,
-        "recipientAccountId": aws_info["account_id"],
-        "simulation": True
+        "recipientAccountId": aws_info["account_id"]
     }
 
     if error_code:
         event["errorCode"] = error_code
         event["errorMessage"] = f"Request denied due to {error_code}"
-        event["responseElements"] = None
 
     if scenario_id:
         event["scenarioId"] = scenario_id
 
     return event
+
+def generate_cloudtrail_stop_logging_event(
+    user_name: str,
+    source_ip: str,
+    trail_name: str = "arn:aws:cloudtrail:us-east-1:123456789012:trail/corp-security-audit",
+    scenario_id: Optional[str] = None,
+    event_time: Optional[str] = None
+) -> Dict[str, Any]:
+    """
+    Generates a high-severity StopLogging evasion event in CloudTrail.
+    """
+    return generate_cloudtrail_event(
+        event_name="StopLogging",
+        event_source="cloudtrail.amazonaws.com",
+        user_name=user_name,
+        source_ip=source_ip,
+        request_parameters={"name": trail_name},
+        response_elements=None,
+        error_code=None,
+        read_only=False,
+        scenario_id=scenario_id,
+        event_time=event_time
+    )
+
+def generate_cloudtrail_policy_event(
+    user_name: str,
+    source_ip: str,
+    policy_arn: str = "arn:aws:iam::aws:policy/AdministratorAccess",
+    scenario_id: Optional[str] = None,
+    event_time: Optional[str] = None
+) -> Dict[str, Any]:
+    """
+    Generates an AttachUserPolicy event in CloudTrail.
+    """
+    return generate_cloudtrail_event(
+        event_name="AttachUserPolicy",
+        event_source="iam.amazonaws.com",
+        user_name=user_name,
+        source_ip=source_ip,
+        request_parameters={
+            "userName": user_name,
+            "policyArn": policy_arn
+        },
+        read_only=False,
+        scenario_id=scenario_id,
+        event_time=event_time
+    )
 
 def generate_cloudtrail_baseline_event() -> Dict[str, Any]:
     """

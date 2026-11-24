@@ -1,0 +1,1252 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.aetheris.example/source/windows_event_logs/1.0.0.json",
+  "title": "Windows Event Logs (Sysmon, PowerShell, Security): event body",
+  "description": "One Windows event: authoritative `raw_xml` plus its parsed form. Typed EventData is enforced for Sysmon 1/3/10/11/22, PowerShell 4104 and Security 4624/4625/4688/4698; other events are accepted with a generic EventData object.",
+  "x-schema-version": "1.0.0",
+  "x-splunk": {
+    "index": "endpoint",
+    "sourcetype_simulation": [
+      "XmlWinEventLog:Microsoft-Windows-Sysmon/Operational",
+      "XmlWinEventLog:Microsoft-Windows-PowerShell/Operational",
+      "XmlWinEventLog:Security"
+    ],
+    "note": "These XmlWinEventLog sourcetypes are the Splunk Add-on for Microsoft Windows convention."
+  },
+  "x-dedupe-key": "Computer + Channel + EventRecordID + TimeCreated.SystemTime",
+  "$defs": {
+    "ts": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{1,7})?Z$",
+      "description": "UTC, ISO 8601, trailing Z, up to 7 fractional digits."
+    },
+    "sid": {
+      "type": "string",
+      "pattern": "^S-1-\\d+(-\\d+)+$"
+    },
+    "systemPlusData": {
+      "type": "object",
+      "required": [
+        "Provider",
+        "EventID",
+        "Version",
+        "Level",
+        "Task",
+        "Opcode",
+        "Keywords",
+        "TimeCreated",
+        "EventRecordID",
+        "Execution",
+        "Channel",
+        "Computer",
+        "Security",
+        "EventData"
+      ],
+      "properties": {
+        "Provider": {
+          "type": "object",
+          "required": [
+            "Name"
+          ],
+          "properties": {
+            "Name": {
+              "type": "string"
+            },
+            "Guid": {
+              "type": "string"
+            }
+          }
+        },
+        "EventID": {
+          "type": "integer",
+          "x-role": "event_type"
+        },
+        "Version": {
+          "type": "integer"
+        },
+        "Level": {
+          "type": "integer"
+        },
+        "Task": {
+          "type": "integer"
+        },
+        "Opcode": {
+          "type": "integer"
+        },
+        "Keywords": {
+          "type": "string",
+          "pattern": "^0x[0-9A-Fa-f]+$"
+        },
+        "TimeCreated": {
+          "type": "object",
+          "required": [
+            "SystemTime"
+          ],
+          "properties": {
+            "SystemTime": {
+              "$ref": "#/$defs/ts",
+              "x-role": "event_time"
+            }
+          }
+        },
+        "EventRecordID": {
+          "type": "integer",
+          "x-role": "dedupe_key"
+        },
+        "Correlation": {
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "Execution": {
+          "type": "object",
+          "required": [
+            "ProcessID",
+            "ThreadID"
+          ],
+          "properties": {
+            "ProcessID": {
+              "type": "integer",
+              "x-role": "join_key.process"
+            },
+            "ThreadID": {
+              "type": "integer"
+            }
+          }
+        },
+        "Channel": {
+          "type": "string",
+          "x-role": "dedupe_key"
+        },
+        "Computer": {
+          "type": "string",
+          "description": "FQDN of the logging host. Dedupe key = Computer + Channel + EventRecordID + SystemTime.",
+          "x-role": [
+            "entity.host",
+            "dedupe_key"
+          ]
+        },
+        "Security": {
+          "type": "object",
+          "required": [
+            "UserID"
+          ],
+          "properties": {
+            "UserID": {
+              "$ref": "#/$defs/sid"
+            }
+          }
+        },
+        "EventData": {
+          "type": "object"
+        }
+      }
+    }
+  },
+  "type": "object",
+  "required": [
+    "raw_xml",
+    "parsed_event"
+  ],
+  "properties": {
+    "raw_xml": {
+      "type": "string",
+      "pattern": "^<Event xmlns=\\\"http://schemas\\.microsoft\\.com/win/2004/08/events/event\\\">.*</Event>$",
+      "description": "Authoritative record. In Splunk (XmlWinEventLog) this string IS _raw."
+    },
+    "parsed_event": {
+      "$ref": "#/$defs/systemPlusData",
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "Channel": {
+                "const": "Microsoft-Windows-Sysmon/Operational"
+              },
+              "EventID": {
+                "const": 1
+              }
+            },
+            "required": [
+              "Channel",
+              "EventID"
+            ]
+          },
+          "then": {
+            "properties": {
+              "EventData": {
+                "type": "object",
+                "required": [
+                  "UtcTime",
+                  "ProcessGuid",
+                  "ProcessId",
+                  "Image",
+                  "FileVersion",
+                  "Description",
+                  "Product",
+                  "Company",
+                  "OriginalFileName",
+                  "CommandLine",
+                  "CurrentDirectory",
+                  "User",
+                  "LogonGuid",
+                  "LogonId",
+                  "TerminalSessionId",
+                  "IntegrityLevel",
+                  "Hashes",
+                  "ParentProcessGuid",
+                  "ParentProcessId",
+                  "ParentImage",
+                  "ParentCommandLine",
+                  "ParentUser"
+                ],
+                "properties": {
+                  "UtcTime": {
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\\.\\d{3}$"
+                  },
+                  "ProcessGuid": {
+                    "type": "string",
+                    "pattern": "^\\{[0-9A-Fa-f]{8}(-[0-9A-Fa-f]{4}){3}-[0-9A-Fa-f]{12}\\}$"
+                  },
+                  "ProcessId": {
+                    "type": "string",
+                    "pattern": "^\\d+$"
+                  },
+                  "Image": {
+                    "type": "string"
+                  },
+                  "FileVersion": {
+                    "type": "string"
+                  },
+                  "Description": {
+                    "type": "string"
+                  },
+                  "Product": {
+                    "type": "string"
+                  },
+                  "Company": {
+                    "type": "string"
+                  },
+                  "OriginalFileName": {
+                    "type": "string"
+                  },
+                  "CommandLine": {
+                    "type": "string"
+                  },
+                  "CurrentDirectory": {
+                    "type": "string"
+                  },
+                  "User": {
+                    "type": "string"
+                  },
+                  "LogonGuid": {
+                    "type": "string"
+                  },
+                  "LogonId": {
+                    "type": "string",
+                    "pattern": "^0x[0-9A-Fa-f]{1,16}$"
+                  },
+                  "TerminalSessionId": {
+                    "type": "string"
+                  },
+                  "IntegrityLevel": {
+                    "enum": [
+                      "Low",
+                      "Medium",
+                      "High",
+                      "System"
+                    ]
+                  },
+                  "Hashes": {
+                    "type": "string",
+                    "pattern": "^(MD5=[A-F0-9]{32},)?SHA256=[A-F0-9]{64}(,IMPHASH=[A-F0-9]{32})?$"
+                  },
+                  "ParentProcessGuid": {
+                    "type": "string",
+                    "pattern": "^\\{[0-9A-Fa-f]{8}(-[0-9A-Fa-f]{4}){3}-[0-9A-Fa-f]{12}\\}$"
+                  },
+                  "ParentProcessId": {
+                    "type": "string",
+                    "pattern": "^\\d+$"
+                  },
+                  "ParentImage": {
+                    "type": "string"
+                  },
+                  "ParentCommandLine": {
+                    "type": "string"
+                  },
+                  "ParentUser": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "Channel": {
+                "const": "Microsoft-Windows-Sysmon/Operational"
+              },
+              "EventID": {
+                "const": 3
+              }
+            },
+            "required": [
+              "Channel",
+              "EventID"
+            ]
+          },
+          "then": {
+            "properties": {
+              "EventData": {
+                "type": "object",
+                "required": [
+                  "UtcTime",
+                  "ProcessGuid",
+                  "ProcessId",
+                  "Image",
+                  "User",
+                  "Protocol",
+                  "Initiated",
+                  "SourceIsIpv6",
+                  "SourceIp",
+                  "SourcePort",
+                  "DestinationIsIpv6",
+                  "DestinationIp",
+                  "DestinationPort"
+                ],
+                "properties": {
+                  "UtcTime": {
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\\.\\d{3}$"
+                  },
+                  "ProcessGuid": {
+                    "type": "string",
+                    "pattern": "^\\{[0-9A-Fa-f]{8}(-[0-9A-Fa-f]{4}){3}-[0-9A-Fa-f]{12}\\}$"
+                  },
+                  "ProcessId": {
+                    "type": "string",
+                    "pattern": "^\\d+$"
+                  },
+                  "Image": {
+                    "type": "string"
+                  },
+                  "User": {
+                    "type": "string"
+                  },
+                  "Protocol": {
+                    "enum": [
+                      "tcp",
+                      "udp"
+                    ]
+                  },
+                  "Initiated": {
+                    "enum": [
+                      "true",
+                      "false"
+                    ]
+                  },
+                  "SourceIsIpv6": {
+                    "type": "string"
+                  },
+                  "SourceIp": {
+                    "type": "string"
+                  },
+                  "SourcePort": {
+                    "type": "string",
+                    "pattern": "^\\d+$"
+                  },
+                  "DestinationIsIpv6": {
+                    "type": "string"
+                  },
+                  "DestinationIp": {
+                    "type": "string"
+                  },
+                  "DestinationPort": {
+                    "type": "string",
+                    "pattern": "^\\d+$"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "Channel": {
+                "const": "Microsoft-Windows-Sysmon/Operational"
+              },
+              "EventID": {
+                "const": 10
+              }
+            },
+            "required": [
+              "Channel",
+              "EventID"
+            ]
+          },
+          "then": {
+            "properties": {
+              "EventData": {
+                "type": "object",
+                "required": [
+                  "UtcTime",
+                  "SourceProcessGUID",
+                  "SourceProcessId",
+                  "SourceThreadId",
+                  "SourceImage",
+                  "TargetProcessGUID",
+                  "TargetProcessId",
+                  "TargetImage",
+                  "GrantedAccess",
+                  "CallTrace",
+                  "SourceUser",
+                  "TargetUser"
+                ],
+                "properties": {
+                  "UtcTime": {
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\\.\\d{3}$"
+                  },
+                  "SourceProcessGUID": {
+                    "type": "string"
+                  },
+                  "SourceProcessId": {
+                    "type": "string"
+                  },
+                  "SourceThreadId": {
+                    "type": "string"
+                  },
+                  "SourceImage": {
+                    "type": "string"
+                  },
+                  "TargetProcessGUID": {
+                    "type": "string"
+                  },
+                  "TargetProcessId": {
+                    "type": "string"
+                  },
+                  "TargetImage": {
+                    "type": "string"
+                  },
+                  "GrantedAccess": {
+                    "type": "string",
+                    "pattern": "^0x[0-9A-Fa-f]{1,8}$"
+                  },
+                  "CallTrace": {
+                    "type": "string"
+                  },
+                  "SourceUser": {
+                    "type": "string"
+                  },
+                  "TargetUser": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "Channel": {
+                "const": "Microsoft-Windows-Sysmon/Operational"
+              },
+              "EventID": {
+                "const": 11
+              }
+            },
+            "required": [
+              "Channel",
+              "EventID"
+            ]
+          },
+          "then": {
+            "properties": {
+              "EventData": {
+                "type": "object",
+                "required": [
+                  "UtcTime",
+                  "ProcessGuid",
+                  "ProcessId",
+                  "Image",
+                  "TargetFilename",
+                  "CreationUtcTime",
+                  "User"
+                ],
+                "properties": {
+                  "UtcTime": {
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\\.\\d{3}$"
+                  },
+                  "ProcessGuid": {
+                    "type": "string",
+                    "pattern": "^\\{[0-9A-Fa-f]{8}(-[0-9A-Fa-f]{4}){3}-[0-9A-Fa-f]{12}\\}$"
+                  },
+                  "ProcessId": {
+                    "type": "string"
+                  },
+                  "Image": {
+                    "type": "string"
+                  },
+                  "TargetFilename": {
+                    "type": "string"
+                  },
+                  "CreationUtcTime": {
+                    "type": "string"
+                  },
+                  "User": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "Channel": {
+                "const": "Microsoft-Windows-Sysmon/Operational"
+              },
+              "EventID": {
+                "const": 22
+              }
+            },
+            "required": [
+              "Channel",
+              "EventID"
+            ]
+          },
+          "then": {
+            "properties": {
+              "EventData": {
+                "type": "object",
+                "required": [
+                  "UtcTime",
+                  "ProcessGuid",
+                  "ProcessId",
+                  "QueryName",
+                  "QueryStatus",
+                  "QueryResults",
+                  "Image",
+                  "User"
+                ],
+                "properties": {
+                  "UtcTime": {
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\\.\\d{3}$"
+                  },
+                  "ProcessGuid": {
+                    "type": "string",
+                    "pattern": "^\\{[0-9A-Fa-f]{8}(-[0-9A-Fa-f]{4}){3}-[0-9A-Fa-f]{12}\\}$"
+                  },
+                  "ProcessId": {
+                    "type": "string"
+                  },
+                  "QueryName": {
+                    "type": "string"
+                  },
+                  "QueryStatus": {
+                    "type": "string"
+                  },
+                  "QueryResults": {
+                    "type": "string"
+                  },
+                  "Image": {
+                    "type": "string"
+                  },
+                  "User": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "Channel": {
+                "const": "Microsoft-Windows-PowerShell/Operational"
+              },
+              "EventID": {
+                "const": 4104
+              }
+            },
+            "required": [
+              "Channel",
+              "EventID"
+            ]
+          },
+          "then": {
+            "properties": {
+              "EventData": {
+                "type": "object",
+                "required": [
+                  "MessageNumber",
+                  "MessageTotal",
+                  "ScriptBlockText",
+                  "ScriptBlockId",
+                  "Path"
+                ],
+                "properties": {
+                  "MessageNumber": {
+                    "type": "string",
+                    "pattern": "^\\d+$"
+                  },
+                  "MessageTotal": {
+                    "type": "string",
+                    "pattern": "^\\d+$"
+                  },
+                  "ScriptBlockText": {
+                    "type": "string"
+                  },
+                  "ScriptBlockId": {
+                    "type": "string",
+                    "pattern": "^[0-9A-Fa-f]{8}(-[0-9A-Fa-f]{4}){3}-[0-9A-Fa-f]{12}$"
+                  },
+                  "Path": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "Channel": {
+                "const": "Security"
+              },
+              "EventID": {
+                "const": 4624
+              }
+            },
+            "required": [
+              "Channel",
+              "EventID"
+            ]
+          },
+          "then": {
+            "properties": {
+              "EventData": {
+                "type": "object",
+                "required": [
+                  "SubjectUserSid",
+                  "SubjectUserName",
+                  "SubjectDomainName",
+                  "SubjectLogonId",
+                  "TargetUserSid",
+                  "TargetUserName",
+                  "TargetDomainName",
+                  "TargetLogonId",
+                  "LogonType",
+                  "LogonProcessName",
+                  "AuthenticationPackageName",
+                  "WorkstationName",
+                  "LogonGuid",
+                  "ProcessId",
+                  "ProcessName",
+                  "IpAddress",
+                  "IpPort",
+                  "ImpersonationLevel",
+                  "ElevatedToken"
+                ],
+                "properties": {
+                  "SubjectUserSid": {
+                    "type": "string"
+                  },
+                  "SubjectUserName": {
+                    "type": "string"
+                  },
+                  "SubjectDomainName": {
+                    "type": "string"
+                  },
+                  "SubjectLogonId": {
+                    "type": "string",
+                    "pattern": "^0x[0-9A-Fa-f]{1,16}$"
+                  },
+                  "TargetUserSid": {
+                    "type": "string"
+                  },
+                  "TargetUserName": {
+                    "type": "string"
+                  },
+                  "TargetDomainName": {
+                    "type": "string"
+                  },
+                  "TargetLogonId": {
+                    "type": "string",
+                    "pattern": "^0x[0-9A-Fa-f]{1,16}$"
+                  },
+                  "LogonType": {
+                    "enum": [
+                      "2",
+                      "3",
+                      "4",
+                      "5",
+                      "7",
+                      "8",
+                      "9",
+                      "10",
+                      "11"
+                    ]
+                  },
+                  "LogonProcessName": {
+                    "type": "string"
+                  },
+                  "AuthenticationPackageName": {
+                    "type": "string"
+                  },
+                  "WorkstationName": {
+                    "type": "string"
+                  },
+                  "LogonGuid": {
+                    "type": "string"
+                  },
+                  "ProcessId": {
+                    "type": "string"
+                  },
+                  "ProcessName": {
+                    "type": "string"
+                  },
+                  "IpAddress": {
+                    "type": "string"
+                  },
+                  "IpPort": {
+                    "type": "string"
+                  },
+                  "ImpersonationLevel": {
+                    "type": "string"
+                  },
+                  "ElevatedToken": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "Channel": {
+                "const": "Security"
+              },
+              "EventID": {
+                "const": 4625
+              }
+            },
+            "required": [
+              "Channel",
+              "EventID"
+            ]
+          },
+          "then": {
+            "properties": {
+              "EventData": {
+                "type": "object",
+                "required": [
+                  "SubjectUserSid",
+                  "SubjectUserName",
+                  "SubjectDomainName",
+                  "SubjectLogonId",
+                  "TargetUserSid",
+                  "TargetUserName",
+                  "TargetDomainName",
+                  "Status",
+                  "SubStatus",
+                  "LogonType",
+                  "LogonProcessName",
+                  "AuthenticationPackageName",
+                  "WorkstationName",
+                  "ProcessId",
+                  "ProcessName",
+                  "IpAddress",
+                  "IpPort"
+                ],
+                "properties": {
+                  "SubjectUserSid": {
+                    "type": "string"
+                  },
+                  "SubjectUserName": {
+                    "type": "string"
+                  },
+                  "SubjectDomainName": {
+                    "type": "string"
+                  },
+                  "SubjectLogonId": {
+                    "type": "string"
+                  },
+                  "TargetUserSid": {
+                    "type": "string"
+                  },
+                  "TargetUserName": {
+                    "type": "string"
+                  },
+                  "TargetDomainName": {
+                    "type": "string"
+                  },
+                  "Status": {
+                    "type": "string",
+                    "pattern": "^0x[0-9A-Fa-f]{1,8}$"
+                  },
+                  "SubStatus": {
+                    "type": "string",
+                    "pattern": "^0x[0-9A-Fa-f]{1,8}$"
+                  },
+                  "LogonType": {
+                    "enum": [
+                      "2",
+                      "3",
+                      "4",
+                      "5",
+                      "7",
+                      "8",
+                      "9",
+                      "10",
+                      "11"
+                    ]
+                  },
+                  "LogonProcessName": {
+                    "type": "string"
+                  },
+                  "AuthenticationPackageName": {
+                    "type": "string"
+                  },
+                  "WorkstationName": {
+                    "type": "string"
+                  },
+                  "ProcessId": {
+                    "type": "string"
+                  },
+                  "ProcessName": {
+                    "type": "string"
+                  },
+                  "IpAddress": {
+                    "type": "string"
+                  },
+                  "IpPort": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "Channel": {
+                "const": "Security"
+              },
+              "EventID": {
+                "const": 4688
+              }
+            },
+            "required": [
+              "Channel",
+              "EventID"
+            ]
+          },
+          "then": {
+            "properties": {
+              "EventData": {
+                "type": "object",
+                "required": [
+                  "SubjectUserSid",
+                  "SubjectUserName",
+                  "SubjectDomainName",
+                  "SubjectLogonId",
+                  "NewProcessId",
+                  "NewProcessName",
+                  "TokenElevationType",
+                  "ProcessId",
+                  "CommandLine",
+                  "ParentProcessName"
+                ],
+                "properties": {
+                  "SubjectUserSid": {
+                    "type": "string"
+                  },
+                  "SubjectUserName": {
+                    "type": "string"
+                  },
+                  "SubjectDomainName": {
+                    "type": "string"
+                  },
+                  "SubjectLogonId": {
+                    "type": "string"
+                  },
+                  "NewProcessId": {
+                    "type": "string",
+                    "pattern": "^0x[0-9A-Fa-f]{1,16}$"
+                  },
+                  "NewProcessName": {
+                    "type": "string"
+                  },
+                  "TokenElevationType": {
+                    "type": "string"
+                  },
+                  "ProcessId": {
+                    "type": "string",
+                    "pattern": "^0x[0-9A-Fa-f]{1,16}$"
+                  },
+                  "CommandLine": {
+                    "type": "string"
+                  },
+                  "ParentProcessName": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "Channel": {
+                "const": "Security"
+              },
+              "EventID": {
+                "const": 4698
+              }
+            },
+            "required": [
+              "Channel",
+              "EventID"
+            ]
+          },
+          "then": {
+            "properties": {
+              "EventData": {
+                "type": "object",
+                "required": [
+                  "SubjectUserSid",
+                  "SubjectUserName",
+                  "SubjectDomainName",
+                  "SubjectLogonId",
+                  "TaskName",
+                  "TaskContent"
+                ],
+                "properties": {
+                  "SubjectUserSid": {
+                    "type": "string"
+                  },
+                  "SubjectUserName": {
+                    "type": "string"
+                  },
+                  "SubjectDomainName": {
+                    "type": "string"
+                  },
+                  "SubjectLogonId": {
+                    "type": "string"
+                  },
+                  "TaskName": {
+                    "type": "string"
+                  },
+                  "TaskContent": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "description": "Parsed form of raw_xml. Produced by the pipeline's parse stage; the simulation emits both so parse correctness can be tested. Must equal parse(raw_xml)."
+    }
+  },
+  "examples": [
+    {
+      "raw_xml": "<Event xmlns=\"http://schemas.microsoft.com/win/2004/08/events/event\"><System><Provider Name=\"Microsoft-Windows-Sysmon\" Guid=\"{5770385F-C22A-43E0-BF4C-06F5698FFBD9}\"/><EventID>1</EventID><Version>5</Version><Level>4</Level><Task>1</Task><Opcode>0</Opcode><Keywords>0x8000000000000000</Keywords><TimeCreated SystemTime=\"2026-11-23T08:31:02.4172910Z\"/><EventRecordID>91001</EventRecordID><Correlation/><Execution ProcessID=\"2216\" ThreadID=\"3480\"/><Channel>Microsoft-Windows-Sysmon/Operational</Channel><Computer>FINANCE-PC-01.corp.example.com</Computer><Security UserID=\"S-1-5-18\"/></System><EventData><Data Name=\"RuleName\">-</Data><Data Name=\"UtcTime\">2026-11-23 08:31:02.417</Data><Data Name=\"ProcessGuid\">{9FA491BA-7AC7-5CDC-9F6E-A4AC3AC2D0ED}</Data><Data Name=\"ProcessId\">4820</Data><Data Name=\"Image\">C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe</Data><Data Name=\"FileVersion\">10.0.22621.2506 (WinBuild.160101.0800)</Data><Data Name=\"Description\">Windows PowerShell</Data><Data Name=\"Product\">Microsoft Windows Operating System</Data><Data Name=\"Company\">Microsoft Corporation</Data><Data Name=\"OriginalFileName\">PowerShell.EXE</Data><Data Name=\"CommandLine\">powershell.exe -NoProfile -WindowStyle Hidden -EncodedCommand VwByAGkAdABlAC0ATwB1AHQAcAB1AHQAIAAnAGkAbgBlAHIAdAAgAHMAaQBtAHUAbABhAHQAaQBvAG4AIABwAGEAeQBsAG8AYQBkACcA</Data><Data Name=\"CurrentDirectory\">C:\\Users\\j.doe\\Downloads\\</Data><Data Name=\"User\">CORP\\j.doe</Data><Data Name=\"LogonGuid\">{86290923-04B5-5762-BEC1-4CCFA2BC4FAA}</Data><Data Name=\"LogonId\">0xf1206</Data><Data Name=\"TerminalSessionId\">1</Data><Data Name=\"IntegrityLevel\">Medium</Data><Data Name=\"Hashes\">MD5=E44CC72D74D91C47BF47947F78CB88AA,SHA256=B6A8C199C8A41F9DD0BD414857E33F5B6971A4821706D8740CB6086F9F31E352,IMPHASH=DA41703DA2314CB799845B2FC0243412</Data><Data Name=\"ParentProcessGuid\">{4BE22093-1FC6-54E9-9E87-8CBD022FF391}</Data><Data Name=\"ParentProcessId\">3012</Data><Data Name=\"ParentImage\">C:\\Program Files\\Microsoft Office\\root\\Office16\\WINWORD.EXE</Data><Data Name=\"ParentCommandLine\">\"WINWORD.EXE\" /n \"C:\\Users\\j.doe\\Downloads\\Q3-invoice.docm\"</Data><Data Name=\"ParentUser\">CORP\\j.doe</Data></EventData></Event>",
+      "parsed_event": {
+        "Provider": {
+          "Name": "Microsoft-Windows-Sysmon",
+          "Guid": "{5770385F-C22A-43E0-BF4C-06F5698FFBD9}"
+        },
+        "EventID": 1,
+        "Version": 5,
+        "Level": 4,
+        "Task": 1,
+        "Opcode": 0,
+        "Keywords": "0x8000000000000000",
+        "TimeCreated": {
+          "SystemTime": "2026-11-23T08:31:02.4172910Z"
+        },
+        "EventRecordID": 91001,
+        "Correlation": {},
+        "Execution": {
+          "ProcessID": 2216,
+          "ThreadID": 3480
+        },
+        "Channel": "Microsoft-Windows-Sysmon/Operational",
+        "Computer": "FINANCE-PC-01.corp.example.com",
+        "Security": {
+          "UserID": "S-1-5-18"
+        },
+        "EventData": {
+          "RuleName": "-",
+          "UtcTime": "2026-11-23 08:31:02.417",
+          "ProcessGuid": "{9FA491BA-7AC7-5CDC-9F6E-A4AC3AC2D0ED}",
+          "ProcessId": "4820",
+          "Image": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+          "FileVersion": "10.0.22621.2506 (WinBuild.160101.0800)",
+          "Description": "Windows PowerShell",
+          "Product": "Microsoft Windows Operating System",
+          "Company": "Microsoft Corporation",
+          "OriginalFileName": "PowerShell.EXE",
+          "CommandLine": "powershell.exe -NoProfile -WindowStyle Hidden -EncodedCommand VwByAGkAdABlAC0ATwB1AHQAcAB1AHQAIAAnAGkAbgBlAHIAdAAgAHMAaQBtAHUAbABhAHQAaQBvAG4AIABwAGEAeQBsAG8AYQBkACcA",
+          "CurrentDirectory": "C:\\Users\\j.doe\\Downloads\\",
+          "User": "CORP\\j.doe",
+          "LogonGuid": "{86290923-04B5-5762-BEC1-4CCFA2BC4FAA}",
+          "LogonId": "0xf1206",
+          "TerminalSessionId": "1",
+          "IntegrityLevel": "Medium",
+          "Hashes": "MD5=E44CC72D74D91C47BF47947F78CB88AA,SHA256=B6A8C199C8A41F9DD0BD414857E33F5B6971A4821706D8740CB6086F9F31E352,IMPHASH=DA41703DA2314CB799845B2FC0243412",
+          "ParentProcessGuid": "{4BE22093-1FC6-54E9-9E87-8CBD022FF391}",
+          "ParentProcessId": "3012",
+          "ParentImage": "C:\\Program Files\\Microsoft Office\\root\\Office16\\WINWORD.EXE",
+          "ParentCommandLine": "\"WINWORD.EXE\" /n \"C:\\Users\\j.doe\\Downloads\\Q3-invoice.docm\"",
+          "ParentUser": "CORP\\j.doe"
+        }
+      }
+    },
+    {
+      "raw_xml": "<Event xmlns=\"http://schemas.microsoft.com/win/2004/08/events/event\"><System><Provider Name=\"Microsoft-Windows-PowerShell\" Guid=\"{A0C1853B-5C40-4B15-8766-3CF1C58F985A}\"/><EventID>4104</EventID><Version>1</Version><Level>5</Level><Task>2</Task><Opcode>15</Opcode><Keywords>0x0</Keywords><TimeCreated SystemTime=\"2026-11-23T08:31:03.1020000Z\"/><EventRecordID>91002</EventRecordID><Correlation/><Execution ProcessID=\"4820\" ThreadID=\"5012\"/><Channel>Microsoft-Windows-PowerShell/Operational</Channel><Computer>FINANCE-PC-01.corp.example.com</Computer><Security UserID=\"S-1-5-21-3623811015-3361044348-30300820-1105\"/></System><EventData><Data Name=\"MessageNumber\">1</Data><Data Name=\"MessageTotal\">1</Data><Data Name=\"ScriptBlockText\">Write-Output 'inert simulation payload'</Data><Data Name=\"ScriptBlockId\">3c3f3429-bc50-5267-813e-17f999179e26</Data><Data Name=\"Path\"></Data></EventData></Event>",
+      "parsed_event": {
+        "Provider": {
+          "Name": "Microsoft-Windows-PowerShell",
+          "Guid": "{A0C1853B-5C40-4B15-8766-3CF1C58F985A}"
+        },
+        "EventID": 4104,
+        "Version": 1,
+        "Level": 5,
+        "Task": 2,
+        "Opcode": 15,
+        "Keywords": "0x0",
+        "TimeCreated": {
+          "SystemTime": "2026-11-23T08:31:03.1020000Z"
+        },
+        "EventRecordID": 91002,
+        "Correlation": {},
+        "Execution": {
+          "ProcessID": 4820,
+          "ThreadID": 5012
+        },
+        "Channel": "Microsoft-Windows-PowerShell/Operational",
+        "Computer": "FINANCE-PC-01.corp.example.com",
+        "Security": {
+          "UserID": "S-1-5-21-3623811015-3361044348-30300820-1105"
+        },
+        "EventData": {
+          "MessageNumber": "1",
+          "MessageTotal": "1",
+          "ScriptBlockText": "Write-Output 'inert simulation payload'",
+          "ScriptBlockId": "3c3f3429-bc50-5267-813e-17f999179e26",
+          "Path": ""
+        }
+      }
+    },
+    {
+      "raw_xml": "<Event xmlns=\"http://schemas.microsoft.com/win/2004/08/events/event\"><System><Provider Name=\"Microsoft-Windows-Sysmon\" Guid=\"{5770385F-C22A-43E0-BF4C-06F5698FFBD9}\"/><EventID>3</EventID><Version>5</Version><Level>4</Level><Task>3</Task><Opcode>0</Opcode><Keywords>0x8000000000000000</Keywords><TimeCreated SystemTime=\"2026-11-23T08:31:08.2500000Z\"/><EventRecordID>91003</EventRecordID><Correlation/><Execution ProcessID=\"2216\" ThreadID=\"3480\"/><Channel>Microsoft-Windows-Sysmon/Operational</Channel><Computer>FINANCE-PC-01.corp.example.com</Computer><Security UserID=\"S-1-5-18\"/></System><EventData><Data Name=\"RuleName\">-</Data><Data Name=\"UtcTime\">2026-11-23 08:31:08.250</Data><Data Name=\"ProcessGuid\">{9FA491BA-7AC7-5CDC-9F6E-A4AC3AC2D0ED}</Data><Data Name=\"ProcessId\">4820</Data><Data Name=\"Image\">C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe</Data><Data Name=\"User\">CORP\\j.doe</Data><Data Name=\"Protocol\">tcp</Data><Data Name=\"Initiated\">true</Data><Data Name=\"SourceIsIpv6\">false</Data><Data Name=\"SourceIp\">10.20.4.15</Data><Data Name=\"SourceHostname\">-</Data><Data Name=\"SourcePort\">53122</Data><Data Name=\"SourcePortName\">-</Data><Data Name=\"DestinationIsIpv6\">false</Data><Data Name=\"DestinationIp\">203.0.113.77</Data><Data Name=\"DestinationHostname\">-</Data><Data Name=\"DestinationPort\">443</Data><Data Name=\"DestinationPortName\">https</Data></EventData></Event>",
+      "parsed_event": {
+        "Provider": {
+          "Name": "Microsoft-Windows-Sysmon",
+          "Guid": "{5770385F-C22A-43E0-BF4C-06F5698FFBD9}"
+        },
+        "EventID": 3,
+        "Version": 5,
+        "Level": 4,
+        "Task": 3,
+        "Opcode": 0,
+        "Keywords": "0x8000000000000000",
+        "TimeCreated": {
+          "SystemTime": "2026-11-23T08:31:08.2500000Z"
+        },
+        "EventRecordID": 91003,
+        "Correlation": {},
+        "Execution": {
+          "ProcessID": 2216,
+          "ThreadID": 3480
+        },
+        "Channel": "Microsoft-Windows-Sysmon/Operational",
+        "Computer": "FINANCE-PC-01.corp.example.com",
+        "Security": {
+          "UserID": "S-1-5-18"
+        },
+        "EventData": {
+          "RuleName": "-",
+          "UtcTime": "2026-11-23 08:31:08.250",
+          "ProcessGuid": "{9FA491BA-7AC7-5CDC-9F6E-A4AC3AC2D0ED}",
+          "ProcessId": "4820",
+          "Image": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+          "User": "CORP\\j.doe",
+          "Protocol": "tcp",
+          "Initiated": "true",
+          "SourceIsIpv6": "false",
+          "SourceIp": "10.20.4.15",
+          "SourceHostname": "-",
+          "SourcePort": "53122",
+          "SourcePortName": "-",
+          "DestinationIsIpv6": "false",
+          "DestinationIp": "203.0.113.77",
+          "DestinationHostname": "-",
+          "DestinationPort": "443",
+          "DestinationPortName": "https"
+        }
+      }
+    },
+    {
+      "raw_xml": "<Event xmlns=\"http://schemas.microsoft.com/win/2004/08/events/event\"><System><Provider Name=\"Microsoft-Windows-Sysmon\" Guid=\"{5770385F-C22A-43E0-BF4C-06F5698FFBD9}\"/><EventID>10</EventID><Version>3</Version><Level>4</Level><Task>10</Task><Opcode>0</Opcode><Keywords>0x8000000000000000</Keywords><TimeCreated SystemTime=\"2026-11-23T08:33:40.5110000Z\"/><EventRecordID>91004</EventRecordID><Correlation/><Execution ProcessID=\"2216\" ThreadID=\"3480\"/><Channel>Microsoft-Windows-Sysmon/Operational</Channel><Computer>FINANCE-PC-01.corp.example.com</Computer><Security UserID=\"S-1-5-18\"/></System><EventData><Data Name=\"RuleName\">-</Data><Data Name=\"UtcTime\">2026-11-23 08:33:40.511</Data><Data Name=\"SourceProcessGUID\">{9FA491BA-7AC7-5CDC-9F6E-A4AC3AC2D0ED}</Data><Data Name=\"SourceProcessId\">4820</Data><Data Name=\"SourceThreadId\">5012</Data><Data Name=\"SourceImage\">C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe</Data><Data Name=\"TargetProcessGUID\">{2D2756CF-2ED7-5379-87F6-DB928DC3CC29}</Data><Data Name=\"TargetProcessId\">640</Data><Data Name=\"TargetImage\">C:\\Windows\\System32\\lsass.exe</Data><Data Name=\"GrantedAccess\">0x1410</Data><Data Name=\"CallTrace\">C:\\Windows\\SYSTEM32\\ntdll.dll+9d4c4|C:\\Windows\\System32\\KERNELBASE.dll+2c2de</Data><Data Name=\"SourceUser\">CORP\\j.doe</Data><Data Name=\"TargetUser\">NT AUTHORITY\\SYSTEM</Data></EventData></Event>",
+      "parsed_event": {
+        "Provider": {
+          "Name": "Microsoft-Windows-Sysmon",
+          "Guid": "{5770385F-C22A-43E0-BF4C-06F5698FFBD9}"
+        },
+        "EventID": 10,
+        "Version": 3,
+        "Level": 4,
+        "Task": 10,
+        "Opcode": 0,
+        "Keywords": "0x8000000000000000",
+        "TimeCreated": {
+          "SystemTime": "2026-11-23T08:33:40.5110000Z"
+        },
+        "EventRecordID": 91004,
+        "Correlation": {},
+        "Execution": {
+          "ProcessID": 2216,
+          "ThreadID": 3480
+        },
+        "Channel": "Microsoft-Windows-Sysmon/Operational",
+        "Computer": "FINANCE-PC-01.corp.example.com",
+        "Security": {
+          "UserID": "S-1-5-18"
+        },
+        "EventData": {
+          "RuleName": "-",
+          "UtcTime": "2026-11-23 08:33:40.511",
+          "SourceProcessGUID": "{9FA491BA-7AC7-5CDC-9F6E-A4AC3AC2D0ED}",
+          "SourceProcessId": "4820",
+          "SourceThreadId": "5012",
+          "SourceImage": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+          "TargetProcessGUID": "{2D2756CF-2ED7-5379-87F6-DB928DC3CC29}",
+          "TargetProcessId": "640",
+          "TargetImage": "C:\\Windows\\System32\\lsass.exe",
+          "GrantedAccess": "0x1410",
+          "CallTrace": "C:\\Windows\\SYSTEM32\\ntdll.dll+9d4c4|C:\\Windows\\System32\\KERNELBASE.dll+2c2de",
+          "SourceUser": "CORP\\j.doe",
+          "TargetUser": "NT AUTHORITY\\SYSTEM"
+        }
+      }
+    },
+    {
+      "raw_xml": "<Event xmlns=\"http://schemas.microsoft.com/win/2004/08/events/event\"><System><Provider Name=\"Microsoft-Windows-Security-Auditing\" Guid=\"{54849625-5478-4994-A5BA-3E3B0328C30D}\"/><EventID>4624</EventID><Version>2</Version><Level>0</Level><Task>12544</Task><Opcode>0</Opcode><Keywords>0x8020000000000000</Keywords><TimeCreated SystemTime=\"2026-11-23T08:05:11.0200000Z\"/><EventRecordID>91005</EventRecordID><Correlation/><Execution ProcessID=\"780\" ThreadID=\"6104\"/><Channel>Security</Channel><Computer>FINANCE-PC-01.corp.example.com</Computer><Security UserID=\"S-1-5-18\"/></System><EventData><Data Name=\"SubjectUserSid\">S-1-5-18</Data><Data Name=\"SubjectUserName\">FINANCE-PC-01$</Data><Data Name=\"SubjectDomainName\">CORP</Data><Data Name=\"SubjectLogonId\">0x3e7</Data><Data Name=\"TargetUserSid\">S-1-5-21-3623811015-3361044348-30300820-1105</Data><Data Name=\"TargetUserName\">j.doe</Data><Data Name=\"TargetDomainName\">CORP</Data><Data Name=\"TargetLogonId\">0xf1206</Data><Data Name=\"LogonType\">2</Data><Data Name=\"LogonProcessName\">User32</Data><Data Name=\"AuthenticationPackageName\">Negotiate</Data><Data Name=\"WorkstationName\">FINANCE-PC-01</Data><Data Name=\"LogonGuid\">{5F6E0F9B-59BB-5018-9F47-1694F167EFFD}</Data><Data Name=\"ProcessId\">0x2c4</Data><Data Name=\"ProcessName\">C:\\Windows\\System32\\winlogon.exe</Data><Data Name=\"IpAddress\">127.0.0.1</Data><Data Name=\"IpPort\">0</Data><Data Name=\"ImpersonationLevel\">%%1833</Data><Data Name=\"ElevatedToken\">%%1843</Data></EventData></Event>",
+      "parsed_event": {
+        "Provider": {
+          "Name": "Microsoft-Windows-Security-Auditing",
+          "Guid": "{54849625-5478-4994-A5BA-3E3B0328C30D}"
+        },
+        "EventID": 4624,
+        "Version": 2,
+        "Level": 0,
+        "Task": 12544,
+        "Opcode": 0,
+        "Keywords": "0x8020000000000000",
+        "TimeCreated": {
+          "SystemTime": "2026-11-23T08:05:11.0200000Z"
+        },
+        "EventRecordID": 91005,
+        "Correlation": {},
+        "Execution": {
+          "ProcessID": 780,
+          "ThreadID": 6104
+        },
+        "Channel": "Security",
+        "Computer": "FINANCE-PC-01.corp.example.com",
+        "Security": {
+          "UserID": "S-1-5-18"
+        },
+        "EventData": {
+          "SubjectUserSid": "S-1-5-18",
+          "SubjectUserName": "FINANCE-PC-01$",
+          "SubjectDomainName": "CORP",
+          "SubjectLogonId": "0x3e7",
+          "TargetUserSid": "S-1-5-21-3623811015-3361044348-30300820-1105",
+          "TargetUserName": "j.doe",
+          "TargetDomainName": "CORP",
+          "TargetLogonId": "0xf1206",
+          "LogonType": "2",
+          "LogonProcessName": "User32",
+          "AuthenticationPackageName": "Negotiate",
+          "WorkstationName": "FINANCE-PC-01",
+          "LogonGuid": "{5F6E0F9B-59BB-5018-9F47-1694F167EFFD}",
+          "ProcessId": "0x2c4",
+          "ProcessName": "C:\\Windows\\System32\\winlogon.exe",
+          "IpAddress": "127.0.0.1",
+          "IpPort": "0",
+          "ImpersonationLevel": "%%1833",
+          "ElevatedToken": "%%1843"
+        }
+      }
+    },
+    {
+      "raw_xml": "<Event xmlns=\"http://schemas.microsoft.com/win/2004/08/events/event\"><System><Provider Name=\"Microsoft-Windows-Security-Auditing\" Guid=\"{54849625-5478-4994-A5BA-3E3B0328C30D}\"/><EventID>4625</EventID><Version>0</Version><Level>0</Level><Task>12546</Task><Opcode>0</Opcode><Keywords>0x8010000000000000</Keywords><TimeCreated SystemTime=\"2026-11-23T08:04:58.3300000Z\"/><EventRecordID>91006</EventRecordID><Correlation/><Execution ProcessID=\"780\" ThreadID=\"6104\"/><Channel>Security</Channel><Computer>FINANCE-PC-01.corp.example.com</Computer><Security UserID=\"S-1-5-18\"/></System><EventData><Data Name=\"SubjectUserSid\">S-1-5-18</Data><Data Name=\"SubjectUserName\">FINANCE-PC-01$</Data><Data Name=\"SubjectDomainName\">CORP</Data><Data Name=\"SubjectLogonId\">0x3e7</Data><Data Name=\"TargetUserSid\">S-1-0-0</Data><Data Name=\"TargetUserName\">j.doe</Data><Data Name=\"TargetDomainName\">CORP</Data><Data Name=\"Status\">0xc000006d</Data><Data Name=\"SubStatus\">0xc000006a</Data><Data Name=\"LogonType\">2</Data><Data Name=\"LogonProcessName\">User32</Data><Data Name=\"AuthenticationPackageName\">Negotiate</Data><Data Name=\"WorkstationName\">FINANCE-PC-01</Data><Data Name=\"ProcessId\">0x2c4</Data><Data Name=\"ProcessName\">C:\\Windows\\System32\\winlogon.exe</Data><Data Name=\"IpAddress\">127.0.0.1</Data><Data Name=\"IpPort\">0</Data></EventData></Event>",
+      "parsed_event": {
+        "Provider": {
+          "Name": "Microsoft-Windows-Security-Auditing",
+          "Guid": "{54849625-5478-4994-A5BA-3E3B0328C30D}"
+        },
+        "EventID": 4625,
+        "Version": 0,
+        "Level": 0,
+        "Task": 12546,
+        "Opcode": 0,
+        "Keywords": "0x8010000000000000",
+        "TimeCreated": {
+          "SystemTime": "2026-11-23T08:04:58.3300000Z"
+        },
+        "EventRecordID": 91006,
+        "Correlation": {},
+        "Execution": {
+          "ProcessID": 780,
+          "ThreadID": 6104
+        },
+        "Channel": "Security",
+        "Computer": "FINANCE-PC-01.corp.example.com",
+        "Security": {
+          "UserID": "S-1-5-18"
+        },
+        "EventData": {
+          "SubjectUserSid": "S-1-5-18",
+          "SubjectUserName": "FINANCE-PC-01$",
+          "SubjectDomainName": "CORP",
+          "SubjectLogonId": "0x3e7",
+          "TargetUserSid": "S-1-0-0",
+          "TargetUserName": "j.doe",
+          "TargetDomainName": "CORP",
+          "Status": "0xc000006d",
+          "SubStatus": "0xc000006a",
+          "LogonType": "2",
+          "LogonProcessName": "User32",
+          "AuthenticationPackageName": "Negotiate",
+          "WorkstationName": "FINANCE-PC-01",
+          "ProcessId": "0x2c4",
+          "ProcessName": "C:\\Windows\\System32\\winlogon.exe",
+          "IpAddress": "127.0.0.1",
+          "IpPort": "0"
+        }
+      }
+    }
+  ]
+}

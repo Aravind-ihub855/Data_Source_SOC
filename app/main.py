@@ -14,16 +14,16 @@ logger = logging.getLogger("synthetic_generator")
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    logger.info(f"✨ Starting {settings.APP_NAME} on port {settings.PORT}...")
+    logger.info(f"✨ Starting {settings.APP_NAME} v{settings.APP_VERSION} on port {settings.PORT}...")
     if settings.STREAM_AUTO_START:
         await start_stream()
     yield
-    logger.info("🛑 Shutting down Synthetic Security Data Generator...")
+    logger.info("🛑 Shutting down 5-Source Synthetic Security Data Generator...")
     await stop_stream()
 
 app = FastAPI(
     title=settings.APP_NAME,
-    description="Autonomous Synthetic Telemetry Generator simulating Microsoft Defender, PowerShell, AWS CloudTrail, and Microsoft Entra ID with Splunk HEC delivery.",
+    description="Autonomous 5-Source Synthetic Telemetry Generator simulating Microsoft Defender, Microsoft Entra ID, AWS CloudTrail, Windows Event Logs (OS, PowerShell, Sysmon), and Network Firewall logs with Splunk HEC delivery.",
     version=settings.APP_VERSION,
     lifespan=lifespan
 )

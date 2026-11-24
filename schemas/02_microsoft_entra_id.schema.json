@@ -1,0 +1,965 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.aetheris.example/source/microsoft_entra_id/1.0.0.json",
+  "title": "Microsoft Entra ID: event body",
+  "description": "Microsoft Graph `signIn` and `directoryAudit` resources. Sign-ins and audits are separate event families with separate natural keys.",
+  "x-schema-version": "1.0.0",
+  "x-splunk": {
+    "index": "identity",
+    "sourcetype_simulation": "aetheris:entra",
+    "source_per_family": [
+      "signin",
+      "audit"
+    ],
+    "note": "Production sourcetype depends on the Microsoft cloud add-on you deploy. Confirm the field casing it emits."
+  },
+  "x-dedupe-key": "id (signIn.id / directoryAudit.id)",
+  "$defs": {
+    "ts": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{1,7})?Z$",
+      "description": "UTC, ISO 8601, trailing Z, up to 7 fractional digits."
+    },
+    "ip": {
+      "type": "string",
+      "pattern": "^(((25[0-5]|2[0-4]\\d|1?\\d?\\d)\\.){3}(25[0-5]|2[0-4]\\d|1?\\d?\\d)|[0-9a-fA-F:]{2,39})$",
+      "description": "IPv4 or IPv6 literal. Simulation uses RFC 5737 / RFC 3849 documentation ranges and RFC 1918 only."
+    },
+    "guid": {
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}$"
+    },
+    "gnull": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/guid"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "signIn": {
+      "title": "signIn (Microsoft Graph)",
+      "type": "object",
+      "required": [
+        "id",
+        "createdDateTime",
+        "userId",
+        "userPrincipalName",
+        "appId",
+        "appDisplayName",
+        "resourceId",
+        "ipAddress",
+        "correlationId",
+        "status",
+        "deviceDetail",
+        "location",
+        "conditionalAccessStatus",
+        "authenticationRequirement",
+        "clientAppUsed",
+        "userAgent",
+        "isInteractive",
+        "riskLevelDuringSignIn",
+        "riskLevelAggregated",
+        "riskState",
+        "signInEventTypes"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}$",
+          "x-role": "dedupe_key"
+        },
+        "createdDateTime": {
+          "$ref": "#/$defs/ts",
+          "x-role": "event_time"
+        },
+        "userId": {
+          "type": "string",
+          "x-role": "entity.user"
+        },
+        "userDisplayName": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "userPrincipalName": {
+          "type": "string",
+          "x-role": "entity.user"
+        },
+        "userType": {
+          "enum": [
+            "member",
+            "guest",
+            null
+          ]
+        },
+        "appId": {
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}$"
+        },
+        "appDisplayName": {
+          "type": "string"
+        },
+        "resourceId": {
+          "type": "string"
+        },
+        "resourceDisplayName": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "servicePrincipalId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "servicePrincipalName": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "ipAddress": {
+          "$ref": "#/$defs/ip",
+          "x-role": "entity.ip"
+        },
+        "autonomousSystemNumber": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "clientAppUsed": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "userAgent": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "isInteractive": {
+          "type": "boolean"
+        },
+        "correlationId": {
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}$",
+          "x-role": "join_key.session"
+        },
+        "uniqueTokenIdentifier": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sessionId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "status": {
+          "type": "object",
+          "required": [
+            "errorCode"
+          ],
+          "properties": {
+            "errorCode": {
+              "type": "integer"
+            },
+            "failureReason": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "additionalDetails": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "deviceDetail": {
+          "type": "object",
+          "properties": {
+            "deviceId": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/guid"
+                },
+                {
+                  "const": ""
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "displayName": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "operatingSystem": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "browser": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "isCompliant": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "isManaged": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "trustType": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "location": {
+          "type": "object",
+          "properties": {
+            "city": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "state": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "countryOrRegion": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "pattern": "^[A-Z]{2}$"
+            },
+            "geoCoordinates": {
+              "type": [
+                "object",
+                "null"
+              ]
+            }
+          }
+        },
+        "conditionalAccessStatus": {
+          "enum": [
+            "success",
+            "failure",
+            "notApplied",
+            "unknownFutureValue"
+          ]
+        },
+        "appliedConditionalAccessPolicies": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "displayName",
+              "result"
+            ],
+            "properties": {
+              "id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "displayName": {
+                "type": "string"
+              },
+              "result": {
+                "type": "string"
+              },
+              "enforcedGrantControls": {
+                "type": "array"
+              }
+            }
+          }
+        },
+        "authenticationRequirement": {
+          "enum": [
+            "singleFactorAuthentication",
+            "multiFactorAuthentication"
+          ]
+        },
+        "authenticationDetails": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "authenticationMethod",
+              "succeeded"
+            ],
+            "properties": {
+              "authenticationMethod": {
+                "type": "string"
+              },
+              "authenticationMethodDetail": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "succeeded": {
+                "type": "boolean"
+              },
+              "authenticationStepResultDetail": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            }
+          }
+        },
+        "authenticationMethodsUsed": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "mfaDetail": {
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "tokenIssuerType": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "riskDetail": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "riskLevelDuringSignIn": {
+          "enum": [
+            "none",
+            "low",
+            "medium",
+            "high",
+            "hidden",
+            "unknownFutureValue"
+          ]
+        },
+        "riskLevelAggregated": {
+          "enum": [
+            "none",
+            "low",
+            "medium",
+            "high",
+            "hidden",
+            "unknownFutureValue"
+          ]
+        },
+        "riskState": {
+          "enum": [
+            "none",
+            "confirmedSafe",
+            "remediated",
+            "dismissed",
+            "atRisk",
+            "confirmedCompromised",
+            "unknownFutureValue"
+          ]
+        },
+        "riskEventTypes_v2": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "signInEventTypes": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "enum": [
+              "interactiveUser",
+              "nonInteractiveUser",
+              "servicePrincipal",
+              "managedIdentity"
+            ]
+          }
+        },
+        "homeTenantId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "resourceTenantId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "signInEventTypes"
+            ],
+            "properties": {
+              "signInEventTypes": {
+                "contains": {
+                  "const": "servicePrincipal"
+                }
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "servicePrincipalId"
+            ]
+          }
+        }
+      ]
+    },
+    "directoryAudit": {
+      "title": "directoryAudit (Microsoft Graph)",
+      "type": "object",
+      "required": [
+        "id",
+        "activityDateTime",
+        "activityDisplayName",
+        "category",
+        "result",
+        "operationType",
+        "loggedByService",
+        "correlationId",
+        "initiatedBy",
+        "targetResources"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "x-role": "dedupe_key"
+        },
+        "activityDateTime": {
+          "$ref": "#/$defs/ts",
+          "x-role": "event_time"
+        },
+        "activityDisplayName": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string"
+        },
+        "result": {
+          "enum": [
+            "success",
+            "failure",
+            "timeout",
+            "unknownFutureValue"
+          ]
+        },
+        "resultReason": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "operationType": {
+          "enum": [
+            "Add",
+            "Update",
+            "Delete",
+            "Assign",
+            "Unassign",
+            "Other",
+            "Unknown"
+          ]
+        },
+        "loggedByService": {
+          "type": "string"
+        },
+        "correlationId": {
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}$"
+        },
+        "initiatedBy": {
+          "type": "object",
+          "properties": {
+            "user": {
+              "type": [
+                "object",
+                "null"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "userPrincipalName": {
+                  "type": "string"
+                },
+                "ipAddress": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/$defs/ip"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              }
+            },
+            "app": {
+              "type": [
+                "object",
+                "null"
+              ],
+              "properties": {
+                "appId": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "displayName": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "servicePrincipalId": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "targetResources": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "type"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "displayName": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "type": {
+                "type": "string"
+              },
+              "userPrincipalName": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "modifiedProperties": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "displayName"
+                  ],
+                  "properties": {
+                    "displayName": {
+                      "type": "string"
+                    },
+                    "oldValue": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "newValue": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "additionalDetails": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "key": {
+                "type": "string"
+              },
+              "value": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/signIn"
+    },
+    {
+      "$ref": "#/$defs/directoryAudit"
+    }
+  ],
+  "examples": [
+    {
+      "id": "ba8166ee-8789-5e7e-9191-e18f1950430c",
+      "createdDateTime": "2026-11-23T08:04:55Z",
+      "userId": "3f2b8c1e-7a44-4d0b-9c61-5e1d2a8f0b17",
+      "userDisplayName": "Jordan Doe",
+      "userPrincipalName": "j.doe@example.com",
+      "userType": "member",
+      "appId": "13d1c2f2-b1f8-5be8-ba00-bf9b379b1d76",
+      "appDisplayName": "Microsoft 365",
+      "resourceId": "0bb06430-3723-5385-9f10-6c310323ab72",
+      "resourceDisplayName": "Office 365 Exchange Online",
+      "ipAddress": "198.51.100.10",
+      "autonomousSystemNumber": 64500,
+      "clientAppUsed": "Browser",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Edge/120.0",
+      "isInteractive": true,
+      "correlationId": "be8c2524-d0b1-5260-a6bb-390540afb814",
+      "uniqueTokenIdentifier": "uti-001",
+      "status": {
+        "errorCode": 0,
+        "failureReason": null,
+        "additionalDetails": null
+      },
+      "deviceDetail": {
+        "deviceId": "b7c2e9a4-5d31-4f6a-8e02-91a3c4d5e6f7",
+        "displayName": "FINANCE-PC-01",
+        "operatingSystem": "Windows 11",
+        "browser": "Edge 120.0.2210",
+        "isCompliant": true,
+        "isManaged": true,
+        "trustType": "Domain joined"
+      },
+      "location": {
+        "city": "New York",
+        "state": "New York",
+        "countryOrRegion": "US"
+      },
+      "conditionalAccessStatus": "success",
+      "appliedConditionalAccessPolicies": [
+        {
+          "id": "6fd56ac5-a91b-50bc-bb88-aea59ccf8248",
+          "displayName": "Require MFA for cloud apps",
+          "result": "success",
+          "enforcedGrantControls": [
+            "Mfa"
+          ]
+        }
+      ],
+      "authenticationRequirement": "multiFactorAuthentication",
+      "authenticationDetails": [
+        {
+          "authenticationMethod": "Password",
+          "succeeded": true
+        },
+        {
+          "authenticationMethod": "Mobile app notification",
+          "succeeded": true
+        }
+      ],
+      "authenticationMethodsUsed": [
+        "Password",
+        "Mobile app notification"
+      ],
+      "riskDetail": "none",
+      "riskLevelDuringSignIn": "none",
+      "riskLevelAggregated": "none",
+      "riskState": "none",
+      "riskEventTypes_v2": [],
+      "signInEventTypes": [
+        "interactiveUser"
+      ]
+    },
+    {
+      "id": "04c14b71-bbb4-5d80-9a89-ff9f9ff2e2f0",
+      "createdDateTime": "2026-11-23T08:41:15Z",
+      "userId": "3f2b8c1e-7a44-4d0b-9c61-5e1d2a8f0b17",
+      "userDisplayName": "Jordan Doe",
+      "userPrincipalName": "j.doe@example.com",
+      "userType": "member",
+      "appId": "6159b0c4-028c-5479-ba6a-c5ed11efdd82",
+      "appDisplayName": "AWS IAM Identity Center",
+      "resourceId": "b0f4b621-5bf9-5bc1-af23-3eec0cb97d2e",
+      "resourceDisplayName": "AWS Single Sign-On",
+      "ipAddress": "203.0.113.77",
+      "autonomousSystemNumber": 64511,
+      "clientAppUsed": "Browser",
+      "userAgent": "python-requests/2.31.0",
+      "isInteractive": true,
+      "correlationId": "c33cfeda-06d3-58c8-95f7-216d4140e48d",
+      "uniqueTokenIdentifier": "uti-777",
+      "status": {
+        "errorCode": 0,
+        "failureReason": null,
+        "additionalDetails": null
+      },
+      "deviceDetail": {
+        "deviceId": "",
+        "displayName": null,
+        "operatingSystem": "Linux",
+        "browser": "Unknown",
+        "isCompliant": false,
+        "isManaged": false,
+        "trustType": null
+      },
+      "location": {
+        "city": "Example City",
+        "state": null,
+        "countryOrRegion": "NL"
+      },
+      "conditionalAccessStatus": "success",
+      "appliedConditionalAccessPolicies": [
+        {
+          "id": "6fd56ac5-a91b-50bc-bb88-aea59ccf8248",
+          "displayName": "Require MFA for cloud apps",
+          "result": "success",
+          "enforcedGrantControls": [
+            "Mfa"
+          ]
+        }
+      ],
+      "authenticationRequirement": "multiFactorAuthentication",
+      "authenticationDetails": [
+        {
+          "authenticationMethod": "Previously satisfied",
+          "succeeded": true
+        }
+      ],
+      "authenticationMethodsUsed": [
+        "Previously satisfied"
+      ],
+      "riskDetail": "none",
+      "riskLevelDuringSignIn": "medium",
+      "riskLevelAggregated": "medium",
+      "riskState": "atRisk",
+      "riskEventTypes_v2": [
+        "unfamiliarFeatures",
+        "anonymizedIPAddress"
+      ],
+      "signInEventTypes": [
+        "interactiveUser"
+      ]
+    },
+    {
+      "id": "7f83f170-ef45-5f75-91d1-764070d40215",
+      "createdDateTime": "2026-11-23T08:04:12Z",
+      "userId": "3f2b8c1e-7a44-4d0b-9c61-5e1d2a8f0b17",
+      "userDisplayName": "Jordan Doe",
+      "userPrincipalName": "j.doe@example.com",
+      "userType": "member",
+      "appId": "13d1c2f2-b1f8-5be8-ba00-bf9b379b1d76",
+      "appDisplayName": "Microsoft 365",
+      "resourceId": "0bb06430-3723-5385-9f10-6c310323ab72",
+      "resourceDisplayName": "Office 365 Exchange Online",
+      "ipAddress": "198.51.100.10",
+      "autonomousSystemNumber": 64500,
+      "clientAppUsed": "Browser",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Edge/120.0",
+      "isInteractive": true,
+      "correlationId": "3f7bd066-d158-5227-a22a-a832cafa0cdf",
+      "uniqueTokenIdentifier": "uti-000",
+      "status": {
+        "errorCode": 50126,
+        "failureReason": "Invalid username or password.",
+        "additionalDetails": null
+      },
+      "deviceDetail": {
+        "deviceId": "b7c2e9a4-5d31-4f6a-8e02-91a3c4d5e6f7",
+        "displayName": "FINANCE-PC-01",
+        "operatingSystem": "Windows 11",
+        "browser": "Edge 120.0.2210",
+        "isCompliant": true,
+        "isManaged": true,
+        "trustType": "Domain joined"
+      },
+      "location": {
+        "city": "New York",
+        "state": "New York",
+        "countryOrRegion": "US"
+      },
+      "conditionalAccessStatus": "notApplied",
+      "appliedConditionalAccessPolicies": [
+        {
+          "id": "6fd56ac5-a91b-50bc-bb88-aea59ccf8248",
+          "displayName": "Require MFA for cloud apps",
+          "result": "success",
+          "enforcedGrantControls": [
+            "Mfa"
+          ]
+        }
+      ],
+      "authenticationRequirement": "singleFactorAuthentication",
+      "authenticationDetails": [
+        {
+          "authenticationMethod": "Password",
+          "succeeded": false
+        }
+      ],
+      "authenticationMethodsUsed": [
+        "Password"
+      ],
+      "riskDetail": "none",
+      "riskLevelDuringSignIn": "none",
+      "riskLevelAggregated": "none",
+      "riskState": "none",
+      "riskEventTypes_v2": [],
+      "signInEventTypes": [
+        "interactiveUser"
+      ]
+    },
+    {
+      "id": "78e45b59-e59e-5ea9-92a9-f2effe942949",
+      "createdDateTime": "2026-11-23T08:27:00Z",
+      "userId": "00000000-0000-0000-0000-000000000000",
+      "userDisplayName": null,
+      "userPrincipalName": "reporting-app@example.com",
+      "userType": "member",
+      "appId": "13d1c2f2-b1f8-5be8-ba00-bf9b379b1d76",
+      "appDisplayName": "Reporting Service",
+      "resourceId": "0bb06430-3723-5385-9f10-6c310323ab72",
+      "resourceDisplayName": "Office 365 Exchange Online",
+      "ipAddress": "192.0.2.80",
+      "autonomousSystemNumber": 64500,
+      "clientAppUsed": "Browser",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Edge/120.0",
+      "isInteractive": false,
+      "correlationId": "00fd5611-1a15-54d2-8261-ba919fa19fc4",
+      "uniqueTokenIdentifier": "uti-001",
+      "status": {
+        "errorCode": 0,
+        "failureReason": null,
+        "additionalDetails": null
+      },
+      "deviceDetail": {
+        "deviceId": "",
+        "displayName": null
+      },
+      "location": {
+        "city": "New York",
+        "state": "New York",
+        "countryOrRegion": "US"
+      },
+      "conditionalAccessStatus": "success",
+      "appliedConditionalAccessPolicies": [
+        {
+          "id": "6fd56ac5-a91b-50bc-bb88-aea59ccf8248",
+          "displayName": "Require MFA for cloud apps",
+          "result": "success",
+          "enforcedGrantControls": [
+            "Mfa"
+          ]
+        }
+      ],
+      "authenticationRequirement": "singleFactorAuthentication",
+      "authenticationDetails": [],
+      "authenticationMethodsUsed": [],
+      "riskDetail": "none",
+      "riskLevelDuringSignIn": "none",
+      "riskLevelAggregated": "none",
+      "riskState": "none",
+      "riskEventTypes_v2": [],
+      "signInEventTypes": [
+        "servicePrincipal"
+      ],
+      "servicePrincipalId": "9a16a279-f19c-5a70-98c3-9593d9041754",
+      "servicePrincipalName": "Reporting Service"
+    },
+    {
+      "id": "Directory_a1c9af73-db24-5d3c",
+      "activityDateTime": "2026-11-23T08:44:10Z",
+      "activityDisplayName": "Add member to role",
+      "category": "RoleManagement",
+      "result": "success",
+      "resultReason": "",
+      "operationType": "Assign",
+      "loggedByService": "Core Directory",
+      "correlationId": "90737398-51c3-50bf-93ca-c015c4a6a14f",
+      "initiatedBy": {
+        "user": {
+          "id": "3f2b8c1e-7a44-4d0b-9c61-5e1d2a8f0b17",
+          "userPrincipalName": "j.doe@example.com",
+          "ipAddress": "203.0.113.77"
+        },
+        "app": null
+      },
+      "targetResources": [
+        {
+          "id": "3f2b8c1e-7a44-4d0b-9c61-5e1d2a8f0b17",
+          "displayName": "Jordan Doe",
+          "type": "User",
+          "userPrincipalName": "j.doe@example.com",
+          "modifiedProperties": [
+            {
+              "displayName": "Role.DisplayName",
+              "oldValue": null,
+              "newValue": "\"Application Administrator\""
+            }
+          ]
+        }
+      ],
+      "additionalDetails": [
+        {
+          "key": "User-Agent",
+          "value": "python-requests/2.31.0"
+        }
+      ]
+    }
+  ]
+}

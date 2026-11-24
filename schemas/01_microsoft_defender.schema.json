@@ -1,0 +1,955 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.aetheris.example/source/microsoft_defender/1.0.0.json",
+  "title": "Microsoft Defender for Endpoint: event body",
+  "description": "Advanced Hunting row shape (DeviceProcessEvents, DeviceNetworkEvents, DeviceFileEvents, DeviceLogonEvents) plus a denormalised alert. The table name is NOT a field in native rows; in Splunk it is carried by `source`/`sourcetype`. Discrimination here is by ActionType enum and by AlertId.",
+  "x-schema-version": "1.0.0",
+  "x-splunk": {
+    "index": "endpoint",
+    "sourcetype_simulation": "aetheris:defender",
+    "source_per_table": [
+      "DeviceProcessEvents",
+      "DeviceNetworkEvents",
+      "DeviceFileEvents",
+      "DeviceLogonEvents",
+      "AlertInfo"
+    ],
+    "note": "Production sourcetype depends on the Defender add-on you deploy. Confirm against that add-on's documentation."
+  },
+  "x-dedupe-key": "DeviceId + ReportId + Timestamp (alerts: AlertId)",
+  "$defs": {
+    "ts": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{1,7})?Z$",
+      "description": "UTC, ISO 8601, trailing Z, up to 7 fractional digits."
+    },
+    "ip": {
+      "type": "string",
+      "pattern": "^(((25[0-5]|2[0-4]\\d|1?\\d?\\d)\\.){3}(25[0-5]|2[0-4]\\d|1?\\d?\\d)|[0-9a-fA-F:]{2,39})$",
+      "description": "IPv4 or IPv6 literal. Simulation uses RFC 5737 / RFC 3849 documentation ranges and RFC 1918 only."
+    },
+    "guid": {
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}$"
+    },
+    "sidn": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^S-1-\\d+(-\\d+)+$"
+    },
+    "sha1": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[a-f0-9]{40}$"
+    },
+    "sha256": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "md5": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[a-f0-9]{32}$"
+    },
+    "deviceId": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{40}$",
+      "description": "Defender DeviceId: 40 hex characters, constant per device."
+    },
+    "deviceBase": {
+      "type": "object",
+      "required": [
+        "Timestamp",
+        "DeviceId",
+        "DeviceName",
+        "ActionType",
+        "ReportId"
+      ],
+      "properties": {
+        "Timestamp": {
+          "$ref": "#/$defs/ts",
+          "x-role": "event_time"
+        },
+        "DeviceId": {
+          "$ref": "#/$defs/deviceId",
+          "x-role": [
+            "entity.host",
+            "dedupe_key"
+          ]
+        },
+        "DeviceName": {
+          "type": "string",
+          "description": "FQDN when domain-joined, lower case. Must be stable for the life of the device.",
+          "x-role": "entity.host"
+        },
+        "ActionType": {
+          "type": "string"
+        },
+        "ReportId": {
+          "type": "integer",
+          "description": "Unique per DeviceId. Dedupe key = DeviceId + ReportId + Timestamp.",
+          "x-role": "dedupe_key"
+        },
+        "MachineGroup": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "AdditionalFields": {
+          "type": [
+            "string",
+            "object",
+            "null"
+          ]
+        },
+        "InitiatingProcessFileName": {
+          "type": "string"
+        },
+        "InitiatingProcessId": {
+          "type": "integer"
+        },
+        "InitiatingProcessCommandLine": {
+          "type": "string"
+        },
+        "InitiatingProcessFolderPath": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "InitiatingProcessCreationTime": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ts"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "InitiatingProcessSHA1": {
+          "$ref": "#/$defs/sha1"
+        },
+        "InitiatingProcessSHA256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "InitiatingProcessMD5": {
+          "$ref": "#/$defs/md5"
+        },
+        "InitiatingProcessFileSize": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "InitiatingProcessAccountDomain": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "InitiatingProcessAccountName": {
+          "type": "string"
+        },
+        "InitiatingProcessAccountSid": {
+          "$ref": "#/$defs/sidn"
+        },
+        "InitiatingProcessAccountUpn": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "InitiatingProcessAccountObjectId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "InitiatingProcessLogonId": {
+          "type": "integer"
+        },
+        "InitiatingProcessIntegrityLevel": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "InitiatingProcessTokenElevation": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "InitiatingProcessParentFileName": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "InitiatingProcessParentId": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "InitiatingProcessParentCreationTime": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ts"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "InitiatingProcessVersionInfoCompanyName": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "InitiatingProcessVersionInfoProductName": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "InitiatingProcessVersionInfoOriginalFileName": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "processEvent": {
+      "title": "DeviceProcessEvents",
+      "allOf": [
+        {
+          "$ref": "#/$defs/deviceBase"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "FileName": {
+              "type": "string"
+            },
+            "FolderPath": {
+              "type": "string"
+            },
+            "SHA1": {
+              "$ref": "#/$defs/sha1"
+            },
+            "SHA256": {
+              "$ref": "#/$defs/sha256",
+              "x-role": "entity.file_hash"
+            },
+            "MD5": {
+              "$ref": "#/$defs/md5"
+            },
+            "FileSize": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "ProcessId": {
+              "type": "integer",
+              "x-role": "entity.process"
+            },
+            "ProcessCommandLine": {
+              "type": "string"
+            },
+            "ProcessCreationTime": {
+              "$ref": "#/$defs/ts",
+              "x-role": "entity.process"
+            },
+            "ProcessIntegrityLevel": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "ProcessTokenElevation": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "ProcessVersionInfoCompanyName": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "ProcessVersionInfoProductName": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "ProcessVersionInfoProductVersion": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "ProcessVersionInfoInternalFileName": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "ProcessVersionInfoOriginalFileName": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "ProcessVersionInfoFileDescription": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "AccountDomain": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "AccountName": {
+              "type": "string",
+              "x-role": "entity.user"
+            },
+            "AccountSid": {
+              "$ref": "#/$defs/sidn",
+              "x-role": "entity.user"
+            },
+            "AccountUpn": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "x-role": "entity.user"
+            },
+            "AccountObjectId": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "x-role": "entity.user"
+            },
+            "LogonId": {
+              "type": "integer",
+              "x-role": "join_key.logon_session"
+            },
+            "ActionType": {
+              "enum": [
+                "ProcessCreated",
+                "ProcessPrimaryTokenModified"
+              ]
+            }
+          },
+          "required": [
+            "FileName",
+            "FolderPath",
+            "ProcessId",
+            "ProcessCommandLine",
+            "ProcessCreationTime",
+            "SHA1",
+            "SHA256",
+            "AccountName",
+            "AccountDomain",
+            "AccountSid",
+            "LogonId",
+            "ProcessIntegrityLevel",
+            "ProcessTokenElevation",
+            "InitiatingProcessFileName",
+            "InitiatingProcessId",
+            "InitiatingProcessCommandLine",
+            "InitiatingProcessCreationTime",
+            "InitiatingProcessSHA256",
+            "InitiatingProcessAccountName",
+            "InitiatingProcessLogonId"
+          ]
+        }
+      ]
+    },
+    "networkEvent": {
+      "title": "DeviceNetworkEvents",
+      "allOf": [
+        {
+          "$ref": "#/$defs/deviceBase"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "LocalIP": {
+              "$ref": "#/$defs/ip",
+              "x-role": "entity.ip"
+            },
+            "LocalPort": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 65535
+            },
+            "LocalIPType": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "RemoteIP": {
+              "$ref": "#/$defs/ip",
+              "x-role": "entity.ip"
+            },
+            "RemotePort": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 65535
+            },
+            "RemoteIPType": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "RemoteUrl": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "Protocol": {
+              "enum": [
+                "Tcp",
+                "Udp",
+                "Icmp",
+                null
+              ]
+            },
+            "ActionType": {
+              "enum": [
+                "ConnectionSuccess",
+                "ConnectionFailed",
+                "ConnectionRequest",
+                "ConnectionAcknowledged",
+                "InboundConnectionAccepted",
+                "ListeningConnectionCreated",
+                "ConnectionFound",
+                "NetworkSignatureInspected",
+                "SslConnectionInspected"
+              ]
+            }
+          },
+          "required": [
+            "LocalIP",
+            "LocalPort",
+            "RemoteIP",
+            "RemotePort",
+            "Protocol",
+            "InitiatingProcessFileName",
+            "InitiatingProcessId",
+            "InitiatingProcessCommandLine",
+            "InitiatingProcessSHA256",
+            "InitiatingProcessAccountName",
+            "InitiatingProcessLogonId"
+          ]
+        }
+      ]
+    },
+    "fileEvent": {
+      "title": "DeviceFileEvents",
+      "allOf": [
+        {
+          "$ref": "#/$defs/deviceBase"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "FileName": {
+              "type": "string"
+            },
+            "FolderPath": {
+              "type": "string"
+            },
+            "SHA1": {
+              "$ref": "#/$defs/sha1"
+            },
+            "SHA256": {
+              "$ref": "#/$defs/sha256",
+              "x-role": "entity.file_hash"
+            },
+            "MD5": {
+              "$ref": "#/$defs/md5"
+            },
+            "FileSize": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "PreviousFileName": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "PreviousFolderPath": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "FileOriginUrl": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "FileOriginIP": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/ip"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "RequestAccountName": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "RequestAccountDomain": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "RequestAccountSid": {
+              "$ref": "#/$defs/sidn"
+            },
+            "ActionType": {
+              "enum": [
+                "FileCreated",
+                "FileModified",
+                "FileRenamed",
+                "FileDeleted"
+              ]
+            }
+          },
+          "required": [
+            "FileName",
+            "FolderPath",
+            "SHA256",
+            "FileSize",
+            "InitiatingProcessFileName",
+            "InitiatingProcessId",
+            "InitiatingProcessAccountName"
+          ]
+        }
+      ]
+    },
+    "logonEvent": {
+      "title": "DeviceLogonEvents",
+      "allOf": [
+        {
+          "$ref": "#/$defs/deviceBase"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "LogonType": {
+              "enum": [
+                "Interactive",
+                "RemoteInteractive",
+                "Network",
+                "Batch",
+                "Service",
+                "Unlock",
+                "CachedInteractive",
+                "NewCredentials",
+                "Unknown"
+              ]
+            },
+            "AccountDomain": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "AccountName": {
+              "type": "string",
+              "x-role": "entity.user"
+            },
+            "AccountSid": {
+              "$ref": "#/$defs/sidn",
+              "x-role": "entity.user"
+            },
+            "RemoteIP": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/ip"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "RemotePort": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "RemoteDeviceName": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "Protocol": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "FailureReason": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "IsLocalAdmin": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "LogonId": {
+              "type": "integer"
+            },
+            "ActionType": {
+              "enum": [
+                "LogonSuccess",
+                "LogonFailed",
+                "LogonAttempted"
+              ]
+            }
+          },
+          "required": [
+            "LogonType",
+            "AccountName",
+            "AccountSid",
+            "LogonId"
+          ]
+        }
+      ]
+    },
+    "alert": {
+      "title": "AlertInfo + AlertEvidence (denormalised)",
+      "type": "object",
+      "required": [
+        "AlertId",
+        "Timestamp",
+        "Title",
+        "Category",
+        "Severity",
+        "ServiceSource",
+        "DetectionSource",
+        "AttackTechniques",
+        "Evidence"
+      ],
+      "properties": {
+        "AlertId": {
+          "type": "string",
+          "x-role": "dedupe_key"
+        },
+        "Timestamp": {
+          "$ref": "#/$defs/ts",
+          "x-role": "event_time"
+        },
+        "Title": {
+          "type": "string"
+        },
+        "Category": {
+          "type": "string"
+        },
+        "Severity": {
+          "enum": [
+            "Informational",
+            "Low",
+            "Medium",
+            "High"
+          ]
+        },
+        "ServiceSource": {
+          "type": "string"
+        },
+        "DetectionSource": {
+          "type": "string"
+        },
+        "OriginSource": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "InvestigationId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "ThreatFamily": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "AttackTechniques": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^T\\d{4}(\\.\\d{3})?$"
+          }
+        },
+        "Evidence": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": [
+              "EntityType",
+              "EvidenceRole"
+            ],
+            "properties": {
+              "EntityType": {
+                "enum": [
+                  "Device",
+                  "Process",
+                  "File",
+                  "Account",
+                  "Ip",
+                  "Url",
+                  "MailMessage",
+                  "Registry"
+                ]
+              },
+              "EvidenceRole": {
+                "enum": [
+                  "Impacted",
+                  "Related",
+                  "Suspicious"
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/processEvent"
+    },
+    {
+      "$ref": "#/$defs/networkEvent"
+    },
+    {
+      "$ref": "#/$defs/fileEvent"
+    },
+    {
+      "$ref": "#/$defs/logonEvent"
+    },
+    {
+      "$ref": "#/$defs/alert"
+    }
+  ],
+  "examples": [
+    {
+      "DeviceId": "93648e706eedbb51c979bdabaeeb52ac4e53a2b4",
+      "DeviceName": "finance-pc-01.corp.example.com",
+      "MachineGroup": "Finance-Workstations",
+      "Timestamp": "2026-11-23T08:31:02.417Z",
+      "ActionType": "ProcessCreated",
+      "ReportId": 48211,
+      "FileName": "powershell.exe",
+      "FolderPath": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+      "SHA1": "fa22a9fb44bbcdc211ade0da99946aacdca7d325",
+      "SHA256": "b6a8c199c8a41f9dd0bd414857e33f5b6971a4821706d8740cb6086f9f31e352",
+      "MD5": "e44cc72d74d91c47bf47947f78cb88aa",
+      "FileSize": 452096,
+      "ProcessId": 4820,
+      "ProcessCommandLine": "powershell.exe -NoProfile -WindowStyle Hidden -EncodedCommand VwByAGkAdABlAC0ATwB1AHQAcAB1AHQAIAAnAGkAbgBlAHIAdAAgAHMAaQBtAHUAbABhAHQAaQBvAG4AIABwAGEAeQBsAG8AYQBkACcA",
+      "ProcessCreationTime": "2026-11-23T08:31:02.417Z",
+      "ProcessIntegrityLevel": "Medium",
+      "ProcessTokenElevation": "TokenElevationTypeLimited",
+      "ProcessVersionInfoCompanyName": "Microsoft Corporation",
+      "ProcessVersionInfoProductName": "Microsoft Windows Operating System",
+      "ProcessVersionInfoProductVersion": "10.0.22621.2506",
+      "ProcessVersionInfoOriginalFileName": "PowerShell.EXE",
+      "AccountDomain": "CORP",
+      "AccountName": "j.doe",
+      "AccountSid": "S-1-5-21-3623811015-3361044348-30300820-1105",
+      "AccountUpn": "j.doe@example.com",
+      "AccountObjectId": "3f2b8c1e-7a44-4d0b-9c61-5e1d2a8f0b17",
+      "LogonId": 987654,
+      "InitiatingProcessFileName": "WINWORD.EXE",
+      "InitiatingProcessId": 3012,
+      "InitiatingProcessCommandLine": "\"WINWORD.EXE\" /n \"C:\\Users\\j.doe\\Downloads\\Q3-invoice.docm\"",
+      "InitiatingProcessFolderPath": "C:\\Program Files\\Microsoft Office\\root\\Office16\\WINWORD.EXE",
+      "InitiatingProcessCreationTime": "2026-11-23T08:29:50.114Z",
+      "InitiatingProcessSHA1": "041cd0532d6dfdd7580bd68942eaf3384e5ae4bd",
+      "InitiatingProcessSHA256": "07ee058f1fe554143eb14624ffe8b76148e9ede2b23f96ecbb6302eeaa1cf4e5",
+      "InitiatingProcessMD5": "f44a30b557792eb86ca95f6687dd5bd4",
+      "InitiatingProcessFileSize": 48201736,
+      "InitiatingProcessAccountDomain": "CORP",
+      "InitiatingProcessAccountName": "j.doe",
+      "InitiatingProcessAccountSid": "S-1-5-21-3623811015-3361044348-30300820-1105",
+      "InitiatingProcessAccountUpn": "j.doe@example.com",
+      "InitiatingProcessAccountObjectId": "3f2b8c1e-7a44-4d0b-9c61-5e1d2a8f0b17",
+      "InitiatingProcessLogonId": 987654,
+      "InitiatingProcessIntegrityLevel": "Medium",
+      "InitiatingProcessTokenElevation": "TokenElevationTypeLimited",
+      "InitiatingProcessParentFileName": "explorer.exe",
+      "InitiatingProcessParentId": 2284,
+      "InitiatingProcessParentCreationTime": "2026-11-23T08:05:11.020Z"
+    },
+    {
+      "DeviceId": "93648e706eedbb51c979bdabaeeb52ac4e53a2b4",
+      "DeviceName": "finance-pc-01.corp.example.com",
+      "MachineGroup": "Finance-Workstations",
+      "Timestamp": "2026-11-23T08:31:08.250Z",
+      "ActionType": "ConnectionSuccess",
+      "ReportId": 48219,
+      "LocalIP": "10.20.4.15",
+      "LocalPort": 53122,
+      "LocalIPType": "Private",
+      "RemoteIP": "203.0.113.77",
+      "RemotePort": 443,
+      "RemoteIPType": "Public",
+      "RemoteUrl": "cdn-update.example.net",
+      "Protocol": "Tcp",
+      "InitiatingProcessFileName": "powershell.exe",
+      "InitiatingProcessId": 4820,
+      "InitiatingProcessCommandLine": "powershell.exe -NoProfile -WindowStyle Hidden -EncodedCommand VwByAGkAdABlAC0ATwB1AHQAcAB1AHQAIAAnAGkAbgBlAHIAdAAgAHMAaQBtAHUAbABhAHQAaQBvAG4AIABwAGEAeQBsAG8AYQBkACcA",
+      "InitiatingProcessFolderPath": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+      "InitiatingProcessCreationTime": "2026-11-23T08:31:02.417Z",
+      "InitiatingProcessSHA1": "fa22a9fb44bbcdc211ade0da99946aacdca7d325",
+      "InitiatingProcessSHA256": "b6a8c199c8a41f9dd0bd414857e33f5b6971a4821706d8740cb6086f9f31e352",
+      "InitiatingProcessMD5": "e44cc72d74d91c47bf47947f78cb88aa",
+      "InitiatingProcessAccountDomain": "CORP",
+      "InitiatingProcessAccountName": "j.doe",
+      "InitiatingProcessAccountSid": "S-1-5-21-3623811015-3361044348-30300820-1105",
+      "InitiatingProcessAccountUpn": "j.doe@example.com",
+      "InitiatingProcessLogonId": 987654
+    },
+    {
+      "AlertId": "da637842560210000000_1928374650",
+      "Timestamp": "2026-11-23T08:32:10.000Z",
+      "Title": "Suspicious PowerShell command line",
+      "Category": "Execution",
+      "Severity": "High",
+      "ServiceSource": "MicrosoftDefenderForEndpoint",
+      "DetectionSource": "EDR",
+      "OriginSource": "Endpoint",
+      "InvestigationId": "7001",
+      "AttackTechniques": [
+        "T1059.001",
+        "T1204.002"
+      ],
+      "Evidence": [
+        {
+          "EntityType": "Device",
+          "EvidenceRole": "Impacted",
+          "DeviceId": "93648e706eedbb51c979bdabaeeb52ac4e53a2b4",
+          "DeviceName": "finance-pc-01.corp.example.com"
+        },
+        {
+          "EntityType": "Process",
+          "EvidenceRole": "Suspicious",
+          "FileName": "powershell.exe",
+          "SHA1": "fa22a9fb44bbcdc211ade0da99946aacdca7d325",
+          "SHA256": "b6a8c199c8a41f9dd0bd414857e33f5b6971a4821706d8740cb6086f9f31e352",
+          "ProcessCommandLine": "powershell.exe -NoProfile -WindowStyle Hidden -EncodedCommand VwByAGkAdABlAC0ATwB1AHQAcAB1AHQAIAAnAGkAbgBlAHIAdAAgAHMAaQBtAHUAbABhAHQAaQBvAG4AIABwAGEAeQBsAG8AYQBkACcA"
+        },
+        {
+          "EntityType": "Account",
+          "EvidenceRole": "Impacted",
+          "AccountName": "j.doe",
+          "AccountSid": "S-1-5-21-3623811015-3361044348-30300820-1105",
+          "AccountUpn": "j.doe@example.com"
+        },
+        {
+          "EntityType": "Ip",
+          "EvidenceRole": "Related",
+          "RemoteIP": "203.0.113.77"
+        }
+      ]
+    },
+    {
+      "DeviceId": "48977817c832af789553ef1dd2add5cefd04eb78",
+      "DeviceName": "hr-laptop-02.corp.example.com",
+      "MachineGroup": "HR-Laptops",
+      "Timestamp": "2026-11-23T09:10:00.205Z",
+      "ActionType": "ProcessCreated",
+      "ReportId": 7340,
+      "FileName": "msedge.exe",
+      "FolderPath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+      "SHA1": "438aa324e37993dceb149da4b3c7f33f3cabaf78",
+      "SHA256": "010ff509df3a299d6a59b8a0be104b423fcaf1645f4474527e76e92792904f39",
+      "MD5": "e9417981dcf51bb3e8fdf7caf8e71379",
+      "FileSize": 4281344,
+      "ProcessId": 6200,
+      "ProcessCommandLine": "\"msedge.exe\" --profile-directory=Default",
+      "ProcessCreationTime": "2026-11-23T09:10:00.205Z",
+      "ProcessIntegrityLevel": "Medium",
+      "ProcessTokenElevation": "TokenElevationTypeLimited",
+      "AccountDomain": "CORP",
+      "AccountName": "a.smith",
+      "AccountSid": "S-1-5-21-3623811015-3361044348-30300820-1208",
+      "AccountUpn": "a.smith@example.com",
+      "AccountObjectId": "f7a08f34-bb87-57b7-8c66-a626d44e1537",
+      "LogonId": 456123,
+      "InitiatingProcessFileName": "explorer.exe",
+      "InitiatingProcessId": 2290,
+      "InitiatingProcessCommandLine": "explorer.exe",
+      "InitiatingProcessCreationTime": "2026-11-23T08:48:02.100Z",
+      "InitiatingProcessSHA256": "fc068390b77044ed8e3ab569ce8b861f70559d765dbd7bc8e2b3de7686929d5b",
+      "InitiatingProcessAccountName": "a.smith",
+      "InitiatingProcessLogonId": 456123
+    },
+    {
+      "DeviceId": "48977817c832af789553ef1dd2add5cefd04eb78",
+      "DeviceName": "hr-laptop-02.corp.example.com",
+      "MachineGroup": "HR-Laptops",
+      "Timestamp": "2026-11-23T09:12:41.880Z",
+      "ActionType": "FileCreated",
+      "ReportId": 7355,
+      "FileName": "payroll-summary.xlsx",
+      "FolderPath": "C:\\Users\\a.smith\\Documents\\payroll-summary.xlsx",
+      "SHA1": "a286f4ec52d9ad4a3328fe70547323b33ad67e45",
+      "SHA256": "a455ff4cbd7d86ff780e5370975775370c6879750f9fcd57855fda3850166788",
+      "FileSize": 98304,
+      "InitiatingProcessFileName": "EXCEL.EXE",
+      "InitiatingProcessId": 7120,
+      "InitiatingProcessAccountName": "a.smith"
+    }
+  ]
+}
