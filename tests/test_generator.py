@@ -295,3 +295,10 @@ def test_each_run_gets_its_own_label_file(isolated, tmp_path):
     assert (isolated / "ground_truth.jsonl").exists()
     with pytest.raises(ValueError):
         delivery.begin_run("../escape")
+
+
+def test_backfill_total_size_is_capped():
+    from fastapi.testclient import TestClient
+    from app.main import app
+    r = TestClient(app).post("/backfill", json={"minutes": 1440, "volume": 50})
+    assert r.status_code == 422 and "at most" in r.json()["detail"]

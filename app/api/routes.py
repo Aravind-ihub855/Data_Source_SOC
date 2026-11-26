@@ -37,6 +37,8 @@ class RateUpdateRequest(BaseModel):
     firewall_rate: Optional[int] = None
     powershell_rate: Optional[int] = None # legacy alias for windows_rate
 
+MAX_BACKFILL_MINUTE_VOLUME = 5000   # about 475,000 events
+
 class BackfillRequest(BaseModel):
     minutes: float = Field(default=30, gt=0, le=1440, description="Length of the simulated window")
     end: Optional[str] = Field(default=None, description="Window end (ISO 8601 UTC, in the past); default now")
@@ -264,6 +266,9 @@ async def start_backfill(req: BackfillRequest):
     Generates a past window (baseline + paced scenarios) on simulated time and sends it to Splunk
     with historical timestamps. Runs in the background; poll GET /backfill. Same SEED, same events.
     """
+    # The factors are capped separately; this bounds the total (about 95 events/min x minutes x volume, all held in memory).
+    if req.minutes * req.volume > MAX_BACKFILL_MINUTE_VOLUME:
+        raise HTTPException(status_code=422, detail=f"minutes x volume must be at most {MAX_BACKFILL_MINUTE_VOLUME}")
     if _backfill["status"] == "RUNNING":
         raise HTTPException(status_code=409, detail="A backfill is already running")
     if is_stream_running():
