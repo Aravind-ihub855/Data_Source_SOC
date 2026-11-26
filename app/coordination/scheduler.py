@@ -4,6 +4,7 @@ import logging
 import random
 import re
 from collections import deque
+from contextvars import ContextVar
 from datetime import datetime, timedelta
 from typing import Any, Dict, List, Optional
 
@@ -11,7 +12,7 @@ from app.config import settings
 from app.coordination.context import build_scenario_context
 from app.coordination.registry import scenario_registry, ScenarioDefinition
 from app.coordination.scenarios import resolve_scenario_id
-from app.delivery.splunk_delivery import baseline_truth, get_metrics_summary, schedule
+from app.delivery.splunk_delivery import baseline_truth, get_metrics_summary, ingest_mode, realistic_delays, schedule
 from app.generators import windows_events
 from app.generators.cloudtrail import generate_cloudtrail_baseline_event
 from app.generators.defender import generate_defender_baseline_event
@@ -33,12 +34,20 @@ BASELINE = {
     "Firewall logs": (generate_firewall_baseline_event, "FIREWALL_RATE_PER_MIN"),
 }
 COOLDOWN = 8
+SCENARIO_SPAN_S = {"SCN-ID-03": 910}   # seconds from start to the last step; the rest finish within 2 minutes
+DEFAULT_SPAN_S = 120
+QUICK_PACK = ["SCN-CH-01", "SCN-ID-03", "SCN-FP-01", "SCN-FP-02"]  # a full attack chain, impossible travel, two lookalikes
+
+# Per-run overrides (batch runs): traffic volume multiplier, and the working-hours curve (None = follow settings)
+_volume: ContextVar[float] = ContextVar("volume", default=1.0)
+_diurnal: ContextVar[Optional[bool]] = ContextVar("diurnal", default=None)
 TECHNIQUE = re.compile(r"^T\d{4}(\.\d{3})?$")
 
 
 def activity_factor(at: datetime) -> float:
     """Share of peak traffic at this moment: a working-hours curve in the business's local time."""
-    if not settings.DIURNAL_CURVE:
+    diurnal = _diurnal.get()
+    if not (settings.DIURNAL_CURVE if diurnal is None else diurnal):
         return 1.0
     local = at + timedelta(hours=settings.BUSINESS_UTC_OFFSET_HOURS)
     h = local.hour + local.minute / 60
@@ -52,7 +61,7 @@ def activity_factor(at: datetime) -> float:
 
 
 def _next_gap_seconds(source: str, at: datetime) -> float:
-    rate_per_min = getattr(settings, BASELINE[source][1]) * activity_factor(at)
+    rate_per_min = getattr(settings, BASELINE[source][1]) * activity_factor(at) * _volume.get()
     return random.expovariate(max(rate_per_min, 0.01) / 60.0)  # Poisson arrivals
 
 
@@ -249,38 +258,83 @@ class TelemetryScheduler:
         return scheduled
 
 
-async def run_backfill(start: datetime, end: datetime, collect: Optional[List] = None) -> Dict[str, Any]:
+def resolve_pack(scenarios: List[str]) -> List[str]:
+    """Scenario ids and pack names ('full', 'quick', 'none') -> ids, without repeats. Raises KeyError for unknown ids."""
+    ids: List[str] = []
+    for item in scenarios:
+        key = item.strip().lower()
+        if key == "full":
+            ids += [d.scenario_id for d in scenario_registry.list_all()]
+        elif key == "quick":
+            ids += QUICK_PACK
+        elif key != "none" and key:
+            ids.append(scenario_registry.get(resolve_scenario_id(item)).scenario_id)
+    return list(dict.fromkeys(ids))
+
+
+async def run_backfill(start: datetime, end: datetime, collect: Optional[List] = None, volume: float = 1.0,
+                       diurnal: Optional[bool] = None, delays: bool = True,
+                       scenarios: Optional[List[str]] = None) -> Dict[str, Any]:
     """
-    Generates [start, end) on simulated time: baseline traffic and paced scenarios, as the live
-    stream would have produced them, sent to Splunk straight away with their historical timestamps.
-    Re-seeds first, so the same SEED and window always produce the same events.
+    Generates [start, end) on simulated time: baseline traffic plus scenarios, delivered to Splunk at once with their
+    historical timestamps (batch / burst mode). Re-seeds first, so the same SEED and window give the same events.
+
+    volume     multiplies every baseline rate;  diurnal  True/False overrides the working-hours curve (None: settings)
+    delays     False = no per-source delivery delay, so everything arrives within seconds
+    scenarios  None: one paced random scenario about every SCENARIO_INTERVAL_MIN (the live behaviour);
+               a list (ids and/or 'full' / 'quick' / 'none'): exactly those, each at a random time in the window,
+               alternating tenants, and no random ones
     """
     random.seed(settings.SEED)
     windows_events._record_ids.clear()
-    timeline = [(start + timedelta(seconds=_next_gap_seconds(s, start)), i, s) for i, s in enumerate(BASELINE)]
-    pace = settings.SCENARIO_INTERVAL_MIN * 60.0
-    timeline.append((start + timedelta(seconds=random.uniform(pace * 0.85, pace * 1.15)), len(BASELINE), "scenario"))
-    heapq.heapify(timeline)
-    recent: deque = deque(maxlen=COOLDOWN)
-    counts = {"events": 0, "scenarios": 0}
-    while timeline and timeline[0][0] < end:
-        at, order, kind = heapq.heappop(timeline)
-        with sim_clock(at):
-            if kind == "scenario":
-                defs = scenario_registry.list_all()
-                chosen = random.choice([d for d in defs if d.scenario_id not in recent] or defs)
-                recent.append(chosen.scenario_id)
-                items = await run_scenario(chosen, random.choice(settings.tenant_list), allow_late=False)
-                counts["scenarios"] += 1
-                nxt = at + timedelta(seconds=random.uniform(pace * 0.85, pace * 1.15))
-            else:
-                items = [await emit_baseline(kind, allow_late=False)]
-                nxt = at + timedelta(seconds=_next_gap_seconds(kind, at))
-        counts["events"] += len(items)
-        if collect is not None:
-            collect.extend(items)
-        heapq.heappush(timeline, (nxt, order, kind))
-    return {"start": start.isoformat(), "end": end.isoformat(), "seed": settings.SEED, **counts}
+    overrides = [(_volume, volume), (_diurnal, diurnal), (realistic_delays, delays), (ingest_mode, "batch")]
+    tokens = [(var, var.set(value)) for var, value in overrides]
+    try:
+        timeline = [(start + timedelta(seconds=_next_gap_seconds(s, start)), i, s) for i, s in enumerate(BASELINE)]
+        pace = settings.SCENARIO_INTERVAL_MIN * 60.0
+        planned = resolve_pack(scenarios) if scenarios is not None else None
+        if planned is None:
+            timeline.append((start + timedelta(seconds=random.uniform(pace * 0.85, pace * 1.15)), len(BASELINE), "scenario"))
+        else:
+            window_s = (end - start).total_seconds()
+            tenants = settings.tenant_list
+            for i, sid in enumerate(planned):
+                span = SCENARIO_SPAN_S.get(sid, DEFAULT_SPAN_S)   # start early enough to finish inside the window
+                at = start + timedelta(seconds=random.uniform(0, max(1.0, window_s - span)))
+                timeline.append((at, 1000 + i, f"scn:{sid}:{tenants[i % len(tenants)]}"))
+        heapq.heapify(timeline)
+        recent: deque = deque(maxlen=COOLDOWN)
+        counts = {"events": 0, "scenarios": 0}
+        executed: List[Dict[str, Any]] = []
+        while timeline and timeline[0][0] < end:
+            at, order, kind = heapq.heappop(timeline)
+            with sim_clock(at):
+                if kind.startswith("scn:"):
+                    _, sid, tenant = kind.split(":", 2)
+                    items = await run_scenario(scenario_registry.get(sid), tenant, allow_late=False)
+                    executed.append({"scenario_id": sid, "tenant_id": tenant, "at": at.isoformat(), "events": len(items)})
+                    counts["scenarios"] += 1
+                    nxt = None
+                elif kind == "scenario":
+                    defs = scenario_registry.list_all()
+                    chosen = random.choice([d for d in defs if d.scenario_id not in recent] or defs)
+                    recent.append(chosen.scenario_id)
+                    items = await run_scenario(chosen, random.choice(settings.tenant_list), allow_late=False)
+                    counts["scenarios"] += 1
+                    nxt = at + timedelta(seconds=random.uniform(pace * 0.85, pace * 1.15))
+                else:
+                    items = [await emit_baseline(kind, allow_late=False)]
+                    nxt = at + timedelta(seconds=_next_gap_seconds(kind, at))
+            counts["events"] += len(items)
+            if collect is not None:
+                collect.extend(items)
+            if nxt is not None:
+                heapq.heappush(timeline, (nxt, order, kind))
+    finally:
+        for var, token in tokens:
+            var.reset(token)
+    return {"start": start.isoformat(), "end": end.isoformat(), "seed": settings.SEED, "volume": volume,
+            "scenario_list": executed, **counts}
 
 
 scheduler = TelemetryScheduler()

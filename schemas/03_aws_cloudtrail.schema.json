@@ -5,7 +5,7 @@
   "description": "One CloudTrail record (an element of the `Records` array). Each record is delivered to Splunk as one event.",
   "x-schema-version": "1.0.0",
   "x-splunk": {
-    "index": "cloud",
+    "index": "security_cloud",
     "sourcetype_simulation": "aws:cloudtrail",
     "sourcetype_production_hint": "aws:cloudtrail (AWS add-on for Splunk)",
     "delivery": "Delivered as the CloudTrail record itself (Splunk Add-on for AWS)."

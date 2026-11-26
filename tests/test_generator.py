@@ -10,7 +10,7 @@ from jsonschema import Draft202012Validator
 import app.coordination.scenarios  # noqa: F401  (registers the 20 scenarios)
 from app.config import settings
 from app.coordination.registry import scenario_registry
-from app.coordination.scheduler import BASELINE, activity_factor, run_backfill, run_scenario, scheduler
+from app.coordination.scheduler import BASELINE, QUICK_PACK, activity_factor, resolve_pack, run_backfill, run_scenario, scheduler
 from app.delivery import splunk_delivery as delivery
 from app.registry.entities import TENANTS, use_tenant
 from app.sources import source_of
@@ -158,7 +158,8 @@ def test_wire_formats_and_sourcetypes():
     assert items["Microsoft Entra ID"]["event"]["category"] in ("SignInLogs", "AuditLogs")
     assert items["AWS CloudTrail"]["sourcetype"] == "aws:cloudtrail"
     for item in items.values():
-        assert set(item["fields"]) == {"tenant_id", "delivery_id", "event_key"}
+        assert set(item["fields"]) == {"tenant_id", "delivery_id", "event_key", "ingest_mode"}
+        assert item["fields"]["ingest_mode"] == "live"
 
 
 def _client(handler):
@@ -235,3 +236,62 @@ def test_random_scenarios_do_not_repeat_within_cooldown():
         sid = asyncio.run(scheduler.trigger_random_scenario())["scenario_id"]
         assert sid not in history[-8:]
         history.append(sid)
+
+
+def _window(minutes):
+    end = datetime(2026, 11, 24, 15, 0, tzinfo=timezone.utc)
+    return end - timedelta(minutes=minutes), end
+
+
+def test_batch_pack_injects_exactly_the_chosen_scenarios_without_delays(isolated):
+    start, end = _window(30)
+    items = []
+    stats = asyncio.run(run_backfill(start, end, collect=items, volume=1.0, diurnal=False, delays=False,
+                                     scenarios=["quick"]))
+    assert sorted(x["scenario_id"] for x in stats["scenario_list"]) == sorted(QUICK_PACK)
+    assert {x["tenant_id"] for x in stats["scenario_list"]} == {"tnt-acme", "tnt-globex"}   # round-robin over tenants
+    labelled = {r["scenario_id"] for r in truth_rows(isolated) if r["scenario_id"]}
+    assert labelled == set(QUICK_PACK)                      # nothing random on top of the pack
+    for entry in delivery._event_buffer:                    # delays off: every event is due by the window end
+        assert parse_iso(entry["send_at"]) <= end + timedelta(seconds=1)
+        assert entry["hec"]["fields"]["ingest_mode"] == "batch"
+
+
+def test_full_pack_covers_all_twenty_scenarios_and_volume_scales_traffic(isolated):
+    start, end = _window(60)
+    low, high = [], []
+    asyncio.run(run_backfill(start, end, collect=low, volume=1.0, diurnal=False, delays=False, scenarios=[]))
+    stats = asyncio.run(run_backfill(start, end, collect=high, volume=3.0, diurnal=False, delays=False, scenarios=["full"]))
+    assert len(resolve_pack(["full"])) == 20 and stats["scenarios"] == 20
+    assert len(high) - sum(x["events"] for x in stats["scenario_list"]) > 2.5 * len(low)   # ~3x baseline events
+    assert {x["scenario_id"] for x in stats["scenario_list"]} == {s.scenario_id for s in scenario_registry.list_all()}
+
+
+def test_batch_settings_do_not_leak_into_live_traffic(isolated):
+    start, end = _window(5)
+    asyncio.run(run_backfill(start, end, volume=5.0, diurnal=False, delays=False, scenarios=[]))
+    assert delivery.realistic_delays.get() is True and delivery.ingest_mode.get() == "live"
+    with use_tenant("tnt-acme"):
+        item = asyncio.run(delivery.schedule(BASELINE["AWS CloudTrail"][0](), "AWS CloudTrail", delivery.baseline_truth()))
+    assert item["fields"]["ingest_mode"] == "live"
+
+
+def test_unknown_scenario_in_a_pack_is_rejected():
+    with pytest.raises(KeyError):
+        resolve_pack(["full", "SCN-NOPE-99"])
+    assert resolve_pack(["none"]) == [] and resolve_pack(["SCN-001", "SCN-CH-01"]) == ["SCN-CH-01"]   # legacy id, deduplicated
+
+
+def test_each_run_gets_its_own_label_file(isolated, tmp_path):
+    path = delivery.begin_run("e2e-test-1")
+    try:
+        assert Path(path).parent.name == "e2e-test-1"
+        asyncio.run(run_scenario(scenario("SCN-CL-02"), "tnt-acme"))
+        assert len(Path(path).read_text(encoding="utf-8").splitlines()) == 1
+        assert not (isolated / "ground_truth.jsonl").exists()          # the cumulative file is untouched
+    finally:
+        delivery.end_run()
+    asyncio.run(run_scenario(scenario("SCN-CL-02"), "tnt-acme"))
+    assert (isolated / "ground_truth.jsonl").exists()
+    with pytest.raises(ValueError):
+        delivery.begin_run("../escape")

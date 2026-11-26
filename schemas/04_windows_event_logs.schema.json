@@ -5,7 +5,7 @@
   "description": "One Windows event: authoritative `raw_xml` plus its parsed form. Typed EventData is enforced for Sysmon 1/3/10/11/22, PowerShell 4104 and Security 4624/4625/4688/4698; other events are accepted with a generic EventData object.",
   "x-schema-version": "1.0.0",
   "x-splunk": {
-    "index": "endpoint",
+    "index": "security_endpoint",
     "sourcetype_simulation": "XmlWinEventLog",
     "note": "These XmlWinEventLog sourcetypes are the Splunk Add-on for Microsoft Windows convention.",
     "delivery": "Only raw_xml is delivered (it is _raw); source is XmlWinEventLog:<Channel> (Splunk Add-on for Windows 5.0+)."

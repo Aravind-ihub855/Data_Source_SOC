@@ -1,0 +1,1021 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Sample spec schemas" id="sources">
+    <mxGraphModel dx="1318" dy="734" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="c2" parent="1" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=40;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;html=1;whiteSpace=wrap;fillColor=#f5f5f5;strokeColor=#666666;swimlaneFillColor=#ffffff;fontSize=12;" value="Sample file (one per source)&lt;br&gt;&lt;font style=&quot;font-size:10px;font-weight:normal&quot;&gt;sample_specs/0N_*.json&lt;/font&gt;" vertex="1">
+          <mxGeometry height="200" width="440" as="geometry" />
+        </mxCell>
+        <mxCell id="c3" parent="c2" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;dataset_name&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. Aetheris multi-source security&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="440" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="c4" parent="c2" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;dataset_version&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. 1.0.0&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="440" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="c5" parent="c2" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;dataset_status&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. synthetic_high_fidelity_test_f&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="440" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="c6" parent="c2" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;source&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. Microsoft Defender for Endpoin&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="440" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="c7" parent="c2" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;native_format&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. Advanced Hunting table-shaped &lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="440" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="c8" parent="c2" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;event_families&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. DeviceProcessEvents, DeviceNet&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="440" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="c9" parent="c2" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;record_count&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;int&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. 6&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="440" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="c10" parent="c2" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;records&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;array&amp;lt;object&amp;gt;&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· one object per sample event&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="440" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="c11" parent="1" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=40;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;html=1;whiteSpace=wrap;fillColor=#f5f5f5;strokeColor=#666666;swimlaneFillColor=#ffffff;fontSize=12;" value="records[] (every record)&lt;br&gt;&lt;font style=&quot;font-size:10px;font-weight:normal&quot;&gt;wrapper around one vendor event&lt;/font&gt;" vertex="1">
+          <mxGeometry height="140" width="440" y="226" as="geometry" />
+        </mxCell>
+        <mxCell id="c12" parent="c11" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;dataset_record_id&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. def-001&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="440" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="c13" parent="c11" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&amp;#128273; &lt;b&gt;source_event_id&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. def-report-1001&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="440" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="c14" parent="c11" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;source_event_time&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. 2026-11-23T08:31:02Z&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="440" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="c15" parent="c11" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;source_payload&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;object&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· the vendor event (panels at right)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="440" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="c16" parent="c11" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;evaluation_metadata&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;object&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· labels (table below)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="440" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="c17" parent="1" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=40;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;html=1;whiteSpace=wrap;fillColor=#f8cecc;strokeColor=#b85450;swimlaneFillColor=#ffffff;fontSize=12;dashed=1;" value="evaluation_metadata (labels)&lt;br&gt;&lt;font style=&quot;font-size:10px;font-weight:normal&quot;&gt;kept beside the payload in these samples only&lt;/font&gt;" vertex="1">
+          <mxGeometry height="180" width="440" y="392" as="geometry" />
+        </mxCell>
+        <mxCell id="c18" parent="c17" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;scenario_key&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. SCN-001&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="440" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="c19" parent="c17" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;correlation_group&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. CORR-001&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="440" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="c20" parent="c17" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;ground_truth&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. malicious_test_activity&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="440" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="c21" parent="c17" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;expected_aetheris_severity&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. high&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="440" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="c22" parent="c17" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="duplicate_of &lt;font color=&quot;#888888&quot;&gt;string?&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. def-001&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="440" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="c23" parent="c17" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;out_of_order_arrival&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;bool&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. False&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="440" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="c24" parent="c17" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;notes&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. Office parent spawned enco…&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="440" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="c25" parent="1" style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacing=10;fillColor=#ffffff;strokeColor=#999999;fontSize=12;" value="&lt;b&gt;Legend&lt;/b&gt;&lt;br&gt;&amp;#128273; event key (from schemas/)&lt;br&gt;&lt;b&gt;bold&lt;/b&gt; in every record of the family, never null&lt;br&gt;plain only in some records (in n/m) or sometimes null (?)&lt;br&gt;grey = type inferred from the values&lt;br&gt;e.g. = one value seen in the samples" vertex="1">
+          <mxGeometry height="130" width="440" y="598" as="geometry" />
+        </mxCell>
+        <mxCell id="c26" parent="1" style="rounded=1;arcSize=1;whiteSpace=wrap;html=1;fillColor=#f5f9ff;strokeColor=#6c8ebf;verticalAlign=top;align=left;spacingLeft=16;spacingRight=16;fontStyle=1;fontSize=16;spacingTop=8;" value="Microsoft Defender for Endpoint&lt;br&gt;&lt;font style=&quot;font-size:11px;font-weight:normal&quot;&gt;&lt;b&gt;Advanced Hunting table-shaped JSON&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px;font-weight:normal&quot;&gt;Families: DeviceProcessEvents, DeviceNetworkEvents, AlertInfo/AlertEvidence&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px;font-weight:normal&quot;&gt;6 records · sample_specs/01_microsoft_defender.json&lt;/font&gt;" vertex="1">
+          <mxGeometry height="1382" width="982" x="500" as="geometry" />
+        </mxCell>
+        <mxCell id="c27" parent="1" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=40;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;html=1;whiteSpace=wrap;fillColor=#dae8fc;strokeColor=#6c8ebf;swimlaneFillColor=#ffffff;fontSize=12;" value="DeviceProcessEvents&lt;br&gt;&lt;font style=&quot;font-size:10px;font-weight:normal&quot;&gt;3 record(s)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="800" width="530" x="522" y="128" as="geometry" />
+        </mxCell>
+        <mxCell id="c28" parent="c27" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&amp;#128273; &lt;b&gt;Timestamp&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;timestamp&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. 2026-11-23T08:31:02Z&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="530" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="c29" parent="c27" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&amp;#128273; &lt;b&gt;DeviceId&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. device-102&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="530" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="c30" parent="c27" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;DeviceName&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. FINANCE-PC-01&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="530" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="c31" parent="c27" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;ActionType&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. ProcessCreated&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="530" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="c32" parent="c27" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&amp;#128273; &lt;b&gt;ReportId&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;int&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. 1001&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="530" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="c33" parent="c27" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;FileName&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. powershell.exe&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="530" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="c34" parent="c27" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;FolderPath&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. C:\Windows\System32\Window…&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="530" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="c35" parent="c27" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;ProcessId&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;int&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. 4820&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="530" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="c36" parent="c27" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;ProcessCommandLine&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. powershell.exe -NoProfile …&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="530" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="c37" parent="c27" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="ProcessCreationTime &lt;font color=&quot;#888888&quot;&gt;timestamp&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 2/3 · e.g. 2026-11-23T08:31:02Z&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="530" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="c38" parent="c27" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;ProcessIntegrityLevel&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. High&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="530" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="c39" parent="c27" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="ProcessTokenElevation &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 2/3 · e.g. TokenElevationTypeFull&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="530" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="c40" parent="c27" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;SHA1&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. aaaaaaaaaaaaaaaaaaaaaaaaaa…&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="530" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="c41" parent="c27" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="SHA256 &lt;font color=&quot;#888888&quot;&gt;null&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 2/3&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="530" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="c42" parent="c27" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="MD5 &lt;font color=&quot;#888888&quot;&gt;null&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 2/3&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="530" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="c43" parent="c27" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="FileSize &lt;font color=&quot;#888888&quot;&gt;int&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 2/3 · e.g. 452096&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="530" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="c44" parent="c27" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="ProcessVersionInfoCompanyName &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 2/3 · e.g. Microsoft Corporation&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="530" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="c45" parent="c27" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="ProcessVersionInfoProductName &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 2/3 · e.g. Microsoft Windows Operatin…&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="530" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="c46" parent="c27" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="ProcessVersionInfoProductVersion &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 2/3 · e.g. 10.0.22621.1&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="530" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="c47" parent="c27" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="ProcessVersionInfoOriginalFileName &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 2/3 · e.g. PowerShell.EXE&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="530" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="c48" parent="c27" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="AccountDomain &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 2/3 · e.g. CORP&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="530" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="c49" parent="c27" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;AccountName&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. j.doe&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="530" y="460" as="geometry" />
+        </mxCell>
+        <mxCell id="c50" parent="c27" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="AccountSid &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 2/3 · e.g. S-1-5-21-111-222-333-1105&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="530" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="c51" parent="c27" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;AccountUpn&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. j.doe@example.com&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="530" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="c52" parent="c27" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="AccountObjectId &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 2/3 · e.g. entra-user-101&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="530" y="520" as="geometry" />
+        </mxCell>
+        <mxCell id="c53" parent="c27" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="LogonId &lt;font color=&quot;#888888&quot;&gt;int&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 2/3 · e.g. 987654&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="530" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="c54" parent="c27" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;InitiatingProcessFileName&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. winword.exe&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="530" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="c55" parent="c27" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="InitiatingProcessId &lt;font color=&quot;#888888&quot;&gt;int&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 2/3 · e.g. 3012&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="530" y="580" as="geometry" />
+        </mxCell>
+        <mxCell id="c56" parent="c27" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="InitiatingProcessCommandLine &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 2/3 · e.g. winword.exe /n&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="530" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="c57" parent="c27" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="InitiatingProcessCreationTime &lt;font color=&quot;#888888&quot;&gt;timestamp&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 2/3 · e.g. 2026-11-23T08:29:50Z&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="530" y="620" as="geometry" />
+        </mxCell>
+        <mxCell id="c58" parent="c27" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="InitiatingProcessSHA1 &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 2/3 · e.g. bbbbbbbbbbbbbbbbbbbbbbbbbb…&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="530" y="640" as="geometry" />
+        </mxCell>
+        <mxCell id="c59" parent="c27" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="InitiatingProcessSHA256 &lt;font color=&quot;#888888&quot;&gt;null&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 2/3&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="530" y="660" as="geometry" />
+        </mxCell>
+        <mxCell id="c60" parent="c27" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="InitiatingProcessAccountName &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 2/3 · e.g. j.doe&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="530" y="680" as="geometry" />
+        </mxCell>
+        <mxCell id="c61" parent="c27" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="InitiatingProcessAccountSid &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 2/3 · e.g. S-1-5-21-111-222-333-1105&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="530" y="700" as="geometry" />
+        </mxCell>
+        <mxCell id="c62" parent="c27" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="InitiatingProcessAccountUpn &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 2/3 · e.g. j.doe@example.com&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="530" y="720" as="geometry" />
+        </mxCell>
+        <mxCell id="c63" parent="c27" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="InitiatingProcessLogonId &lt;font color=&quot;#888888&quot;&gt;int&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 2/3 · e.g. 987654&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="530" y="740" as="geometry" />
+        </mxCell>
+        <mxCell id="c64" parent="c27" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="InitiatingProcessIntegrityLevel &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 2/3 · e.g. Medium&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="530" y="760" as="geometry" />
+        </mxCell>
+        <mxCell id="c65" parent="c27" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="InitiatingProcessTokenElevation &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 2/3 · e.g. TokenElevationTypeDefault&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="530" y="780" as="geometry" />
+        </mxCell>
+        <mxCell id="c66" parent="1" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=40;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;html=1;whiteSpace=wrap;fillColor=#dae8fc;strokeColor=#6c8ebf;swimlaneFillColor=#ffffff;fontSize=12;" value="DeviceNetworkEvents&lt;br&gt;&lt;font style=&quot;font-size:10px;font-weight:normal&quot;&gt;1 record(s)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="380" width="530" x="522" y="954" as="geometry" />
+        </mxCell>
+        <mxCell id="c67" parent="c66" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&amp;#128273; &lt;b&gt;Timestamp&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;timestamp&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. 2026-11-23T08:31:08Z&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="530" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="c68" parent="c66" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&amp;#128273; &lt;b&gt;DeviceId&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. device-102&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="530" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="c69" parent="c66" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;DeviceName&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. FINANCE-PC-01&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="530" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="c70" parent="c66" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;ActionType&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. ConnectionSuccess&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="530" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="c71" parent="c66" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;LocalIP&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;ip&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. 10.20.4.15&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="530" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="c72" parent="c66" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;LocalPort&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;int&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. 53122&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="530" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="c73" parent="c66" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;RemoteIP&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;ip&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. 198.51.100.77&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="530" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="c74" parent="c66" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;RemotePort&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;int&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. 443&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="530" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="c75" parent="c66" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;RemoteUrl&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. updates-example.invalid&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="530" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="c76" parent="c66" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;Protocol&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. Tcp&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="530" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="c77" parent="c66" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;InitiatingProcessFileName&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. powershell.exe&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="530" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="c78" parent="c66" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;InitiatingProcessId&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;int&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. 4820&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="530" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="c79" parent="c66" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;InitiatingProcessCommandLine&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. powershell.exe -NoProfile …&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="530" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="c80" parent="c66" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;InitiatingProcessSHA1&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. aaaaaaaaaaaaaaaaaaaaaaaaaa…&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="530" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="c81" parent="c66" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;InitiatingProcessAccountName&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. j.doe&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="530" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="c82" parent="c66" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;InitiatingProcessAccountUpn&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. j.doe@example.com&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="530" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="c83" parent="c66" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&amp;#128273; &lt;b&gt;ReportId&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;int&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. 1002&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="530" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="c84" parent="1" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=40;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;html=1;whiteSpace=wrap;fillColor=#dae8fc;strokeColor=#6c8ebf;swimlaneFillColor=#ffffff;fontSize=12;" value="AlertInfo / AlertEvidence&lt;br&gt;&lt;font style=&quot;font-size:10px;font-weight:normal&quot;&gt;1 record(s)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="420" width="382" x="1078" y="128" as="geometry" />
+        </mxCell>
+        <mxCell id="c85" parent="c84" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&amp;#128273; &lt;b&gt;AlertId&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. alert-9001&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="382" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="c86" parent="c84" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&amp;#128273; &lt;b&gt;Timestamp&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;timestamp&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. 2026-11-23T08:32:10Z&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="382" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="c87" parent="c84" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;Title&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. Suspicious PowerShell beha…&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="382" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="c88" parent="c84" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;Category&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. Execution&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="382" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="c89" parent="c84" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;Severity&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. High&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="382" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="c90" parent="c84" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;ServiceSource&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. MicrosoftDefenderForEndpoint&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="382" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="c91" parent="c84" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;DetectionSource&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. Behavioral&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="382" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="c92" parent="c84" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;AttackTechniques&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;array&amp;lt;string&amp;gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="382" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="c93" parent="c84" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;OriginSource&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. Endpoint&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="382" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="c94" parent="c84" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;InvestigationId&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. investigation-7001&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="382" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="c95" parent="c84" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;Evidence&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;array&amp;lt;object&amp;gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="382" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="c96" parent="c84" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;Evidence[].EntityType&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. Device&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="382" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="c97" parent="c84" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;Evidence[].EvidenceRole&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. Impacted&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="382" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="c98" parent="c84" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;Evidence[].DeviceId&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. device-102&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="382" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="c99" parent="c84" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;Evidence[].DeviceName&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. FINANCE-PC-01&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="382" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="c100" parent="c84" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;Evidence[].FileName&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. powershell.exe&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="382" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="c101" parent="c84" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;Evidence[].SHA1&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. aaaaaaaaaaaaaaaaaaaaaaaaaa…&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="382" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="c102" parent="c84" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;Evidence[].AccountName&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. j.doe&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="382" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="c103" parent="c84" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;Evidence[].AccountUpn&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. j.doe@example.com&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="382" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="c104" parent="1" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=40;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;html=1;whiteSpace=wrap;fillColor=#dae8fc;strokeColor=#6c8ebf;swimlaneFillColor=#ffffff;fontSize=12;" value="DeviceFileEvents&lt;br&gt;&lt;font style=&quot;font-size:10px;font-weight:normal&quot;&gt;1 record(s)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="260" width="382" x="1078" y="574" as="geometry" />
+        </mxCell>
+        <mxCell id="c105" parent="c104" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&amp;#128273; &lt;b&gt;Timestamp&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;timestamp&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. 2026-11-23T08:28:00Z&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="382" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="c106" parent="c104" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&amp;#128273; &lt;b&gt;DeviceId&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. device-310&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="382" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="c107" parent="c104" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;DeviceName&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. ENG-WS-03&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="382" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="c108" parent="c104" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;ActionType&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. FileCreated&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="382" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="c109" parent="c104" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&amp;#128273; &lt;b&gt;ReportId&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;int&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. 1006&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="382" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="c110" parent="c104" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;FileName&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. quarterly-report.xlsx&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="382" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="c111" parent="c104" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;FolderPath&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. C:\Users\analyst\Documents&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="382" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="c112" parent="c104" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;SHA1&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. dddddddddddddddddddddddddd…&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="382" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="c113" parent="c104" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;FileSize&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;int&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. 98304&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="382" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="c114" parent="c104" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;InitiatingProcessFileName&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. EXCEL.EXE&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="382" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="c115" parent="c104" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;InitiatingProcessAccountName&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. analyst&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="382" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="c116" parent="1" style="rounded=1;arcSize=1;whiteSpace=wrap;html=1;fillColor=#fbf8fd;strokeColor=#9673a6;verticalAlign=top;align=left;spacingLeft=16;spacingRight=16;fontStyle=1;fontSize=16;spacingTop=8;" value="Microsoft Entra ID&lt;br&gt;&lt;font style=&quot;font-size:11px;font-weight:normal&quot;&gt;&lt;b&gt;Microsoft Graph signIn and directoryAudit JSON&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px;font-weight:normal&quot;&gt;Families: Sign-in and directory audit&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px;font-weight:normal&quot;&gt;6 records · sample_specs/02_microsoft_entra_id.json&lt;/font&gt;" vertex="1">
+          <mxGeometry height="1622" width="631" x="1542" as="geometry" />
+        </mxCell>
+        <mxCell id="c117" parent="1" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=40;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;html=1;whiteSpace=wrap;fillColor=#e1d5e7;strokeColor=#9673a6;swimlaneFillColor=#ffffff;fontSize=12;" value="signIn&lt;br&gt;&lt;font style=&quot;font-size:10px;font-weight:normal&quot;&gt;5 record(s)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="820" width="587" x="1564" y="128" as="geometry" />
+        </mxCell>
+        <mxCell id="c118" parent="c117" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&amp;#128273; &lt;b&gt;id&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. signin-5001&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="c119" parent="c117" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;createdDateTime&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;timestamp&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. 2026-11-23T08:29:40Z&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="c120" parent="c117" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;userId&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. entra-user-101&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="c121" parent="c117" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="userDisplayName &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 3/5 · e.g. Jordan Doe&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="c122" parent="c117" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;userPrincipalName&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. j.doe@example.com&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="c123" parent="c117" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="appId &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 2/5 · e.g. app-aws-console&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="c124" parent="c117" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="appDisplayName &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 4/5 · e.g. AWS Console&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="c125" parent="c117" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="resourceId &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 2/5 · e.g. aws-resource-01&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="c126" parent="c117" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="resourceDisplayName &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 2/5 · e.g. AWS Management&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="c127" parent="c117" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;ipAddress&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;ip&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. 198.51.100.77&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="c128" parent="c117" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="clientAppUsed &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 3/5 · e.g. Browser&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="c129" parent="c117" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="isInteractive &lt;font color=&quot;#888888&quot;&gt;bool&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 4/5 · e.g. True&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="c130" parent="c117" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="userAgent &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 2/5 · e.g. Mozilla/5.0&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="c131" parent="c117" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="correlationId &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 2/5 · e.g. entra-corr-5001&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="c132" parent="c117" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;status&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;object&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="c133" parent="c117" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;status.errorCode&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;int&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. 50126&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="c134" parent="c117" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="status.failureReason &lt;font color=&quot;#888888&quot;&gt;string?&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. Invalid username or password&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="c135" parent="c117" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="deviceDetail &lt;font color=&quot;#888888&quot;&gt;object&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 3/5&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="c136" parent="c117" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="deviceDetail.deviceId &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 3/5 · e.g. device-102&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="c137" parent="c117" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="deviceDetail.displayName &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 3/5 · e.g. FINANCE-PC-01&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="c138" parent="c117" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="deviceDetail.operatingSystem &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 3/5 · e.g. Windows 11&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="c139" parent="c117" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="deviceDetail.browser &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 3/5 · e.g. Edge&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="460" as="geometry" />
+        </mxCell>
+        <mxCell id="c140" parent="c117" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="deviceDetail.isCompliant &lt;font color=&quot;#888888&quot;&gt;bool&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 3/5 · e.g. False&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="c141" parent="c117" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="deviceDetail.isManaged &lt;font color=&quot;#888888&quot;&gt;bool&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 3/5 · e.g. True&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="c142" parent="c117" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="location &lt;font color=&quot;#888888&quot;&gt;object&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 3/5&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="520" as="geometry" />
+        </mxCell>
+        <mxCell id="c143" parent="c117" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="location.city &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 3/5 · e.g. Example City&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="c144" parent="c117" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="location.state &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 2/5 · e.g. Example Region&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="c145" parent="c117" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="location.countryOrRegion &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 3/5 · e.g. US&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="580" as="geometry" />
+        </mxCell>
+        <mxCell id="c146" parent="c117" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="conditionalAccessStatus &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 3/5 · e.g. failure&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="c147" parent="c117" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="authenticationRequirement &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 3/5 · e.g. singleFactorAuthentication&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="620" as="geometry" />
+        </mxCell>
+        <mxCell id="c148" parent="c117" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="authenticationDetails &lt;font color=&quot;#888888&quot;&gt;array&amp;lt;object&amp;gt;&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 2/5&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="640" as="geometry" />
+        </mxCell>
+        <mxCell id="c149" parent="c117" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="authenticationDetails[].authenticationMethod &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 2/5 · e.g. Password&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="660" as="geometry" />
+        </mxCell>
+        <mxCell id="c150" parent="c117" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="authenticationDetails[].succeeded &lt;font color=&quot;#888888&quot;&gt;bool&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 2/5 · e.g. False&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="680" as="geometry" />
+        </mxCell>
+        <mxCell id="c151" parent="c117" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="authenticationMethodsUsed &lt;font color=&quot;#888888&quot;&gt;array&amp;lt;string&amp;gt;&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 2/5&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="700" as="geometry" />
+        </mxCell>
+        <mxCell id="c152" parent="c117" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="riskLevelDuringSignIn &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 4/5 · e.g. none&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="720" as="geometry" />
+        </mxCell>
+        <mxCell id="c153" parent="c117" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="riskLevelAggregated &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 3/5 · e.g. none&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="740" as="geometry" />
+        </mxCell>
+        <mxCell id="c154" parent="c117" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="riskState &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 3/5 · e.g. none&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="760" as="geometry" />
+        </mxCell>
+        <mxCell id="c155" parent="c117" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="riskEventTypes_v2 &lt;font color=&quot;#888888&quot;&gt;array&amp;lt;object&amp;gt;&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 2/5&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="780" as="geometry" />
+        </mxCell>
+        <mxCell id="c156" parent="c117" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="signInEventTypes &lt;font color=&quot;#888888&quot;&gt;array&amp;lt;string&amp;gt;&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 2/5&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="800" as="geometry" />
+        </mxCell>
+        <mxCell id="c157" parent="1" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=40;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;html=1;whiteSpace=wrap;fillColor=#e1d5e7;strokeColor=#9673a6;swimlaneFillColor=#ffffff;fontSize=12;" value="directoryAudit&lt;br&gt;&lt;font style=&quot;font-size:10px;font-weight:normal&quot;&gt;1 record(s)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="600" width="587" x="1564" y="974" as="geometry" />
+        </mxCell>
+        <mxCell id="c158" parent="c157" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&amp;#128273; &lt;b&gt;id&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. audit-6001&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="c159" parent="c157" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;activityDateTime&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;timestamp&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. 2026-11-23T08:36:00Z&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="c160" parent="c157" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;activityDisplayName&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. Add member to role&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="c161" parent="c157" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;category&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. RoleManagement&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="c162" parent="c157" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;correlationId&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. entra-audit-corr-6001&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="c163" parent="c157" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;result&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. success&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="c164" parent="c157" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;resultReason&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. Successfully added member&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="c165" parent="c157" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;operationType&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. Assign&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="c166" parent="c157" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;loggedByService&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. Core Directory&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="c167" parent="c157" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;initiatedBy&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;object&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="c168" parent="c157" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;initiatedBy.user&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;object&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="c169" parent="c157" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;initiatedBy.user.id&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. entra-user-101&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="c170" parent="c157" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;initiatedBy.user.displayName&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. Jordan Doe&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="c171" parent="c157" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;initiatedBy.user.userPrincipalName&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. j.doe@example.com&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="c172" parent="c157" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;initiatedBy.user.ipAddress&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;ip&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. 198.51.100.77&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="c173" parent="c157" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="initiatedBy.app &lt;font color=&quot;#888888&quot;&gt;null&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="c174" parent="c157" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;targetResources&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;array&amp;lt;object&amp;gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="c175" parent="c157" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;targetResources[].id&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. entra-user-101&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="c176" parent="c157" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;targetResources[].displayName&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. Jordan Doe&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="c177" parent="c157" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;targetResources[].type&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. User&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="c178" parent="c157" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;targetResources[].userPrincipalName&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. j.doe@example.com&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="c179" parent="c157" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;targetResources[].modifiedProperties&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;array&amp;lt;object&amp;gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="460" as="geometry" />
+        </mxCell>
+        <mxCell id="c180" parent="c157" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;targetResources[].modifiedProperties[].displayName&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. Role.DisplayName&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="c181" parent="c157" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="targetResources[].modifiedProperties[].oldValue &lt;font color=&quot;#888888&quot;&gt;null&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="c182" parent="c157" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;targetResources[].modifiedProperties[].newValue&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. Privileged Role Administra…&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="520" as="geometry" />
+        </mxCell>
+        <mxCell id="c183" parent="c157" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;additionalDetails&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;array&amp;lt;object&amp;gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="c184" parent="c157" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;additionalDetails[].key&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. UserAgent&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="c185" parent="c157" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;additionalDetails[].value&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. Browser&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="587" y="580" as="geometry" />
+        </mxCell>
+        <mxCell id="c186" parent="1" style="rounded=1;arcSize=1;whiteSpace=wrap;html=1;fillColor=#fffaf3;strokeColor=#d79b00;verticalAlign=top;align=left;spacingLeft=16;spacingRight=16;fontStyle=1;fontSize=16;spacingTop=8;" value="AWS CloudTrail&lt;br&gt;&lt;font style=&quot;font-size:11px;font-weight:normal&quot;&gt;&lt;b&gt;CloudTrail JSON event records&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px;font-weight:normal&quot;&gt;Families: IAM management, CloudTrail management, EC2 read, S3 data event&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px;font-weight:normal&quot;&gt;5 records · sample_specs/03_aws_cloudtrail.json&lt;/font&gt;" vertex="1">
+          <mxGeometry height="1196" width="689" x="2233" as="geometry" />
+        </mxCell>
+        <mxCell id="c187" parent="1" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=40;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;html=1;whiteSpace=wrap;fillColor=#ffe6cc;strokeColor=#d79b00;swimlaneFillColor=#ffffff;fontSize=12;" value="CloudTrail record&lt;br&gt;&lt;font style=&quot;font-size:10px;font-weight:normal&quot;&gt;5 record(s)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="1020" width="645" x="2255" y="128" as="geometry" />
+        </mxCell>
+        <mxCell id="c188" parent="c187" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;eventVersion&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. 1.11&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="645" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="c189" parent="c187" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;eventTime&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;timestamp&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. 2026-11-23T08:37:10Z&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="645" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="c190" parent="c187" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;eventSource&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. iam.amazonaws.com&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="645" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="c191" parent="c187" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;eventName&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. AttachUserPolicy&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="645" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="c192" parent="c187" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;awsRegion&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. us-east-1&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="645" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="c193" parent="c187" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;sourceIPAddress&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;ip&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. 198.51.100.77&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="645" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="c194" parent="c187" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="userAgent &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 4/5 · e.g. console.amazonaws.com&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="645" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="c195" parent="c187" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="eventType &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 4/5 · e.g. AwsApiCall&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="645" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="c196" parent="c187" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="eventCategory &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 4/5 · e.g. Management&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="645" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="c197" parent="c187" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&amp;#128273; &lt;b&gt;eventID&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. ct-event-7001&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="645" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="c198" parent="c187" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="requestID &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 2/5 · e.g. aws-request-7001&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="645" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="c199" parent="c187" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;recipientAccountId&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. 123456789012&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="645" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="c200" parent="c187" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="readOnly &lt;font color=&quot;#888888&quot;&gt;bool&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 4/5 · e.g. False&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="645" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="c201" parent="c187" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="managementEvent &lt;font color=&quot;#888888&quot;&gt;bool&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 3/5 · e.g. True&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="645" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="c202" parent="c187" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;userIdentity&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;object&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="645" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="c203" parent="c187" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;userIdentity.type&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. IAMUser&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="645" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="c204" parent="c187" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;userIdentity.principalId&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. AIDAEXAMPLE101&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="645" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="c205" parent="c187" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;userIdentity.arn&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. arn:aws:iam::123456789012:…&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="645" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="c206" parent="c187" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;userIdentity.accountId&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. 123456789012&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="645" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="c207" parent="c187" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="userIdentity.accessKeyId &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 2/5 · e.g. AKIAEXAMPLE101&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="645" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="c208" parent="c187" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="userIdentity.userName &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 4/5 · e.g. j.doe&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="645" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="c209" parent="c187" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;requestParameters&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;object&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="645" y="460" as="geometry" />
+        </mxCell>
+        <mxCell id="c210" parent="c187" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="requestParameters.policyArn &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 2/5 · e.g. arn:aws:iam::aws:policy/Ad…&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="645" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="c211" parent="c187" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="requestParameters.userName &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 2/5 · e.g. j.doe&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="645" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="c212" parent="c187" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="responseElements &lt;font color=&quot;#888888&quot;&gt;null&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 3/5&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="645" y="520" as="geometry" />
+        </mxCell>
+        <mxCell id="c213" parent="c187" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="additionalEventData &lt;font color=&quot;#888888&quot;&gt;object&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 1/5&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="645" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="c214" parent="c187" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="additionalEventData.MFAUsed &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 1/5 · e.g. No&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="645" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="c215" parent="c187" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="resources &lt;font color=&quot;#888888&quot;&gt;array&amp;lt;object&amp;gt;&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 4/5&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="645" y="580" as="geometry" />
+        </mxCell>
+        <mxCell id="c216" parent="c187" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="resources[].ARN &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 4/5 · e.g. arn:aws:iam::123456789012:…&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="645" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="c217" parent="c187" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="resources[].accountId &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 4/5 · e.g. 123456789012&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="645" y="620" as="geometry" />
+        </mxCell>
+        <mxCell id="c218" parent="c187" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="resources[].type &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 4/5 · e.g. AWS::IAM::User&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="645" y="640" as="geometry" />
+        </mxCell>
+        <mxCell id="c219" parent="c187" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="tlsDetails &lt;font color=&quot;#888888&quot;&gt;object&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 1/5&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="645" y="660" as="geometry" />
+        </mxCell>
+        <mxCell id="c220" parent="c187" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="tlsDetails.tlsVersion &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 1/5 · e.g. TLSv1.3&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="645" y="680" as="geometry" />
+        </mxCell>
+        <mxCell id="c221" parent="c187" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="tlsDetails.cipherSuite &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 1/5 · e.g. TLS_AES_128_GCM_SHA256&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="645" y="700" as="geometry" />
+        </mxCell>
+        <mxCell id="c222" parent="c187" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="tlsDetails.clientProvidedHostHeader &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 1/5 · e.g. iam.amazonaws.com&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="645" y="720" as="geometry" />
+        </mxCell>
+        <mxCell id="c223" parent="c187" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="requestParameters.name &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 1/5 · e.g. organization-trail&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="645" y="740" as="geometry" />
+        </mxCell>
+        <mxCell id="c224" parent="c187" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="userIdentity.sessionContext &lt;font color=&quot;#888888&quot;&gt;object&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 1/5&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="645" y="760" as="geometry" />
+        </mxCell>
+        <mxCell id="c225" parent="c187" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="userIdentity.sessionContext.attributes &lt;font color=&quot;#888888&quot;&gt;object&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 1/5&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="645" y="780" as="geometry" />
+        </mxCell>
+        <mxCell id="c226" parent="c187" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="userIdentity.sessionContext.attributes.creationDate &lt;font color=&quot;#888888&quot;&gt;timestamp&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 1/5 · e.g. 2026-11-23T09:00:00Z&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="645" y="800" as="geometry" />
+        </mxCell>
+        <mxCell id="c227" parent="c187" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="userIdentity.sessionContext.attributes.mfaAuthenticated &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 1/5 · e.g. true&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="645" y="820" as="geometry" />
+        </mxCell>
+        <mxCell id="c228" parent="c187" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="userIdentity.sessionContext.sessionIssuer &lt;font color=&quot;#888888&quot;&gt;object&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 1/5&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="645" y="840" as="geometry" />
+        </mxCell>
+        <mxCell id="c229" parent="c187" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="userIdentity.sessionContext.sessionIssuer.type &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 1/5 · e.g. Role&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="645" y="860" as="geometry" />
+        </mxCell>
+        <mxCell id="c230" parent="c187" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="userIdentity.sessionContext.sessionIssuer.principalId &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 1/5 · e.g. AROAXAMPLE&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="645" y="880" as="geometry" />
+        </mxCell>
+        <mxCell id="c231" parent="c187" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="userIdentity.sessionContext.sessionIssuer.arn &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 1/5 · e.g. arn:aws:iam::123456789012:…&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="645" y="900" as="geometry" />
+        </mxCell>
+        <mxCell id="c232" parent="c187" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="userIdentity.sessionContext.sessionIssuer.accountId &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 1/5 · e.g. 123456789012&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="645" y="920" as="geometry" />
+        </mxCell>
+        <mxCell id="c233" parent="c187" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="userIdentity.sessionContext.sessionIssuer.userName &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 1/5 · e.g. ReadOnlyAutomation&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="645" y="940" as="geometry" />
+        </mxCell>
+        <mxCell id="c234" parent="c187" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="requestParameters.instanceIds &lt;font color=&quot;#888888&quot;&gt;array&amp;lt;string&amp;gt;&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 1/5&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="645" y="960" as="geometry" />
+        </mxCell>
+        <mxCell id="c235" parent="c187" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="requestParameters.bucketName &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 1/5 · e.g. finance-reports-example&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="645" y="980" as="geometry" />
+        </mxCell>
+        <mxCell id="c236" parent="c187" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="requestParameters.key &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 1/5 · e.g. monthly/report.csv&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="645" y="1000" as="geometry" />
+        </mxCell>
+        <mxCell id="c237" parent="1" style="rounded=1;arcSize=1;whiteSpace=wrap;html=1;fillColor=#f6fbf5;strokeColor=#82b366;verticalAlign=top;align=left;spacingLeft=16;spacingRight=16;fontStyle=1;fontSize=16;spacingTop=8;" value="Windows Event Logs&lt;br&gt;&lt;font style=&quot;font-size:11px;font-weight:normal&quot;&gt;&lt;b&gt;Native-style Windows Event XML plus parsed representation&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px;font-weight:normal&quot;&gt;Families: Sysmon 1/3, PowerShell 4104, Security 4624/4625&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px;font-weight:normal&quot;&gt;6 records · sample_specs/04_windows_event_logs.json&lt;/font&gt;" vertex="1">
+          <mxGeometry height="1374" width="867" x="2982" as="geometry" />
+        </mxCell>
+        <mxCell id="c238" parent="1" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=40;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;html=1;whiteSpace=wrap;fillColor=#d5e8d4;strokeColor=#82b366;swimlaneFillColor=#ffffff;fontSize=12;" value="System header&lt;br&gt;&lt;font style=&quot;font-size:10px;font-weight:normal&quot;&gt;6 records · parsed_event.*&lt;/font&gt;" vertex="1">
+          <mxGeometry height="240" width="414" x="3004" y="128" as="geometry" />
+        </mxCell>
+        <mxCell id="c239" parent="c238" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;raw_xml&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· the rendered &amp;lt;Event&amp;gt; XML&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="414" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="c240" parent="c238" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;Provider&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;object&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="414" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="c241" parent="c238" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;Provider.Name&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. Microsoft-Windows-Sysmon&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="414" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="c242" parent="c238" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;EventID&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;int&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. 1&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="414" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="c243" parent="c238" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;Version&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;int&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. 0&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="414" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="c244" parent="c238" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;TimeCreated&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;object&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="414" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="c245" parent="c238" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&amp;#128273; &lt;b&gt;TimeCreated.SystemTime&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;timestamp&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. 2026-11-23T08:31:02Z&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="414" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="c246" parent="c238" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&amp;#128273; &lt;b&gt;EventRecordID&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;int&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. 9012&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="414" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="c247" parent="c238" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&amp;#128273; &lt;b&gt;Channel&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. Microsoft-Windows-Sysmon/O…&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="414" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="c248" parent="c238" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&amp;#128273; &lt;b&gt;Computer&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. FINANCE-PC-01&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="414" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="c249" parent="1" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=40;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;html=1;whiteSpace=wrap;fillColor=#d5e8d4;strokeColor=#82b366;swimlaneFillColor=#ffffff;fontSize=12;" value="EventData · Sysmon 1&lt;br&gt;&lt;font style=&quot;font-size:10px;font-weight:normal&quot;&gt;2 record(s)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="380" width="414" x="3004" y="394" as="geometry" />
+        </mxCell>
+        <mxCell id="c250" parent="c249" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;UtcTime&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;timestamp&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. 2026-11-23 08:31:02.000&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="414" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="c251" parent="c249" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;ProcessGuid&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. {process-guid-123}&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="414" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="c252" parent="c249" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;ProcessId&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. 4820&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="414" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="c253" parent="c249" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;Image&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. C:\Windows\System32\Window…&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="414" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="c254" parent="c249" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;CommandLine&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. powershell.exe -NoProfile …&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="414" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="c255" parent="c249" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="CurrentDirectory &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 1/2 · e.g. C:\Users\j.doe\&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="414" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="c256" parent="c249" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;User&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. CORP\j.doe&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="414" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="c257" parent="c249" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="LogonGuid &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 1/2 · e.g. {logon-guid-123}&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="414" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="c258" parent="c249" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="LogonId &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 1/2 · e.g. 0x000F1206&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="414" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="c259" parent="c249" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="TerminalSessionId &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 1/2 · e.g. 1&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="414" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="c260" parent="c249" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;IntegrityLevel&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. High&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="414" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="c261" parent="c249" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;Hashes&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. SHA256=aaaaaaaaaaaaaaaaaaa…&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="414" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="c262" parent="c249" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;ParentProcessGuid&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. {parent-guid-456}&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="414" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="c263" parent="c249" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;ParentProcessId&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. 3012&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="414" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="c264" parent="c249" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;ParentImage&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. C:\Program Files\Microsoft…&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="414" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="c265" parent="c249" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;ParentCommandLine&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. WINWORD.EXE /n&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="414" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="c266" parent="c249" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;ParentUser&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. CORP\j.doe&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="414" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="c267" parent="1" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=40;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;html=1;whiteSpace=wrap;fillColor=#d5e8d4;strokeColor=#82b366;swimlaneFillColor=#ffffff;fontSize=12;" value="EventData · PowerShell 4104&lt;br&gt;&lt;font style=&quot;font-size:10px;font-weight:normal&quot;&gt;1 record(s)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="180" width="414" x="3004" y="800" as="geometry" />
+        </mxCell>
+        <mxCell id="c268" parent="c267" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;MessageNumber&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. 1&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="414" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="c269" parent="c267" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;MessageTotal&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. 1&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="414" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="c270" parent="c267" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;ScriptBlockText&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. [System.Text.Encoding]::Un…&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="414" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="c271" parent="c267" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;ScriptBlockId&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. {script-block-123}&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="414" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="c272" parent="c267" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;Path&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. &lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="414" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="c273" parent="c267" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;SequenceNumber&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. 1&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="414" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="c274" parent="c267" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;RunspaceId&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. {runspace-123}&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="414" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="c275" parent="1" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=40;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;html=1;whiteSpace=wrap;fillColor=#d5e8d4;strokeColor=#82b366;swimlaneFillColor=#ffffff;fontSize=12;" value="EventData · Security 4625&lt;br&gt;&lt;font style=&quot;font-size:10px;font-weight:normal&quot;&gt;1 record(s)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="320" width="414" x="3004" y="1006" as="geometry" />
+        </mxCell>
+        <mxCell id="c276" parent="c275" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;SubjectUserSid&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. S-1-5-18&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="414" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="c277" parent="c275" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;SubjectUserName&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. FINANCE-PC-01$&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="414" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="c278" parent="c275" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;TargetUserSid&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. S-1-0-0&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="414" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="c279" parent="c275" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;TargetUserName&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. j.doe&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="414" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="c280" parent="c275" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;TargetDomainName&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. CORP&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="414" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="c281" parent="c275" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;Status&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. 0xC000006D&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="414" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="c282" parent="c275" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;SubStatus&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. 0xC000006A&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="414" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="c283" parent="c275" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;FailureReason&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. Unknown user name or bad p…&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="414" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="c284" parent="c275" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;LogonType&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. 3&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="414" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="c285" parent="c275" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;LogonProcessName&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. NtLmSsp&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="414" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="c286" parent="c275" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;AuthenticationPackageName&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. NTLM&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="414" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="c287" parent="c275" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;WorkstationName&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. FINANCE-PC-01&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="414" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="c288" parent="c275" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;IpAddress&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;ip&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. 198.51.100.77&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="414" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="c289" parent="c275" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;IpPort&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. 53122&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="414" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="c290" parent="1" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=40;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;html=1;whiteSpace=wrap;fillColor=#d5e8d4;strokeColor=#82b366;swimlaneFillColor=#ffffff;fontSize=12;" value="EventData · Sysmon 3&lt;br&gt;&lt;font style=&quot;font-size:10px;font-weight:normal&quot;&gt;1 record(s)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="320" width="382" x="3444" y="128" as="geometry" />
+        </mxCell>
+        <mxCell id="c291" parent="c290" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;UtcTime&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;timestamp&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. 2026-11-23 08:31:08.000&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="382" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="c292" parent="c290" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;ProcessGuid&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. {process-guid-123}&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="382" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="c293" parent="c290" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;ProcessId&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. 4820&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="382" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="c294" parent="c290" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;Image&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. C:\Windows\System32\Window…&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="382" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="c295" parent="c290" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;User&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. CORP\j.doe&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="382" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="c296" parent="c290" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;Protocol&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. tcp&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="382" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="c297" parent="c290" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;Initiated&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. true&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="382" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="c298" parent="c290" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;SourceIsIpv6&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. false&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="382" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="c299" parent="c290" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;SourceIp&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;ip&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. 10.20.4.15&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="382" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="c300" parent="c290" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;SourcePort&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. 53122&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="382" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="c301" parent="c290" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;DestinationIsIpv6&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. false&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="382" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="c302" parent="c290" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;DestinationIp&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;ip&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. 198.51.100.77&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="382" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="c303" parent="c290" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;DestinationPort&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. 443&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="382" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="c304" parent="c290" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;DestinationHostname&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. updates-example.invalid&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="382" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="c305" parent="1" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=40;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;html=1;whiteSpace=wrap;fillColor=#d5e8d4;strokeColor=#82b366;swimlaneFillColor=#ffffff;fontSize=12;" value="EventData · Security 4624&lt;br&gt;&lt;font style=&quot;font-size:10px;font-weight:normal&quot;&gt;1 record(s)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="240" width="382" x="3444" y="474" as="geometry" />
+        </mxCell>
+        <mxCell id="c306" parent="c305" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;SubjectUserSid&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. S-1-5-18&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="382" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="c307" parent="c305" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;TargetUserSid&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. S-1-5-21-111-222-333-1105&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="382" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="c308" parent="c305" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;TargetUserName&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. j.doe&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="382" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="c309" parent="c305" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;TargetDomainName&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. CORP&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="382" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="c310" parent="c305" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;LogonType&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. 10&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="382" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="c311" parent="c305" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;LogonProcessName&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. User32&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="382" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="c312" parent="c305" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;AuthenticationPackageName&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. Negotiate&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="382" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="c313" parent="c305" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;WorkstationName&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. FINANCE-PC-01&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="382" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="c314" parent="c305" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;IpAddress&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;ip&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. 198.51.100.77&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="382" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="c315" parent="c305" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;IpPort&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. 53122&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="382" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="c316" parent="1" style="rounded=1;arcSize=1;whiteSpace=wrap;html=1;fillColor=#fffbef;strokeColor=#d6b656;verticalAlign=top;align=left;spacingLeft=16;spacingRight=16;fontStyle=1;fontSize=16;spacingTop=8;" value="Vendor-neutral firewall&lt;br&gt;&lt;font style=&quot;font-size:11px;font-weight:normal&quot;&gt;&lt;b&gt;CEF raw message plus parsed representation&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px;font-weight:normal&quot;&gt;Families: Allowed traffic, threat alert, normal traffic, denied traffic&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px;font-weight:normal&quot;&gt;5 records · sample_specs/05_network_firewall.json&lt;/font&gt;" vertex="1">
+          <mxGeometry height="662" width="520" x="3909" as="geometry" />
+        </mxCell>
+        <mxCell id="c317" parent="1" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=40;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;html=1;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;swimlaneFillColor=#ffffff;fontSize=12;" value="Record&lt;br&gt;&lt;font style=&quot;font-size:10px;font-weight:normal&quot;&gt;5 records&lt;/font&gt;" vertex="1">
+          <mxGeometry height="80" width="408" x="3931" y="128" as="geometry" />
+        </mxCell>
+        <mxCell id="c318" parent="c317" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;format&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. CEF&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="408" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="c319" parent="c317" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;raw_message&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. CEF:0|ExampleVendor|Exampl…&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="408" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="c320" parent="1" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=40;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;html=1;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;swimlaneFillColor=#ffffff;fontSize=12;" value="parsed_fields (CEF decoded)&lt;br&gt;&lt;font style=&quot;font-size:10px;font-weight:normal&quot;&gt;5 records&lt;/font&gt;" vertex="1">
+          <mxGeometry height="380" width="408" x="3931" y="234" as="geometry" />
+        </mxCell>
+        <mxCell id="c321" parent="c320" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;device_vendor&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. ExampleVendor&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="408" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="c322" parent="c320" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;device_product&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. ExampleFirewall&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="408" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="c323" parent="c320" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;device_version&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. 10.2&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="408" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="c324" parent="c320" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;signature_id&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. 8001&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="408" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="c325" parent="c320" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;name&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. Outbound connection&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="408" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="c326" parent="c320" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;severity&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. 5&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="408" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="c327" parent="c320" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&amp;#128273; &lt;b&gt;event_time&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;timestamp&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. 2026-11-23T08:31:08Z&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="408" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="c328" parent="c320" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;device_name&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. FW-01&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="408" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="c329" parent="c320" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&amp;#128273; &lt;b&gt;device_id&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. FW-01&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="408" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="c330" parent="c320" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;source_ip&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;ip&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. 10.20.4.15&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="408" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="c331" parent="c320" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;source_port&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;int&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. 53122&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="408" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="c332" parent="c320" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;destination_ip&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;ip&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. 198.51.100.77&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="408" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="c333" parent="c320" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;destination_port&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;int&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. 443&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="408" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="c334" parent="c320" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;protocol&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. TCP&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="408" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="c335" parent="c320" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;action&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. allow&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="408" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="c336" parent="c320" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="&lt;b&gt;rule_name&lt;/b&gt; &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· e.g. Outbound-Web&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="408" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="c337" parent="c320" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=nowrap;html=1;fontSize=11;fontFamily=Consolas;" value="threat_name &lt;font color=&quot;#888888&quot;&gt;string&lt;/font&gt; &lt;font color=&quot;#9a9a9a&quot;&gt;· in 1/5 · e.g. Suspicious TLS destination&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="408" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="c338" parent="1" style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacing=10;fillColor=#ffffff;strokeColor=#6c8ebf;fontSize=12;" value="&lt;b&gt;Identifiers shared across sources in the samples&lt;/b&gt; (how the example records link up)&lt;br&gt;&lt;b&gt;198.51.100.77&lt;/b&gt;: cloudtrail: sourceIPAddress · defender: RemoteIP · entra: initiatedBy.user.ipAddress · entra: ipAddress · firewall: parsed_fields.destination_ip · windows: parsed_event.EventData.DestinationIp · windows: parsed_event.EventData.IpAddress&lt;br&gt;&lt;b&gt;10.20.4.15&lt;/b&gt;: defender: LocalIP · firewall: parsed_fields.destination_ip · firewall: parsed_fields.source_ip · windows: parsed_event.EventData.SourceIp&lt;br&gt;&lt;b&gt;finance-pc-01&lt;/b&gt;: defender: DeviceName · defender: Evidence[].DeviceName · entra: deviceDetail.displayName · windows: parsed_event.Computer · windows: parsed_event.EventData.WorkstationName&lt;br&gt;&lt;b&gt;hr-laptop-02&lt;/b&gt;: defender: DeviceName · entra: deviceDetail.displayName · windows: parsed_event.Computer&lt;br&gt;&lt;b&gt;j.doe&lt;/b&gt;: cloudtrail: requestParameters.userName · cloudtrail: userIdentity.userName · defender: AccountName · defender: Evidence[].AccountName · defender: InitiatingProcessAccountName · windows: parsed_event.EventData.ParentUser · windows: parsed_event.EventData.TargetUserName · windows: parsed_event.EventData.User&lt;br&gt;&lt;b&gt;192.0.2.25&lt;/b&gt;: entra: ipAddress · firewall: parsed_fields.destination_ip&lt;br&gt;&lt;b&gt;192.0.2.80&lt;/b&gt;: cloudtrail: sourceIPAddress · entra: ipAddress&lt;br&gt;&lt;b&gt;a.smith&lt;/b&gt;: defender: AccountName · windows: parsed_event.EventData.ParentUser · windows: parsed_event.EventData.User&lt;br&gt;&lt;b&gt;a.smith@example.com&lt;/b&gt;: defender: AccountUpn · entra: userPrincipalName&lt;br&gt;&lt;b&gt;device-102&lt;/b&gt;: defender: DeviceId · defender: Evidence[].DeviceId · entra: deviceDetail.deviceId&lt;br&gt;&lt;b&gt;device-205&lt;/b&gt;: defender: DeviceId · entra: deviceDetail.deviceId&lt;br&gt;&lt;b&gt;entra-user-101&lt;/b&gt;: defender: AccountObjectId · entra: initiatedBy.user.id · entra: targetResources[].id · entra: userId&lt;br&gt;&lt;b&gt;explorer.exe&lt;/b&gt;: defender: InitiatingProcessFileName · windows: parsed_event.EventData.ParentCommandLine · windows: parsed_event.EventData.ParentImage&lt;br&gt;&lt;b&gt;j.doe@example.com&lt;/b&gt;: defender: AccountUpn · defender: Evidence[].AccountUpn · defender: InitiatingProcessAccountUpn · entra: initiatedBy.user.userPrincipalName · entra: targetResources[].userPrincipalName · entra: userPrincipalName" vertex="1">
+          <mxGeometry height="744" width="440" y="754" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

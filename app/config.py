@@ -7,7 +7,7 @@ load_dotenv()
 
 class AppSettings(BaseSettings):
     APP_NAME: str = "Aetheris Synthetic Security Data Generator"
-    APP_VERSION: str = "2.1.0"
+    APP_VERSION: str = "2.2.0"
     HOST: str = os.getenv("HOST", "0.0.0.0")
     PORT: int = int(os.getenv("PORT", "8002"))
     RELOAD: bool = False  # uvicorn auto-reload: development only

@@ -5,7 +5,7 @@
   "description": "Advanced Hunting row shape (DeviceProcessEvents, DeviceNetworkEvents, DeviceFileEvents, DeviceLogonEvents) plus a denormalised alert. The table name is NOT a field in native rows; in Splunk it is carried by `source`/`sourcetype`. Discrimination here is by ActionType enum and by AlertId.",
   "x-schema-version": "1.0.0",
   "x-splunk": {
-    "index": "endpoint",
+    "index": "security_endpoint",
     "sourcetype_simulation": "ms:defender:eventhub",
     "source_per_table": [
       "DeviceProcessEvents",

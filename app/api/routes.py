@@ -6,6 +6,8 @@ from pydantic import BaseModel, Field
 from app.config import settings
 from app.splunk_config import splunk_config, is_splunk_enabled
 from app.delivery.splunk_delivery import (
+    begin_run,
+    end_run,
     get_recent_events,
     get_metrics_summary,
     test_splunk_connection
@@ -19,6 +21,7 @@ from app.coordination.scheduler import (
     trigger_random_scenario,
     get_cooldown_info,
     activity_factor,
+    resolve_pack,
     run_backfill
 )
 from app.coordination.registry import scenario_registry
@@ -35,8 +38,16 @@ class RateUpdateRequest(BaseModel):
     powershell_rate: Optional[int] = None # legacy alias for windows_rate
 
 class BackfillRequest(BaseModel):
-    hours: float = Field(default=1.0, gt=0, le=168, description="Length of the window to generate")
-    end: Optional[str] = Field(default=None, description="Window end (ISO 8601 UTC); default now")
+    minutes: float = Field(default=30, gt=0, le=1440, description="Length of the simulated window")
+    end: Optional[str] = Field(default=None, description="Window end (ISO 8601 UTC, in the past); default now")
+    volume: float = Field(default=1.0, gt=0, le=50, description="Multiplier on every baseline rate")
+    diurnal: bool = Field(default=False, description="Follow the working-hours curve (False = always peak)")
+    delays: bool = Field(default=False, description="Apply each source's real-world delivery delay")
+    scenarios: Optional[List[str]] = Field(default=None, description="Scenario ids and/or 'full', 'quick', 'none'; "
+                                           "omitted = one paced random scenario every few minutes")
+
+class RunRequest(BaseModel):
+    run_id: str
 
 _backfill: Dict[str, Any] = {"status": "IDLE", "result": None, "error": None}
 
@@ -264,20 +275,42 @@ async def start_backfill(req: BackfillRequest):
         raise HTTPException(status_code=422, detail="end must be ISO 8601, e.g. 2026-11-24T09:00:00Z")
     if end > now():
         raise HTTPException(status_code=422, detail="A backfill window must end in the past (end defaults to now)")
-    start = end - timedelta(hours=req.hours)
+    start = end - timedelta(minutes=req.minutes)
+    try:
+        if req.scenarios is not None:
+            resolve_pack(req.scenarios)   # unknown ids are rejected here, not halfway through the run
+    except KeyError as e:
+        raise HTTPException(status_code=422, detail=str(e))
 
     async def _run():
         try:
-            _backfill["result"] = await run_backfill(start, end)
+            _backfill["result"] = await run_backfill(start, end, volume=req.volume, diurnal=req.diurnal,
+                                                     delays=req.delays, scenarios=req.scenarios)
             _backfill["status"] = "DONE"
         except Exception as e:
             _backfill.update(status="FAILED", error=str(e))
 
     _backfill.update(status="RUNNING", result=None, error=None)
     _backfill["task"] = asyncio.create_task(_run())
-    return {"status": "STARTED", "start": start.isoformat(), "end": end.isoformat(), "seed": settings.SEED}
+    return {"status": "STARTED", "start": start.isoformat(), "end": end.isoformat(), "seed": settings.SEED,
+            "volume": req.volume, "scenarios": req.scenarios}
 
 @router.get("/backfill", tags=["Backfill"])
 async def backfill_status():
     """Status of the last backfill."""
     return {k: v for k, v in _backfill.items() if k != "task"}
+
+
+@router.post("/runs/begin", tags=["Run control"])
+async def run_begin(req: RunRequest):
+    """Starts a run: its ground-truth labels go to their own file until /runs/end. Returns that file's path."""
+    try:
+        return {"run_id": req.run_id, "ground_truth_path": begin_run(req.run_id)}
+    except ValueError as e:
+        raise HTTPException(status_code=422, detail=str(e))
+
+@router.post("/runs/end", tags=["Run control"])
+async def run_finish():
+    """Ends the current run: labels go back to the default (cumulative) file."""
+    end_run()
+    return {"status": "ENDED"}

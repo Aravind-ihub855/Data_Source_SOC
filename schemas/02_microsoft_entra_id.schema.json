@@ -5,7 +5,7 @@
   "description": "Microsoft Graph `signIn` and `directoryAudit` resources. Sign-ins and audits are separate event families with separate natural keys.",
   "x-schema-version": "1.0.0",
   "x-splunk": {
-    "index": "identity",
+    "index": "security_identity",
     "sourcetype_simulation": "azure:monitor:aad",
     "source_per_family": [
       "signin",

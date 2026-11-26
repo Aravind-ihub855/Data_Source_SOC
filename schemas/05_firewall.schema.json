@@ -5,7 +5,7 @@
   "description": "Vendor-neutral next-generation firewall traffic/threat log as CEF with parsed fields. Replace device_vendor/product with the real vendor profile when a customer firewall is onboarded; keep the parsed_fields contract.",
   "x-schema-version": "1.0.0",
   "x-splunk": {
-    "index": "network",
+    "index": "security_network",
     "sourcetype_simulation": "cef",
     "note": "Production sourcetype depends on the vendor add-on (for example Palo Alto or Fortinet) or generic CEF ingestion.",
     "delivery": "Only raw_message (the CEF syslog line) is delivered; source udp:514."

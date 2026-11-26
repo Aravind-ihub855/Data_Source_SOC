@@ -21,7 +21,8 @@ class SplunkConfig(BaseSettings):
     INDEX_NETWORK: str = os.getenv("SPLUNK_INDEX_NETWORK", "security_network")
 
     # Delivery Engine settings
-    BATCH_SIZE: int = int(os.getenv("SPLUNK_BATCH_SIZE", "50"))
+    BATCH_SIZE: int = int(os.getenv("SPLUNK_BATCH_SIZE", "500"))
+    CONCURRENCY: int = int(os.getenv("SPLUNK_CONCURRENCY", "16"))  # batches in flight at once (burst delivery)
     FLUSH_INTERVAL_SEC: float = float(os.getenv("SPLUNK_FLUSH_INTERVAL_SEC", "2.0"))
     TIMEOUT_SEC: float = float(os.getenv("SPLUNK_TIMEOUT_SEC", "5.0"))
     MAX_RETRIES: int = int(os.getenv("SPLUNK_MAX_RETRIES", "5"))

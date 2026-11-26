@@ -1,4 +1,18 @@
-# Data generator changes (v2.0.0 → v2.1.0)
+# Data generator changes (v2.0.0 → v2.2.0)
+
+## v2.2.0 — batch mode, per-run labels
+
+- **Batch (burst) generation**: `POST /backfill {minutes, volume, diurnal, delays, scenarios}` creates a window of simulated
+  traffic ending now and delivers it at once. `volume` multiplies every rate, `diurnal:false` keeps peak hours, `delays:false`
+  skips each source's real-world delay, `scenarios` is a list of ids and/or packs (`full` = all 20, `quick`, `none`) placed at
+  random times in the window, alternating tenants. Omitting `scenarios` keeps the old paced random scenario.
+- **Delivery is concurrent** (`SPLUNK_CONCURRENCY`, default 16 batches in flight; batch size 500) so a burst of thousands of
+  events is acknowledged in seconds. `queue_depth` counts in-flight events.
+- **`ingest_mode`** (`live` | `batch`) is a new HEC indexed field; the pipeline never flags batch events as late.
+- **One label file per run**: `POST /runs/begin {run_id}` / `POST /runs/end` write labels to
+  `out/runs/<run_id>/ground_truth.jsonl` instead of the cumulative `out/ground_truth.jsonl`.
+
+## v2.1.0
 
 Date: 24 Nov 2026
 
@@ -245,9 +259,11 @@ Faults are injected at delivery, not only in the two data-quality scenarios, and
 | `app/delivery/splunk_delivery.py` | Rewritten: scheduling queue, ack, retry, dead-letter, faults, ground truth. |
 | `app/config.py`, `app/splunk_config.py` | New settings (below). |
 | `app/api/routes.py`, `app/main.py`, `run.py` | API changes, background sender at startup, CORS, reload. |
-| `schemas/0[1-5]_*.json` | `x-splunk` now documents the real sourcetype and delivery form. |
+| `schemas/0[1-5]_*.json` | `x-splunk` now documents the real sourcetype, delivery form and the `security_*` index. |
 | `schemas/06_ground_truth_labels.schema.json` | Adds `tenant_id`, `delivery_id`, `scenario_id`. |
 | `tests/test_generator.py`, `pytest.ini` | **New** pytest suite (replaces `tests/test_scheduler_cooldown.py`). |
+| `docs/gen_schema_drawio.py` → `docs/data_source_schemas.drawio` | **New.** Draw.io diagram of all source schemas, generated from `schemas/` and the delivery code (`python docs/gen_schema_drawio.py`). |
+| `docs/gen_sample_specs_drawio.py` → `docs/sample_specs_schemas.drawio` | **New.** Schema inferred from the `sample_specs/` example records (fields per family, types, presence, example values, identifiers shared across sources). |
 
 ### New settings (`.env`)
 

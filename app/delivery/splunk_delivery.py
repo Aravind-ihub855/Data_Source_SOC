@@ -10,9 +10,11 @@ import itertools
 import json
 import logging
 import random
+import re
 import uuid
 from collections import deque
-from datetime import timedelta
+from contextvars import ContextVar
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
@@ -52,6 +54,14 @@ _metrics: Dict[str, Any] = {
 }
 
 FAULTS = ("duplicate", "late_arrival", "truncated", "schema_drift")
+
+# Batch (burst) runs: events are delivered at once instead of after each source's real-world delay, and carry
+# ingest_mode=batch so the pipeline does not flag them as late. Context variables, so a backfill task cannot
+# change how the live stream behaves.
+realistic_delays: ContextVar[bool] = ContextVar("realistic_delays", default=True)
+ingest_mode: ContextVar[str] = ContextVar("ingest_mode", default="live")
+_truth_path: Optional[str] = None   # per-run label file while a run is active, else settings.GROUND_TRUTH_PATH
+_inflight = 0                       # events handed to a sender task and not yet acknowledged / dead-lettered
 
 
 def _append_jsonl(path: str, rows: List[Dict[str, Any]]) -> None:
@@ -96,7 +106,9 @@ async def schedule(event: Dict[str, Any], source_name: str, truth: Dict[str, Any
     src = source_of(source_name)
     event_time = parse_iso(src.time(event))
     if send_at is None:
-        send_at = max(now(), event_time) + timedelta(seconds=random.uniform(*src.ingest_delay_s))
+        # batch: deliver now; a step stamped after the real clock (a scenario longer than the window) is not held back
+        send_at = (max(now(), event_time) + timedelta(seconds=random.uniform(*src.ingest_delay_s))
+                   if realistic_delays.get() else min(event_time, datetime.now(timezone.utc)))
     payload, sourcetype, source, host = src.wire(event)
 
     # A scenario may label its own faults (a resent copy, a backdated event); otherwise roll for one.
@@ -108,7 +120,8 @@ async def schedule(event: Dict[str, Any], source_name: str, truth: Dict[str, Any
     if given == "none" and fault == "late_arrival":
         copies = [(fault, None, send_at + timedelta(seconds=random.uniform(300, 900)))]
     elif given == "none" and fault == "duplicate":
-        copies = [("none", None, send_at), ("duplicate", 0, send_at + timedelta(seconds=random.uniform(5, 120)))]
+        dup_delay = random.uniform(5, 120) if realistic_delays.get() else random.uniform(0.5, 3)   # a resend, seconds later in a burst
+        copies = [("none", None, send_at), ("duplicate", 0, send_at + timedelta(seconds=dup_delay))]
 
     items, rows = [], []
     for copy_fault, dup_index, at in copies:
@@ -121,7 +134,8 @@ async def schedule(event: Dict[str, Any], source_name: str, truth: Dict[str, Any
             "sourcetype": sourcetype,
             "index": src.index,
             "event": _damage(payload, copy_fault),
-            "fields": {"tenant_id": tenant()["tenant_id"], "delivery_id": delivery_id, "event_key": key},
+            "fields": {"tenant_id": tenant()["tenant_id"], "delivery_id": delivery_id, "event_key": key,
+                       "ingest_mode": ingest_mode.get()},
         }
         duplicate_of = truth["duplicate_of"] if dup_index is None else rows[dup_index]["label_id"]
         rows.append({
@@ -140,7 +154,7 @@ async def schedule(event: Dict[str, Any], source_name: str, truth: Dict[str, Any
         })
         items.append((at, item))
 
-    _append_jsonl(settings.GROUND_TRUTH_PATH, rows)
+    _append_jsonl(_truth_path or settings.GROUND_TRUTH_PATH, rows)
     _metrics["ground_truth_rows"] += len(rows)
     for (at, item), row in zip(items, rows):
         _metrics["total_generated"] += 1
@@ -216,8 +230,22 @@ def _due_batch() -> List[Dict[str, Any]]:
     return batch
 
 
+async def _send_batch(client: httpx.AsyncClient, batch: List[Dict[str, Any]], sem: asyncio.Semaphore) -> None:
+    global _inflight
+    try:
+        if settings.MIRROR_URL:
+            await _mirror(client, batch)
+        if is_splunk_enabled():
+            await send_to_splunk_hec(client, batch)
+    finally:
+        _inflight -= len(batch)
+        sem.release()
+
+
 async def run_delivery() -> None:
-    """Background task: sends every queued item once its send time has come."""
+    """Background task: sends every queued item once its send time has come, several batches at a time."""
+    global _inflight
+    sem, tasks = asyncio.Semaphore(max(1, splunk_config.CONCURRENCY)), set()
     async with httpx.AsyncClient(verify=splunk_config.VERIFY_SSL, timeout=splunk_config.TIMEOUT_SEC) as client:
         while True:
             batch = _due_batch()
@@ -231,14 +259,31 @@ async def run_delivery() -> None:
                 except asyncio.TimeoutError:
                     pass
                 continue
-            if settings.MIRROR_URL:
-                await _mirror(client, batch)
-            if is_splunk_enabled():
-                await send_to_splunk_hec(client, batch)
+            await sem.acquire()
+            _inflight += len(batch)
+            task = asyncio.create_task(_send_batch(client, batch, sem))
+            tasks.add(task)
+            task.add_done_callback(tasks.discard)
+
+
+def begin_run(run_id: str) -> str:
+    """Labels of this run go to their own file (out/runs/<run_id>/ground_truth.jsonl) until end_run()."""
+    global _truth_path
+    if not re.fullmatch(r"[A-Za-z0-9_-]{1,64}", run_id):
+        raise ValueError("run_id must be 1-64 letters, digits, - or _")
+    path = Path(settings.GROUND_TRUTH_PATH).resolve().parent / "runs" / run_id / "ground_truth.jsonl"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    _truth_path = str(path)
+    return _truth_path
+
+
+def end_run() -> None:
+    global _truth_path
+    _truth_path = None
 
 
 def queue_depth() -> int:
-    return len(_queue)
+    return len(_queue) + _inflight
 
 
 def get_recent_events(
@@ -264,7 +309,7 @@ def get_metrics_summary() -> Dict[str, Any]:
         "metrics": dict(_metrics),
         "buffer_size": len(_event_buffer),
         "buffer_max": settings.BUFFER_MAX_SIZE,
-        "queue_depth": len(_queue),
+        "queue_depth": queue_depth(),
         "splunk_enabled": is_splunk_enabled()
     }
 
