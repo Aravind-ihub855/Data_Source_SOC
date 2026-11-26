@@ -16,8 +16,11 @@ class SplunkConfig(BaseSettings):
 
     # Target Indexes for the 5 Sources
     INDEX_ENDPOINT: str = os.getenv("SPLUNK_INDEX_ENDPOINT", "security_endpoint")
+    INDEX_DEFENDER: str = os.getenv("SPLUNK_INDEX_DEFENDER", INDEX_ENDPOINT)
+    INDEX_WINDOWS: str = os.getenv("SPLUNK_INDEX_WINDOWS", INDEX_ENDPOINT)
     INDEX_CLOUD: str = os.getenv("SPLUNK_INDEX_CLOUD", "security_cloud")
     INDEX_AUTH: str = os.getenv("SPLUNK_INDEX_AUTH", "security_identity")
+    INDEX_ENTRA: str = os.getenv("SPLUNK_INDEX_ENTRA", INDEX_AUTH)
     INDEX_NETWORK: str = os.getenv("SPLUNK_INDEX_NETWORK", "security_network")
 
     # Delivery Engine settings

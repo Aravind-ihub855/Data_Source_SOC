@@ -74,13 +74,13 @@ class Source:
 
 
 SOURCES: Dict[str, Source] = {s.name: s for s in [
-    Source("Microsoft Defender", "defender", "INDEX_ENDPOINT", lambda e: e["Timestamp"],
+    Source("Microsoft Defender", "defender", "INDEX_DEFENDER", lambda e: e["Timestamp"],
            lambda e: f"defender|{e['DeviceId']}|{e['ReportId']}|{e['Timestamp']}", _defender_wire, (5, 60)),
-    Source("Microsoft Entra ID", "entra", "INDEX_AUTH",
+    Source("Microsoft Entra ID", "entra", "INDEX_ENTRA",
            lambda e: e.get("createdDateTime") or e["activityDateTime"], lambda e: e["id"], _entra_wire, (60, 240)),
     Source("AWS CloudTrail", "cloudtrail", "INDEX_CLOUD", lambda e: e["eventTime"], lambda e: e["eventID"],
            _cloudtrail_wire, (120, 480)),
-    Source("Windows Event Logs", "windows", "INDEX_ENDPOINT",
+    Source("Windows Event Logs", "windows", "INDEX_WINDOWS",
            lambda e: e["parsed_event"]["TimeCreated"]["SystemTime"],
            lambda e: "|".join(str(x) for x in (e["parsed_event"]["Computer"], e["parsed_event"]["Channel"],
                                                 e["parsed_event"]["EventRecordID"],
