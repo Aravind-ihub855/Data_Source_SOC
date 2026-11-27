@@ -218,7 +218,7 @@ def scenario_powershell_abuse(ctx: ScenarioContext) -> List[Tuple[Dict[str, Any]
             image="C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
             command_line=encoded_cmd,
             parent_image="C:\\Program Files\\Microsoft Office\\root\\Office16\\WINWORD.EXE",
-            parent_command_line="WINWORD.EXE /n C:\\Users\\Downloads\\Invoice.docm",
+            parent_command_line="WINWORD.EXE /n C:\\Users\\Downloads\\Supplier_Invoice_PO8842.docm",
             process_id=4820,
             event_time=t1
         ),
@@ -300,7 +300,7 @@ def scenario_ransomware_canary(ctx: ScenarioContext) -> List[Tuple[Dict[str, Any
     user = ctx.target_user["local_account"]
 
     # 1. Rapid sequence of file modifications with encrypted extension
-    for idx, fname in enumerate(["Q3_Ledger.xlsx.locked", "Financial_Model.docx.locked", "Employees.pdf.locked"]):
+    for idx, fname in enumerate(["POS_Settlement_Batch.xlsx.locked", "Holiday_Catalog_Pricing.docx.locked", "Customer_Loyalty_Export.csv.locked"]):
         t = timeline.get_time_at_offset(offset_seconds=idx * 0.8)
         events.append((
             generate_defender_file_event(
@@ -525,7 +525,7 @@ def scenario_s3_data_exfiltration(ctx: ScenarioContext) -> List[Tuple[Dict[str, 
                 user_name=ctx.target_user["username"],
                 source_ip=ctx.attacker_ip,
                 request_parameters={
-                    "bucketName": "acme-customer-kyc-documents",
+                    "bucketName": "novaretail-customer-payment-vault",
                     "key": report_key
                 },
                 response_elements={"bytesTransferred": 45291040},
@@ -655,7 +655,7 @@ def scenario_attack_chain_b(ctx: ScenarioContext) -> List[Tuple[Dict[str, Any], 
     timeline = TimelineManager()
     events: List[Tuple[Dict[str, Any], str]] = []
     dev_ws = ctx.target_device["device_name"]
-    dev_srv = resolve_device("FINANCE-SRV-01")["device_name"]
+    dev_srv = resolve_device("POS-142-12")["device_name"]
     user = ctx.target_user["local_account"]
 
     # 1. Credential dumping on workstation
@@ -743,7 +743,7 @@ def scenario_vuln_scanner(ctx: ScenarioContext) -> List[Tuple[Dict[str, Any], st
     """SCN-FP-02: Approved Vulnerability Scanner Sweeping Subnet."""
     timeline = TimelineManager()
     events: List[Tuple[Dict[str, Any], str]] = []
-    scanner_ip = resolve_device("IT-ADMIN-01")["ip_address"]  # Approved scanner host
+    scanner_ip = resolve_device("ECOMM-ADMIN-01")["ip_address"]  # Approved scanner host
 
     # Firewall observes routine port sweep
     for idx, port in enumerate([80, 443, 8080]):

@@ -5,7 +5,7 @@ from app.util import iso_now, stable_hex
 
 BASELINE_PROCESSES = [
     {"name": "chrome.exe", "path": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe", "parent": "explorer.exe", "cmd": '"C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe" --type=renderer'},
-    {"name": "excel.exe", "path": "C:\\Program Files\\Microsoft Office\\root\\Office16\\EXCEL.EXE", "parent": "explorer.exe", "cmd": '"C:\\Program Files\\Microsoft Office\\root\\Office16\\EXCEL.EXE" "C:\\Users\\Finance\\Q4_Budget.xlsx"'},
+    {"name": "excel.exe", "path": "C:\\Program Files\\Microsoft Office\\root\\Office16\\EXCEL.EXE", "parent": "explorer.exe", "cmd": '"C:\\Program Files\\Microsoft Office\\root\\Office16\\EXCEL.EXE" "C:\\Users\\Merchandising\\Q4_Store_Inventory.xlsx"'},
     {"name": "teams.exe", "path": "C:\\Users\\AppData\\Local\\Microsoft\\Teams\\current\\Teams.exe", "parent": "explorer.exe", "cmd": "Teams.exe --process-start-args"},
     {"name": "outlook.exe", "path": "C:\\Program Files\\Microsoft Office\\root\\Office16\\OUTLOOK.EXE", "parent": "explorer.exe", "cmd": "OUTLOOK.EXE"},
     {"name": "code.exe", "path": "C:\\Program Files\\Microsoft VS Code\\Code.exe", "parent": "explorer.exe", "cmd": "Code.exe ."}
