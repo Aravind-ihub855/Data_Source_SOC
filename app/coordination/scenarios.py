@@ -830,6 +830,313 @@ def scenario_out_of_order_telemetry(ctx: ScenarioContext) -> List[Tuple[Dict[str
     return events
 
 # =============================================================================
+# 6. RETAIL & E-COMMERCE THREAT SCENARIOS (5) - NON-PII SERVICE IDENTITIES
+# =============================================================================
+
+def _retail_upn(ctx: ScenarioContext, svc_name: str) -> str:
+    domain = ctx.company["domain"] if hasattr(ctx, "company") and "domain" in ctx.company else "novaretail.com"
+    return f"{svc_name}@{domain}"
+
+
+def scenario_retail_checkout_skimming(ctx: ScenarioContext) -> List[Tuple[Dict[str, Any], str]]:
+    """SCN-RET-01: Checkout Payment Skimmer Injection (Magecart-style CDN Tampering)."""
+    timeline = TimelineManager()
+    events: List[Tuple[Dict[str, Any], str]] = []
+    svc = "svc-checkout-deploy"
+
+    # 1. CloudTrail PutObject overwriting checkout payment JS bundle in CDN S3 bucket
+    t1 = timeline.get_time_at_offset(offset_seconds=0.0)
+    events.append((
+        generate_cloudtrail_event(
+            event_name="PutObject",
+            event_source="s3.amazonaws.com",
+            user_name=svc,
+            source_ip=ctx.attacker_ip,
+            request_parameters={
+                "bucketName": "novaretail-checkout-cdn-assets",
+                "key": "static/js/payment-checkout-v3.min.js",
+                "x-amz-acl": "public-read",
+            },
+            read_only=False,
+            event_time=t1,
+        ),
+        "AWS CloudTrail",
+    ))
+
+    # 2. CloudTrail PutBucketPolicy relaxing CORS/public access on checkout CDN bucket
+    t2 = timeline.get_time_at_offset(offset_seconds=8.0)
+    events.append((
+        generate_cloudtrail_event(
+            event_name="PutBucketPolicy",
+            event_source="s3.amazonaws.com",
+            user_name=svc,
+            source_ip=ctx.attacker_ip,
+            request_parameters={
+                "bucketName": "novaretail-checkout-cdn-assets",
+                "policy": "AllowPublicReadCheckoutAssets",
+            },
+            read_only=False,
+            event_time=t2,
+        ),
+        "AWS CloudTrail",
+    ))
+
+    # 3. Firewall outbound C2/exfiltration alert to payment skimmer drop server
+    t3 = timeline.get_time_at_offset(offset_seconds=18.0)
+    events.append((
+        generate_firewall_threat_event(
+            source_ip=ctx.internal_ip,
+            destination_ip=ctx.attacker_ip,
+            threat_name="Magecart Payment Skimmer Exfiltration Beacon",
+            user=svc,
+            event_time=t3,
+        ),
+        "Firewall logs",
+    ))
+    return events
+
+
+def scenario_retail_seller_payout_hijack(ctx: ScenarioContext) -> List[Tuple[Dict[str, Any], str]]:
+    """SCN-RET-02: Marketplace Seller Payout Hijack & IAM Role Escalation."""
+    timeline = TimelineManager()
+    events: List[Tuple[Dict[str, Any], str]] = []
+    svc = "svc-seller-payouts"
+    upn = _retail_upn(ctx, svc)
+
+    # 1. Entra ID anomalous high-risk sign-in for seller payout service account
+    t1 = timeline.get_time_at_offset(offset_seconds=0.0)
+    events.append((
+        generate_entra_signin_event(
+            user_principal_name=upn,
+            ip_address=ctx.attacker_ip,
+            app_display_name="Marketplace Seller Payout Portal",
+            is_success=True,
+            risk_level="high",
+            event_time=t1,
+        ),
+        "Microsoft Entra ID",
+    ))
+
+    # 2. Entra ID directory audit adding privileged role to payout service identity
+    t2 = timeline.get_time_at_offset(offset_seconds=14.0)
+    events.append((
+        generate_entra_directory_audit_event(
+            user_principal_name=upn,
+            ip_address=ctx.attacker_ip,
+            activity_name="Add member to role",
+            role_name="Application Administrator",
+            event_time=t2,
+        ),
+        "Microsoft Entra ID",
+    ))
+
+    # 3. CloudTrail IAM policy attachment & payout disbursement S3/DynamoDB modification
+    t3 = timeline.get_time_at_offset(offset_seconds=26.0)
+    events.append((
+        generate_cloudtrail_policy_event(
+            user_name=svc,
+            source_ip=ctx.attacker_ip,
+            policy_arn="arn:aws:iam::aws:policy/PowerUserAccess",
+            event_time=t3,
+        ),
+        "AWS CloudTrail",
+    ))
+    t4 = timeline.get_time_at_offset(offset_seconds=35.0)
+    events.append((
+        generate_cloudtrail_event(
+            event_name="PutObject",
+            event_source="s3.amazonaws.com",
+            user_name=svc,
+            source_ip=ctx.attacker_ip,
+            request_parameters={
+                "bucketName": "novaretail-seller-payouts-prod",
+                "key": "disbursements/ach-routing-override-batch.json",
+            },
+            read_only=False,
+            event_time=t4,
+        ),
+        "AWS CloudTrail",
+    ))
+    return events
+
+
+def scenario_retail_giftcard_vault_drain(ctx: ScenarioContext) -> List[Tuple[Dict[str, Any], str]]:
+    """SCN-RET-03: Loyalty & Gift Card Vault Bulk Token Exfiltration."""
+    timeline = TimelineManager()
+    events: List[Tuple[Dict[str, Any], str]] = []
+    svc = "svc-promo-api"
+    upn = _retail_upn(ctx, svc)
+
+    # 1. Entra ID risky token sign-in from external IP
+    t1 = timeline.get_time_at_offset(offset_seconds=0.0)
+    events.append((
+        generate_entra_signin_event(
+            user_principal_name=upn,
+            ip_address=ctx.attacker_ip,
+            app_display_name="Loyalty & GiftCard Vault API",
+            is_success=True,
+            risk_level="high",
+            event_time=t1,
+        ),
+        "Microsoft Entra ID",
+    ))
+
+    # 2. CloudTrail SecretsManager GetSecretValue + S3 GetObject on giftcard vault
+    t2 = timeline.get_time_at_offset(offset_seconds=10.0)
+    events.append((
+        generate_cloudtrail_event(
+            event_name="GetSecretValue",
+            event_source="secretsmanager.amazonaws.com",
+            user_name=svc,
+            source_ip=ctx.attacker_ip,
+            request_parameters={"secretId": "prod/retail/giftcard-signing-hmac-key"},
+            read_only=True,
+            event_time=t2,
+        ),
+        "AWS CloudTrail",
+    ))
+    t3 = timeline.get_time_at_offset(offset_seconds=22.0)
+    events.append((
+        generate_cloudtrail_event(
+            event_name="GetObject",
+            event_source="s3.amazonaws.com",
+            user_name=svc,
+            source_ip=ctx.attacker_ip,
+            request_parameters={
+                "bucketName": "novaretail-loyalty-giftcards-vault",
+                "key": "exports/active-voucher-balances-full.parquet",
+            },
+            read_only=True,
+            event_time=t3,
+        ),
+        "AWS CloudTrail",
+    ))
+
+    # 3. Firewall large outbound transfer of gift card vault dump
+    t4 = timeline.get_time_at_offset(offset_seconds=34.0)
+    events.append((
+        generate_firewall_cef_event(
+            signature_id="9104",
+            name="Large Outbound Vault Data Exfiltration",
+            severity=8,
+            source_ip=ctx.internal_ip,
+            destination_ip=ctx.attacker_ip,
+            destination_port=443,
+            action="allow",
+            bytes_out=185000000,
+            user=svc,
+            event_time=t4,
+        ),
+        "Firewall logs",
+    ))
+    return events
+
+
+def scenario_retail_catalog_pricing_tamper(ctx: ScenarioContext) -> List[Tuple[Dict[str, Any], str]]:
+    """SCN-RET-04: Catalog & Dynamic Pricing Engine API Tampering."""
+    timeline = TimelineManager()
+    events: List[Tuple[Dict[str, Any], str]] = []
+    svc = "svc-catalog-sync"
+    dev = ctx.target_device["device_name"]
+
+    # 1. Defender EDR process execution on catalog/promo host invoking unauthorized pricing override
+    t1 = timeline.get_time_at_offset(offset_seconds=0.0)
+    events.append((
+        generate_defender_process_event(
+            device_name=dev,
+            account_name=svc,
+            process_name="python.exe",
+            process_command_line="python.exe -c \"import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/internal/pricing/override?discount=99')\"",
+            parent_process_name="cmd.exe",
+            action_type="ProcessCreated",
+            event_time=t1,
+        ),
+        "Microsoft Defender",
+    ))
+
+    # 2. CloudTrail BatchWriteItem modifying catalog pricing DynamoDB table
+    t2 = timeline.get_time_at_offset(offset_seconds=12.0)
+    events.append((
+        generate_cloudtrail_event(
+            event_name="BatchWriteItem",
+            event_source="dynamodb.amazonaws.com",
+            user_name=svc,
+            source_ip=ctx.attacker_ip,
+            request_parameters={
+                "tableName": "prod-catalog-sku-pricing",
+                "itemCount": 250,
+            },
+            read_only=False,
+            event_time=t2,
+        ),
+        "AWS CloudTrail",
+    ))
+    return events
+
+
+def scenario_retail_wms_ransomware(ctx: ScenarioContext) -> List[Tuple[Dict[str, Any], str]]:
+    """SCN-RET-05: Warehouse & Fulfillment (WMS) Ransomware Staging & Encryption."""
+    timeline = TimelineManager()
+    events: List[Tuple[Dict[str, Any], str]] = []
+    svc = "svc-wms-dispatch"
+    dev = ctx.target_device["device_name"]
+
+    # 1. Windows Security Event 4624 remote logon to fulfillment host
+    t1 = timeline.get_time_at_offset(offset_seconds=0.0)
+    events.append((
+        generate_windows_security_logon_event(
+            device_name=dev,
+            user_name=svc,
+            source_ip=ctx.attacker_ip,
+            is_success=True,
+            event_time=t1,
+        ),
+        "Windows Event Logs",
+    ))
+
+    # 2. PowerShell Script Block attempting shadow copy deletion
+    t2 = timeline.get_time_at_offset(offset_seconds=10.0)
+    events.append((
+        generate_powershell_script_block_event(
+            device_name=dev,
+            user_name=svc,
+            script_text="Get-WmiObject Win32_ShadowCopy | ForEach-Object { $_.Delete() }; vssadmin.exe delete shadows /all /quiet",
+            is_suspicious=True,
+            event_time=t2,
+        ),
+        "Windows Event Logs",
+    ))
+
+    # 3. Defender Process & File encryption events on WMS dispatch manifests
+    t3 = timeline.get_time_at_offset(offset_seconds=15.0)
+    events.append((
+        generate_defender_process_event(
+            device_name=dev,
+            account_name=svc,
+            process_name="vssadmin.exe",
+            process_command_line="vssadmin.exe delete shadows /all /quiet",
+            parent_process_name="powershell.exe",
+            action_type="ProcessCreated",
+            event_time=t3,
+        ),
+        "Microsoft Defender",
+    ))
+    t4 = timeline.get_time_at_offset(offset_seconds=20.0)
+    events.append((
+        generate_defender_file_event(
+            device_name=dev,
+            account_name=svc,
+            file_name="WMS_Fulfillment_Dispatch_Batch.csv.locked",
+            folder_path="C:\\WMS\\Dispatch\\",
+            action_type="FileModified",
+            event_time=t4,
+        ),
+        "Microsoft Defender",
+    ))
+    return events
+
+
+# =============================================================================
 # REGISTER ALL 20 SCENARIOS INTO CENTRAL REGISTRY
 # =============================================================================
 
@@ -1086,7 +1393,69 @@ SCENARIOS_DEFINITIONS: List[ScenarioDefinition] = [
         expected_detections=["OUT_OF_ORDER_PROCESSED"],
         description="Emits events with reversed timestamps and delayed arrival (4 minutes in the past) to test time-window correlation.",
         generator_fn=scenario_out_of_order_telemetry
-    )
+    ),
+
+    # 8. Retail & E-Commerce Platform Attacks (5 Non-PII Scenarios)
+    ScenarioDefinition(
+        scenario_id="SCN-RET-01",
+        name="Online Checkout Skimming (Magecart / CDN Tampering)",
+        category="retail_ecommerce",
+        classification="true_positive",
+        severity="critical",
+        mitre_attack={"tactic": "Impact & Exfiltration", "technique_id": "T1195.002, T1059.001", "technique_name": "Supply Chain & Checkout Script Injection"},
+        required_sources=["AWS CloudTrail", "Microsoft Defender", "Firewall logs"],
+        expected_detections=["CHECKOUT_SKIMMING_DETECTED"],
+        description="Compromised checkout deployment service injects skimming script into CDN assets and exfiltrates payment telemetry.",
+        generator_fn=scenario_retail_checkout_skimming
+    ),
+    ScenarioDefinition(
+        scenario_id="SCN-RET-02",
+        name="Seller Portal Takeover & Payout Bank Hijack",
+        category="retail_ecommerce",
+        classification="true_positive",
+        severity="critical",
+        mitre_attack={"tactic": "Persistence & Exfiltration", "technique_id": "T1078, T1098, T1530", "technique_name": "Seller Payout Account Hijack"},
+        required_sources=["Microsoft Entra ID", "AWS CloudTrail"],
+        expected_detections=["SELLER_PAYOUT_HIJACK"],
+        description="High-risk service sign-in escalates IAM privileges and extracts merchant ACH settlement ledgers.",
+        generator_fn=scenario_retail_seller_payout_hijack
+    ),
+    ScenarioDefinition(
+        scenario_id="SCN-RET-03",
+        name="Automated Gift-Card & Loyalty Vault Drain",
+        category="retail_ecommerce",
+        classification="true_positive",
+        severity="high",
+        mitre_attack={"tactic": "Credential Access & Collection", "technique_id": "T1110, T1530", "technique_name": "Gift-Card Vault API Drain"},
+        required_sources=["Microsoft Entra ID", "AWS CloudTrail"],
+        expected_detections=["GIFTCARD_VAULT_DRAIN"],
+        description="Credential stuffing against loyalty API service principal followed by bulk extraction from gift-card vault.",
+        generator_fn=scenario_retail_giftcard_vault_drain
+    ),
+    ScenarioDefinition(
+        scenario_id="SCN-RET-04",
+        name="Catalog Pricing & Flash-Sale Manipulation",
+        category="retail_ecommerce",
+        classification="true_positive",
+        severity="high",
+        mitre_attack={"tactic": "Execution & Impact", "technique_id": "T1059.001, T1565", "technique_name": "Catalog Pricing Tampering"},
+        required_sources=["Windows Event Logs", "AWS CloudTrail"],
+        expected_detections=["CATALOG_PRICING_TAMPER"],
+        description="Encoded PowerShell execution modifies flash-sale discount feeds and writes unauthorized pricing overrides to S3.",
+        generator_fn=scenario_retail_catalog_pricing_tamper
+    ),
+    ScenarioDefinition(
+        scenario_id="SCN-RET-05",
+        name="Fulfillment Warehouse (WMS) Ransomware Precursor",
+        category="retail_ecommerce",
+        classification="true_positive",
+        severity="critical",
+        mitre_attack={"tactic": "Credential Access & Impact", "technique_id": "T1003.001, T1490", "technique_name": "WMS Shadow Copy Deletion & C2"},
+        required_sources=["Microsoft Defender", "Windows Event Logs", "Firewall logs"],
+        expected_detections=["WMS_RANSOMWARE_PRECURSOR"],
+        description="Malicious shell execution on warehouse dispatch server deletes shadow copies, dumps LSASS, and beacons to C2.",
+        generator_fn=scenario_retail_wms_ransomware
+    ),
 ]
 
 # Ground-truth labels per scenario (06_ground_truth_labels.schema.json enums):
@@ -1112,6 +1481,11 @@ SCENARIO_TRUTH = {
     "SCN-FP-02": ("vulnerability_scan", "benign_lookalike", "false_positive"),
     "SCN-DQ-01": ("baseline", "benign", "not_applicable"),
     "SCN-DQ-02": ("baseline", "benign", "not_applicable"),
+    "SCN-RET-01": ("data_exfiltration", "malicious", "true_positive"),
+    "SCN-RET-02": ("cloud_privilege_escalation", "malicious", "true_positive"),
+    "SCN-RET-03": ("account_compromise", "malicious", "true_positive"),
+    "SCN-RET-04": ("malware_execution", "malicious", "true_positive"),
+    "SCN-RET-05": ("ransomware", "malicious", "true_positive"),
 }
 
 # Register all 20 into the registry singleton

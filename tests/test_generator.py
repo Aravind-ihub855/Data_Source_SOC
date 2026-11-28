@@ -262,7 +262,7 @@ def test_full_pack_covers_all_twenty_scenarios_and_volume_scales_traffic(isolate
     low, high = [], []
     asyncio.run(run_backfill(start, end, collect=low, volume=1.0, diurnal=False, delays=False, scenarios=[]))
     stats = asyncio.run(run_backfill(start, end, collect=high, volume=3.0, diurnal=False, delays=False, scenarios=["full"]))
-    assert len(resolve_pack(["full"])) == 20 and stats["scenarios"] == 20
+    assert len(resolve_pack(["full"])) == 25 and stats["scenarios"] == 25
     assert len(high) - sum(x["events"] for x in stats["scenario_list"]) > 2.5 * len(low)   # ~3x baseline events
     assert {x["scenario_id"] for x in stats["scenario_list"]} == {s.scenario_id for s in scenario_registry.list_all()}
 
